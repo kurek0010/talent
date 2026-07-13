@@ -44,7 +44,7 @@
 Z K talentów krajowych i rynkowych kursów walut wynika bez żadnych nowych danych:
 
 1. **Kurs krzyżowy talentów**: `TLN-A/TLN-B (t) = [A_A(t)/A_A(0)] / [A_B(t)/A_B(0)] × FX_AB(t)/FX_AB(0)` — mierzy czysty realny rozjazd dwóch gospodarek po odjęciu szumu walutowego i inflacyjnego. Sama w sobie ciekawa publikacja (np. TLN-PL/TLN-US ×~1,53 za 2002–2024: tyle realnie Polska dogoniła Amerykę).
-2. **Talent umowy dwustronnej** (zbadany w `WYNIKI_talent_dwustronny.md`): środek geometryczny pary z kursem po połowie — dla dowolnej z K(K−1)/2 par. Przy 9 walutach: **36 gotowych jednostek umów dwustronnych**.
+2. **Talent umowy dwustronnej** (zbadany w `materialy/wyniki_talent_dwustronny.md`): środek geometryczny pary z kursem po połowie — dla dowolnej z K(K−1)/2 par. Przy 9 walutach: **36 gotowych jednostek umów dwustronnych**.
 3. **Talent koszykowy N stron**: średnia geometryczna talentów uczestników (wagi równe lub kontraktowe) — jednostka konsorcjów i łańcuchów dostaw.
 
 Publikacyjnie: jedna tabela dzienna K kotwic + macierz kursów krzyżowych; koszt krańcowy kolejnej waluty bliski zeru.

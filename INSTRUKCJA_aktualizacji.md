@@ -1,6 +1,6 @@
 # Instrukcja miesięcznej aktualizacji Talenta (dla Claude Code / administratora)
 
-**Kadencja — ścisła, z `REGULA_publikacyjna_Talent_v0.1.md` §2 i `POLITYKA_danych_v0.1.md` §2:**
+**Kadencja — ścisła, z `strona/regula_publikacyjna.md` §2 i `POLITYKA_danych_v0.1.md` §2:**
 
 | Kiedy | Co się dzieje |
 |---|---|
@@ -66,7 +66,7 @@ push na `main`, który zmienia jeden z plików `.md` kompilowanych na stronę
 wyłącznie `build_strona.py` i commituje wygenerowane HTML (autor
 `github-actions[bot]`, komunikat `Przebudowa strony po zmianie treści`) —
 tylko jeśli builder faktycznie coś zmienił. Dokumenty spoza słownika `DOCS`
-(`SZKIC_`, `TALENTY_`, `waluty/`, `PODSUMOWANIE_` itd.) nie są na liście
+(`materialy/SZKIC_`, `materialy/TALENTY_`, `materialy/waluty/` itd.) nie są na liście
 `paths` i push do nich nie uruchamia builda. **Dodajesz plik do `DOCS`** →
 dopisz go też do `paths` w tym workflow, inaczej treść się zmieni, ale strona
 nie. Wyłączenie: zakładka Actions → „Przebudowa strony po zmianie treści" →
@@ -74,4 +74,4 @@ nie. Wyłączenie: zakładka Actions → „Przebudowa strony po zmianie treści
 
 ## Inne waluty (gdy powstaną TLN-USD, TLN-EUR…)
 
-Ta sama kadencja per kraj wg kalendarza z karty walutowej (`waluty/TALENT-XXX.md`): kotwica 25. dnia z danych opublikowanych do 24., osobny plik `talent_published_XXX.json`, osobny alert-log. Kursy krzyżowe (TLN-PLN-USD itd.) liczą się automatycznie z kotwic i kursów NBP — bez dodatkowych publikacji.
+Ta sama kadencja per kraj wg kalendarza z karty walutowej (`materialy/waluty/TALENT-XXX.md`): kotwica 25. dnia z danych opublikowanych do 24., osobny plik `talent_published_XXX.json`, osobny alert-log. Kursy krzyżowe (TLN-PLN-USD itd.) liczą się automatycznie z kotwic i kursów NBP — bez dodatkowych publikacji.

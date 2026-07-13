@@ -1,7 +1,7 @@
 # Talent w kruchych gospodarkach — Polska (ilościowo), Niemcy i Argentyna (epizody)
 
 **Data:** 2026-07-04
-**Kod:** `prototyp/src/regret_poland.py`. Nazewnictwo przyjęte: jednostka **Talent (TLN)** = √(CPI × płaca); wariant dla finansów bezodsetkowych: **Qist**. Metryka: **żal / regret** (dwustronny, jak w `WYNIKI_test_stulecia_USA.md`).
+**Kod:** `prototyp/src/regret_poland.py`. Nazewnictwo przyjęte: jednostka **Talent (TLN)** = √(CPI × płaca); wariant dla finansów bezodsetkowych: **Qist**. Metryka: **żal / regret** (dwustronny, jak w `materialy/wyniki_test_stulecia_usa.md`).
 
 ---
 

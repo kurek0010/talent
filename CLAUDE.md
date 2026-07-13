@@ -11,7 +11,7 @@ Zamiast tego edytuj źródła i uruchom builder:
 | Chcesz zmienić | Edytuj | Potem |
 |---|---|---|
 | układ/treść strony głównej (w tym sekcję rynkową z kaflami i wykresem) | `prototyp/src/strona_szablon.html` | `cd prototyp && python src/build_strona.py` |
-| treść dokumentów (whitepaper itd.) | odpowiedni plik `.md` w korzeniu lub w `TIP/` (markdown jest kanoniczny) | j.w. |
+| treść dokumentów (whitepaper itd.) | źródło `.md`: artykuły witryny w `strona/`, strony dowodowe w `materialy/`, TIP w `TIP/` — nazwa pliku md odpowiada nazwie html (markdown jest kanoniczny) | j.w. |
 | listę dokumentów konwertowanych na HTML lub podmiany linków wewnątrz nich | słowniki `DOCS` / `LINK_REWRITES` w `build_strona.py` | j.w. **+ dodaj plik też do `paths` w `.github/workflows/przebudowa_strony.yml`**, inaczej push nie przebuduje strony automatycznie |
 | wykresy/dane na stronie | skrypty w `prototyp/src/` (aktualizują `data/processed/`) | j.w. |
 

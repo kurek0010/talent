@@ -3,7 +3,7 @@
 Zasada: NIE edytuj recznie index.html, talent_strona.html ani stron
 dokumentow (whitepaper.html itd.) — kazde uruchomienie buildera je nadpisze.
 - uklad strony glownej: prototyp/src/strona_szablon.html (edytuj TO)
-- tresc dokumentow: pliki .md w korzeniu repo (edytuj TE)
+- tresc dokumentow: pliki .md w strona/ oraz materialy/ (edytuj TE) — patrz DOCS
 Po zmianach uruchom: python src/build_strona.py
 """
 from __future__ import annotations
@@ -59,14 +59,17 @@ def build_index() -> None:
 
 # ------------------------------------------------------------- dokumenty md->html
 
-DOCS = {  # plik md w korzeniu -> strona html
-    "ARTYKUL_Talent_popularnonaukowy.md": "whitepaper.html",
-    "ARTYKUL_wprowadzenie_i_zastosowania.md": "wprowadzenie.html",
-    "REGULA_publikacyjna_Talent_v0.1.md": "regula_publikacyjna.html",
-    "WYSCIG_kandydatow_minimalny_zal.md": "wyscig_kandydatow.html",
-    "WYNIKI_test_stulecia_USA.md": "wyniki_test_stulecia_usa.html",
-    "WYNIKI_kruche_gospodarki.md": "wyniki_kruche_gospodarki.html",
-    "WYNIKI_talent_dwustronny.md": "wyniki_talent_dwustronny.html",
+DOCS = {  # plik md zrodlowy -> strona html (nazwa md == nazwa html)
+    # artykuly witryny: katalog strona/
+    "strona/whitepaper.md": "whitepaper.html",
+    "strona/wprowadzenie.md": "wprowadzenie.html",
+    "strona/regula_publikacyjna.md": "regula_publikacyjna.html",
+    # strony dowodowe: katalog materialy/ (material zrodlowy pod podrecznik)
+    "materialy/wyscig_kandydatow.md": "wyscig_kandydatow.html",
+    "materialy/wyniki_test_stulecia_usa.md": "wyniki_test_stulecia_usa.html",
+    "materialy/wyniki_kruche_gospodarki.md": "wyniki_kruche_gospodarki.html",
+    "materialy/wyniki_talent_dwustronny.md": "wyniki_talent_dwustronny.html",
+    # TIP: katalog procesu (README linkuje do TIP-0001/0002)
     "TIP/README.md": "tip.html",
 }
 

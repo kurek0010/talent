@@ -2,9 +2,10 @@ name: Przebudowa strony po zmianie treści
 
 # Wyzwala builder (prototyp/src/build_strona.py) na push do main, ale WYLACZNIE
 # gdy zmienil sie plik faktycznie kompilowany na strone: dokladnie klucze
-# slownika DOCS w build_strona.py + szablon/builder same w sobie. Dokumenty
-# robocze (SZKIC_, TALENTY_, waluty/, PODSUMOWANIE_ itd.) NIE sa
-# na tej liscie i nie uruchamiaja builda.
+# slownika DOCS w build_strona.py + szablon/builder same w sobie. Zrodla
+# artykulow sa w strona/, strony dowodowe w materialy/. Dokumenty czysto
+# robocze (materialy/SZKIC_, materialy/TALENTY_, materialy/waluty/,
+# materialy/ZRODLA_ itd.) NIE sa na tej liscie i nie uruchamiaja builda.
 #
 # SYNCHRONIZACJA NA PRZYSZLOSC: dodajesz plik do DOCS w build_strona.py ->
 # dodaj go tez do `paths` ponizej, inaczej zmiana tresci nie przebuduje strony
@@ -17,13 +18,13 @@ on:
   push:
     branches: [main]
     paths:
-      - "ARTYKUL_Talent_popularnonaukowy.md"
-      - "ARTYKUL_wprowadzenie_i_zastosowania.md"
-      - "REGULA_publikacyjna_Talent_v0.1.md"
-      - "WYSCIG_kandydatow_minimalny_zal.md"
-      - "WYNIKI_test_stulecia_USA.md"
-      - "WYNIKI_kruche_gospodarki.md"
-      - "WYNIKI_talent_dwustronny.md"
+      - "strona/whitepaper.md"
+      - "strona/wprowadzenie.md"
+      - "strona/regula_publikacyjna.md"
+      - "materialy/wyscig_kandydatow.md"
+      - "materialy/wyniki_test_stulecia_usa.md"
+      - "materialy/wyniki_kruche_gospodarki.md"
+      - "materialy/wyniki_talent_dwustronny.md"
       - "TIP/README.md"
       - "prototyp/src/strona_szablon.html"
       - "prototyp/src/build_strona.py"

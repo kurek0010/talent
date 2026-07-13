@@ -34,4 +34,4 @@ Kontekst próby: płace PL ×3,84 vs płace US ×1,82 (konwergencja), CPI PL ×2
 
 ## Zastrzeżenia
 
-Dane roczne; płace PL z tablic GUS/ZUS (do weryfikacji, jak w `WYNIKI_kruche_gospodarki.md`); płace US = produkcyjni w przemyśle; kurs = średnia roczna NBP. Wyniki wrażliwe na dobór próby 2002–2024 (jedna wielka konwergencja) — wskazany test na dłuższej parze (np. US-UK od 1939).
+Dane roczne; płace PL z tablic GUS/ZUS (do weryfikacji, jak w `materialy/wyniki_kruche_gospodarki.md`); płace US = produkcyjni w przemyśle; kurs = średnia roczna NBP. Wyniki wrażliwe na dobór próby 2002–2024 (jedna wielka konwergencja) — wskazany test na dłuższej parze (np. US-UK od 1939).

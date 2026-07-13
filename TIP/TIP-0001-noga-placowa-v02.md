@@ -31,4 +31,4 @@ Dryf długookresowy identyczny (różnica 0,5 p.p. na ćwierć wieku — opóźn
 
 ## Decyzja
 
-Wdrożono do `REGULA_publikacyjna_Talent_v0.1.md` (definicja I_w v0.2) dnia 2026-07-05. Wykres porównawczy obu metod: `talent_strona.html`. Docelowym rozszerzeniem pozostaje mediana wzrostu płac tych samych osób z danych ZUS (osobny TIP, gdy dostępność danych zostanie zbadana).
+Wdrożono do `strona/regula_publikacyjna.md` (definicja I_w v0.2) dnia 2026-07-05. Wykres porównawczy obu metod: `talent_strona.html`. Docelowym rozszerzeniem pozostaje mediana wzrostu płac tych samych osób z danych ZUS (osobny TIP, gdy dostępność danych zostanie zbadana).

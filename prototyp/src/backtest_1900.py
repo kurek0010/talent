@@ -94,7 +94,7 @@ def main() -> None:
     histdf = compute_historical(monthly)
     if histdf is None:
         print("[!] Brak danych w data/manual/backtest_historyczny.csv.")
-        print("    Wypełnij wg ZRODLA_backtest_historyczny.md, potem uruchom ponownie.")
+        print("    Wypełnij wg materialy/ZRODLA_backtest_historyczny.md, potem uruchom ponownie.")
         return
     b = histdf.index.min(); e = histdf.index.max()
     drift = histdf["AUV_PKB"].loc[e] / 100 - 1

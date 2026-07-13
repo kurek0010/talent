@@ -27,7 +27,7 @@ WYLACZNIE raportuje potrzebe recznego wpisu do first_prints_pln.json
 
 Zapis: prototyp/data/first_prints_pln.json, append-only - istniejace klucze
 (miesiace CPI, lata plac) nigdy nie sa nadpisywane ani usuwane, zgodnie z
-zakazem rewizji wstecz (REGULA_publikacyjna_Talent_v0.1.md §3).
+zakazem rewizji wstecz (strona/regula_publikacyjna.md §3).
 """
 from __future__ import annotations
 

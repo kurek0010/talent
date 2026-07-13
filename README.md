@@ -8,18 +8,19 @@ Zasada projektu: **kod jest metodologią**. Wszystkie wartości są odtwarzalne 
 
 | Dokument | Co zawiera |
 |---|---|
-| [ARTYKUL_Talent_popularnonaukowy.md](ARTYKUL_Talent_popularnonaukowy.md) | **Whitepaper** — pełny wywód: problem, wzór z dowodem dla licealisty, testy, granice metody |
-| [REGULA_publikacyjna_Talent_v0.1.md](REGULA_publikacyjna_Talent_v0.1.md) | Specyfikacja techniczna: definicje nóg, kalendarz publikacji, bezpieczniki |
+| [strona/whitepaper.md](strona/whitepaper.md) | **Whitepaper** — pełny wywód: problem, wzór z dowodem dla licealisty, testy, granice metody |
+| [strona/wprowadzenie.md](strona/wprowadzenie.md) | Wprowadzenie — czym jest Talent i do czego służy |
+| [strona/regula_publikacyjna.md](strona/regula_publikacyjna.md) | Specyfikacja techniczna: definicje nóg, kalendarz publikacji, bezpieczniki |
 | [TIP/](TIP/) | Talent Improvement Proposals — jawny proces zmian formuły (wzorzec BIP/EIP) |
 | [talent_strona.html](talent_strona.html) | Strona z wartością bieżącą i wykresami (statyczna, działa z GitHub Pages) |
 
 ## Dowody empiryczne
 
-- [WYSCIG_kandydatow_minimalny_zal.md](WYSCIG_kandydatow_minimalny_zal.md) — porównanie kandydatów na jednostkę (CPI, złoto, surowce, płace, mieszanki), 1996–2025
-- [WYNIKI_test_stulecia_USA.md](WYNIKI_test_stulecia_USA.md) — USA 1929–2025: Wielki Kryzys, wojna, stagflacja, 2022
-- [WYNIKI_kruche_gospodarki.md](WYNIKI_kruche_gospodarki.md) — Polska 1989–2024, Niemcy 1923, Argentyna (granice metody)
-- [WYNIKI_talent_dwustronny.md](WYNIKI_talent_dwustronny.md) — jednostka umów międzynarodowych (PL-US)
-- [ZRODLA_backtest_historyczny.md](ZRODLA_backtest_historyczny.md) — źródła danych do testów wstecznych
+- [materialy/wyscig_kandydatow.md](materialy/wyscig_kandydatow.md) — porównanie kandydatów na jednostkę (CPI, złoto, surowce, płace, mieszanki), 1996–2025
+- [materialy/wyniki_test_stulecia_usa.md](materialy/wyniki_test_stulecia_usa.md) — USA 1929–2025: Wielki Kryzys, wojna, stagflacja, 2022
+- [materialy/wyniki_kruche_gospodarki.md](materialy/wyniki_kruche_gospodarki.md) — Polska 1989–2024, Niemcy 1923, Argentyna (granice metody)
+- [materialy/wyniki_talent_dwustronny.md](materialy/wyniki_talent_dwustronny.md) — jednostka umów międzynarodowych (PL-US)
+- [materialy/ZRODLA_backtest_historyczny.md](materialy/ZRODLA_backtest_historyczny.md) — źródła danych do testów wstecznych
 
 ## Odtwórz obliczenia
 
@@ -38,11 +39,16 @@ Dane wejściowe są w `prototyp/data/` (surowe pobrania + przetworzone wyniki), 
 ## Struktura repozytorium
 
 ```
-├── ARTYKUL_Talent_popularnonaukowy.md   # whitepaper
-├── REGULA_publikacyjna_Talent_v0.1.md   # specyfikacja
+├── strona/                              # źródła MD artykułów witryny (nazwa md == nazwa html)
+│   ├── whitepaper.md                    # whitepaper
+│   ├── wprowadzenie.md                  # wprowadzenie
+│   └── regula_publikacyjna.md           # specyfikacja
+├── materialy/                           # strony dowodowe + dokumenty robocze (materiał pod podręcznik)
+│   ├── wyniki_*.md, wyscig_*.md         # raporty z testów (kompilowane na stronę)
+│   ├── ZRODLA_, SZKIC_, TALENTY_*.md    # zaplecze i szkice
+│   └── waluty/                          # karty walutowe TALENT-XXX
 ├── TIP/                                 # proces zmian
-├── WYNIKI_*.md, WYSCIG_*.md             # raporty z testów
-├── talent_strona.html                   # strona publiczna
+├── *.html                               # strony publiczne (generowane przez builder)
 ├── prototyp/
 │   ├── src/                             # aktywny kod (talent_daily, regret_*, build_strona)
 │   └── data/                            # dane surowe i przetworzone

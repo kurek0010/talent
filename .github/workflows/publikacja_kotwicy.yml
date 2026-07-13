@@ -1,6 +1,6 @@
 name: Publikacja kotwicy TLN-PLN
 
-# Kadencja z REGULA_publikacyjna_Talent_v0.1.md §2 / POLITYKA_danych_v0.1.md §2:
+# Kadencja z strona/regula_publikacyjna.md §2 / POLITYKA_danych_v0.1.md §2:
 # odciecie danych 24. dnia 12:00 CET, kotwica 25. dnia. Cron 09:00 UTC = zawsze
 # po poludniu CET/CEST 24. dnia poprzedniego dnia -> bezpieczny margines.
 #

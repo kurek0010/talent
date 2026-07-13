@@ -32,7 +32,7 @@ Dla wariantu „w godzinach pracy" (nie PKB), odpowiadającego na LUKĘ 7 recenz
 ## Uwagi metodyczne (do zapisania w artykule)
 
 - **Deflator.** Grilli–Yang jest deflowany MUV, nasze AUV 1996+ efektywnie CPI. To różne deflatory — do odnotowania; dla kształtu wieloletniego nieistotne, dla precyzji tak.
-- **Zszycie (chain-linking).** Skrypt zszywa część historyczną z naszym policzonym 1996+ we wspólnym punkcie (1995/1996), zachowując ciągłość — zgodnie z regułą niezmienniczości (chain-linking, patrz REGULA_publikacyjna_Talent_v0.1.md §4).
+- **Zszycie (chain-linking).** Skrypt zszywa część historyczną z naszym policzonym 1996+ we wspólnym punkcie (1995/1996), zachowując ciągłość — zgodnie z regułą niezmienniczości (chain-linking, patrz strona/regula_publikacyjna.md §4).
 - **Agregat światowy vs USA.** Jeśli łatwiej dostępne są dane USA (płace, CPI), można policzyć wariant „AUV-USA" 1900+ i osobno pilnować, że wniosek (wieloletni spadek) nie zależy od geografii.
 - **Cel testu, nie liczba.** Rozstrzygamy pytanie jakościowe: czy AUV ma wieloletni trend (a jeśli tak, jaki znak i rząd), czy oscyluje wokół stałej. Rekonstrukcja ilustracyjna wskazuje silny spadek (~−2%/rok); ten test ma to potwierdzić lub obalić na twardych danych.
 

@@ -1,5 +1,5 @@
 """Talent (TLN) - dzienna jednostka wartosci. Prototyp liczacy wg reguly
-publikacyjnej v0.1 (patrz REGULA_publikacyjna_Talent_v0.1.md).
+publikacyjnej v0.1 (patrz strona/regula_publikacyjna.md).
 
 Formula:
   noga cen  I_c(m): indeks CPI PL (docelowo mediana zrodel), lancuch m/m

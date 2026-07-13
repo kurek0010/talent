@@ -179,4 +179,4 @@ To jest cały wzorzec działania w czterech krokach: **nazwij problem publicznie
 
 ---
 
-*Artykuł opiera się na obliczeniach dostępnych w repozytorium projektu: wyścig kandydatów (`WYSCIG_kandydatow_minimalny_zal.md`), test stulecia USA (`WYNIKI_test_stulecia_USA.md`), testy Polski, Niemiec i Argentyny (`WYNIKI_kruche_gospodarki.md`), jednostka dwustronna (`WYNIKI_talent_dwustronny.md`), reguła publikacyjna (`REGULA_publikacyjna_Talent_v0.1.md`). Kod: katalog `prototyp/src/`. Dane płacowe GUS/ZUS dla Polski wymagają jeszcze weryfikacji u źródła; wszystkie wyniki są odtwarzalne z załączonego kodu.*
+*Artykuł opiera się na obliczeniach dostępnych w repozytorium projektu: wyścig kandydatów (`materialy/wyscig_kandydatow.md`), test stulecia USA (`materialy/wyniki_test_stulecia_usa.md`), testy Polski, Niemiec i Argentyny (`materialy/wyniki_kruche_gospodarki.md`), jednostka dwustronna (`materialy/wyniki_talent_dwustronny.md`), reguła publikacyjna (`strona/regula_publikacyjna.md`). Kod: katalog `prototyp/src/`. Dane płacowe GUS/ZUS dla Polski wymagają jeszcze weryfikacji u źródła; wszystkie wyniki są odtwarzalne z załączonego kodu.*

@@ -1,6 +1,6 @@
 # Polityka wprowadzania danych — v0.1
 
-**Data:** 2026-07-07 · **Status:** projekt · **Uzupełnia:** `REGULA_publikacyjna_Talent_v0.1.md`
+**Data:** 2026-07-07 · **Status:** projekt · **Uzupełnia:** `strona/regula_publikacyjna.md`
 Reguła publikacyjna mówi *co* i *dlaczego*; ten dokument mówi *którędy dokładnie* — co do serii, tabeli urzędu i dnia. Zasada nadrzędna bez zmian: kod jest metodologią; ta polityka jest jego opisem słownym.
 
 ## 1. Rejestr serii produkcyjnych (Talent-PL)
