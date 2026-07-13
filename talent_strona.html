@@ -18,6 +18,7 @@
 <meta property="og:description" content="Codzienne odczyty jednostki, która chroni obie strony umowy przed inflacją i utratą siły nabywczej pracy.">
 <meta property="og:type" content="website">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.47/katex.min.css">
 <style>
 :root[data-theme="dark"]{--bg:#0f1419;--card:#1a2129;--tx:#e8e6e3;--mut:#8b949e;--ac:#d4a017;--pos:#4c9f70;--neg:#c0504d;--grid:#232b34;--border:#2a323c;--border-hover:#3a4550;--tint:rgba(212,160,23,.08);--tint-border:rgba(212,160,23,.35)}
 :root[data-theme="sepia"]{--bg:#f2e8d5;--card:#fbf3e3;--tx:#3a2f1e;--mut:#7a6a52;--ac:#9c6b1f;--pos:#3f7d4f;--neg:#a1503d;--grid:#e9dfc4;--border:#ded0b0;--border-hover:#c9b98e;--tint:rgba(156,107,31,.10);--tint-border:rgba(156,107,31,.4)}
@@ -79,13 +80,33 @@ a{color:var(--ac)}
 .period.active{border-color:var(--ac);color:var(--ac)}
 .market .cap{margin:12px 4px 0}
 @media(max-width:820px){.market{grid-template-columns:1fr}}
+
+/* --- przelicznik --- */
+.calc{border:1px solid var(--tint-border);background:var(--tint)}
+.calc-h{color:var(--ac);font-size:.78em;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.calc-in{display:flex;gap:8px;margin-bottom:12px}
+.calc-in input{flex:1;min-width:0;background:var(--bg);color:var(--tx);border:1px solid var(--border);border-radius:8px;padding:9px 11px;font:1.05em/1.2 Georgia,serif;font-variant-numeric:tabular-nums}
+.calc-in select{background:var(--bg);color:var(--tx);border:1px solid var(--border);border-radius:8px;padding:0 8px;font:.95em/1.2 Georgia,serif;cursor:pointer}
+.calc-in input:focus,.calc-in select:focus{outline:none;border-color:var(--ac)}
+.calc-out{font-size:1.7em;color:var(--ac);font-variant-numeric:tabular-nums;line-height:1.1}
+.calc-out .calc-unit{font-size:.5em;color:var(--mut);letter-spacing:.06em;margin-left:2px}
+.calc-break{margin-top:10px;display:flex;flex-wrap:wrap;gap:5px 12px;font-size:.82em;font-variant-numeric:tabular-nums}
+.calc-break b{color:var(--tx);font-weight:normal}
+.calc-break span{color:var(--mut)}
+.calc-note{color:var(--mut);font-size:.72em;margin-top:10px}
+/* --- zdegradowany wiersz indeksu --- */
+.idxline{font-size:.82em;color:var(--mut);padding:8px 10px;border-radius:8px;border:1px solid transparent;cursor:pointer;font-variant-numeric:tabular-nums}
+.idxline:hover{border-color:var(--border-hover)}
+.idxline.active{border-color:var(--ac);color:var(--tx)}
+.idxline b{color:var(--tx)}
+.idxline .idxdate{font-size:.85em;color:var(--mut)}
 </style>
 </head>
 <body>
 <div class="topbar">
 <div>
 <h1>Talent <span>TLN</span></h1>
-<p class="sub">Sprawiedliwa miara wartości w zmiennym świecie &middot; √(ceny &times; płace) &middot; prototyp badawczy, Polska, baza I&nbsp;1996&nbsp;=&nbsp;100</p>
+<p class="sub">Sprawiedliwa miara wartości w zmiennym świecie &middot; prototyp badawczy, Polska, baza I&nbsp;1996&nbsp;=&nbsp;100</p>
 </div>
 <div class="theme-switch" role="group" aria-label="Wybierz motyw strony">
 <button class="theme-btn" data-theme-btn="dark">Ciemny</button>
@@ -94,12 +115,29 @@ a{color:var(--ac)}
 </div>
 </div>
 
-<p class="hook">Pożyczyłeś komuś 1000 zł w 2020 roku? Oddane dziś, kupują już tylko 67% tego, co wtedy. W <a href="wprowadzenie.html">Talentach</a> oddaje się dokładnie tyle wartości, ile się pożyczyło.</p>
+<p class="hook">Pożyczasz 1000, oddajesz 1000, a obie strony odzyskują tę samą wartość. Złotówka tego nie gwarantuje — <a href="wprowadzenie.html">Talent</a> tak, bo mierzy umowę cenami i płacami, nie nominałem.</p>
 
 <div class="market">
 <div class="tiles-col">
-<div class="card mtile active" data-series="idx"><div class="l">Wartość dziś (TLN-PLN)</div><div class="v" id="today">—</div><div class="d" id="todaydate"></div></div>
+<div class="card calc">
+<div class="calc-h">Przelicznik — ile to Talentów?</div>
+<div class="calc-in">
+<input id="calcAmt" type="number" min="0" step="any" value="1000" inputmode="decimal" aria-label="Kwota">
+<select id="calcFrom" aria-label="Jednostka">
+<option value="PLN" selected>PLN</option>
+<option value="TLN">TLN</option>
+<option value="USD">USD</option>
+<option value="EUR">EUR</option>
+<option value="CHF">CHF</option>
+<option value="GBP">GBP</option>
+</select>
+</div>
+<div class="calc-out"><b id="calcOut">—</b><span class="calc-unit" id="calcUnit">TLN</span></div>
+<div class="calc-break" id="calcBreak"></div>
+<div class="calc-note" id="calcNote"></div>
+</div>
 <div class="tiles"><div class="card mtile" data-series="PLN"><div class="l">1 TLN w PLN</div><div class="v">5.53</div><div class="d">PLN, XII 2025</div></div><div class="card mtile" data-series="USD"><div class="l">1 TLN w USD</div><div class="v">1.53</div><div class="d">USD, XII 2025</div></div><div class="card mtile" data-series="EUR"><div class="l">1 TLN w EUR</div><div class="v">1.31</div><div class="d">EUR, XII 2025</div></div><div class="card mtile" data-series="CHF"><div class="l">1 TLN w CHF</div><div class="v">1.22</div><div class="d">CHF, XII 2025</div></div><div class="card mtile" data-series="GBP"><div class="l">1 TLN w GBP</div><div class="v">1.14</div><div class="d">GBP, XII 2025</div></div><div class="card mtile" data-series="JPY"><div class="l">1 TLN w JPY</div><div class="v">240.63</div><div class="d">JPY, XII 2025</div></div></div>
+<div class="idxline mtile active" data-series="idx" title="Pokaż wykres indeksu TLN-PLN">Indeks TLN-PLN dziś: <b id="today">—</b> <span class="idxdate" id="todaydate"></span></div>
 </div>
 <div class="panel">
 <div class="panel-head">
@@ -133,7 +171,7 @@ a{color:var(--ac)}
 
 <h2>Dlaczego czas niszczy tradycyjne umowy?</h2>
 <p class="intro">Pieniądz jest fundamentem gospodarki, ale ma jedną wadę: z czasem traci realną wartość. „Oddajesz dokładnie 10&nbsp;000 zł" brzmi uczciwie, dopóki nie zauważysz, że liczba na papierze się nie zmienia, a jej siła nabywcza nieustannie płynie. Kto pożyczył w Polsce w 1989 roku i odzyskał nominalnie 30 lat później, odzyskał realnie mniej niż 1% wartości. Kontrakt z 2019 rozliczony w 2024 to strata ok. 30% względem cen i aż 40% względem zarobków.</p>
-<p class="intro">Powiązanie umowy z samą inflacją (CPI) chroni tylko jedną stronę — nie odpowiada na pytanie dłużnika: „czy ta płatność kosztuje mnie tyle samo mojej pracy, co wcześniej?". W Argentynie 2002 ceny skoczyły o 41%, płace o 7% — umowy indeksowane samą inflacją doprowadziły do masowych bankructw. <b>Wartość ma dwie równoprawne miary: ceny i płace.</b> Talent to ich środek geometryczny — √(ceny&nbsp;×&nbsp;płace) — punkt, w którym w dobrych czasach obie strony dzielą owoce wzrostu po równo, a w złych po równo dzielą stratę.</p>
+<p class="intro">Powiązanie umowy z samą inflacją (CPI) chroni tylko jedną stronę — nie odpowiada na pytanie dłużnika: „czy ta płatność kosztuje mnie tyle samo mojej pracy, co wcześniej?". W Argentynie 2002 ceny skoczyły o 41%, płace o 7% — umowy indeksowane samą inflacją doprowadziły do masowych bankructw. <b>Wartość ma dwie równoprawne miary: ceny i płace.</b> Talent to ich środek geometryczny — pierwiastek z iloczynu obu, \(\sqrt{C \times W}\), gdzie \(C\) to indeks cen, a \(W\) indeks płac — punkt, w którym w dobrych czasach obie strony dzielą owoce wzrostu po równo, a w złych po równo dzielą stratę.</p>
 <p class="intro">Formuła jest w pełni otwarta: kod jest metodologią, dane publiczne, a wyniki nigdy nie są rewidowane wstecz. <a href="wprowadzenie.html"><b>Czytaj pełne wprowadzenie i zastosowania →</b></a></p>
 
 <h2>Dwa główne zastosowania</h2>
@@ -247,6 +285,29 @@ document.querySelectorAll('.period').forEach(el=>{
 });
 renderMarket();
 
+/* --- przelicznik: PLN/waluty <-> Talenty --- */
+const CALC_CURS=['PLN','USD','EUR','CHF','GBP'];
+const PRICE={};                       // 1 TLN = PRICE[cur] jednostek danej waluty (ostatnia kotwica)
+CALC_CURS.forEach(c=>{const s=FX.series[c]; PRICE[c]=s[s.length-1];});
+const fmt=(x,d=2)=>x.toLocaleString('pl-PL',{minimumFractionDigits:d,maximumFractionDigits:d});
+function calcRender(){
+ const outEl=document.getElementById('calcOut'), unitEl=document.getElementById('calcUnit');
+ const breakEl=document.getElementById('calcBreak'), noteEl=document.getElementById('calcNote');
+ const amt=parseFloat(document.getElementById('calcAmt').value);
+ const from=document.getElementById('calcFrom').value;
+ if(!isFinite(amt)||amt<0){outEl.textContent='—';unitEl.textContent='';breakEl.innerHTML='';noteEl.textContent='';return;}
+ const tln=(from==='TLN')?amt:amt/PRICE[from];          // ile Talentów reprezentuje kwota
+ if(from==='TLN'){outEl.textContent=fmt(tln*PRICE.PLN); unitEl.textContent='PLN';}
+ else{outEl.textContent=fmt(tln); unitEl.textContent='TLN';}
+ const parts=(from==='TLN')?[]:[`<b>${fmt(tln)}</b> <span>TLN</span>`];
+ CALC_CURS.forEach(c=>{ if(c===from) return; parts.push(`<b>${fmt(tln*PRICE[c])}</b> <span>${c}</span>`); });
+ breakEl.innerHTML='to&nbsp;odpowiada: '+parts.join(' &middot; ');
+ noteEl.textContent=`1 TLN = ${fmt(PRICE.PLN)} zł · wg ostatniej kotwicy walutowej`;
+}
+document.getElementById('calcAmt').addEventListener('input',calcRender);
+document.getElementById('calcFrom').addEventListener('change',calcRender);
+calcRender();
+
 function setTheme(t){
  document.documentElement.setAttribute('data-theme',t);
  try{localStorage.setItem('tln-theme',t);}catch(e){}
@@ -263,5 +324,7 @@ document.querySelectorAll('.theme-btn').forEach(b=>{
 });
 setTheme(document.documentElement.getAttribute('data-theme')||'dark');
 </script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.47/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.47/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});"></script>
 </body>
 </html>
