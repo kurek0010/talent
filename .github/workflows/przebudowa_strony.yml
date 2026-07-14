@@ -20,6 +20,7 @@ on:
     paths:
       - "strona/whitepaper.md"
       - "strona/wprowadzenie.md"
+      - "strona/faq.md"
       - "strona/regula_publikacyjna.md"
       - "materialy/wyscig_kandydatow.md"
       - "materialy/wyniki_test_stulecia_usa.md"

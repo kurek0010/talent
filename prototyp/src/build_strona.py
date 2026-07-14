@@ -63,6 +63,7 @@ DOCS = {  # plik md zrodlowy -> strona html (nazwa md == nazwa html)
     # artykuly witryny: katalog strona/
     "strona/whitepaper.md": "whitepaper.html",
     "strona/wprowadzenie.md": "wprowadzenie.html",
+    "strona/faq.md": "faq.html",
     "strona/regula_publikacyjna.md": "regula_publikacyjna.html",
     # strony dowodowe: katalog materialy/ (material zrodlowy pod podrecznik)
     "materialy/wyscig_kandydatow.md": "wyscig_kandydatow.html",

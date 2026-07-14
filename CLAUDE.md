@@ -4,7 +4,7 @@
 
 Wszystkie pliki HTML w korzeniu generuje **builder**: `prototyp/src/build_strona.py`.
 
-**NIGDY nie edytuj bezpośrednio:** `index.html`, `talent_strona.html`, `whitepaper.html`, `wprowadzenie.html`, `regula_publikacyjna.html`, `wyscig_kandydatow.html`, `wyniki_*.html`, `tip.html` — builder nadpisze te zmiany bez ostrzeżenia.
+**NIGDY nie edytuj bezpośrednio:** `index.html`, `talent_strona.html`, `whitepaper.html`, `wprowadzenie.html`, `faq.html`, `regula_publikacyjna.html`, `wyscig_kandydatow.html`, `wyniki_*.html`, `tip.html` — builder nadpisze te zmiany bez ostrzeżenia.
 
 Zamiast tego edytuj źródła i uruchom builder:
 

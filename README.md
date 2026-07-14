@@ -10,6 +10,7 @@ Zasada projektu: **kod jest metodologią**. Wszystkie wartości są odtwarzalne 
 |---|---|
 | [strona/whitepaper.md](strona/whitepaper.md) | **Whitepaper** — pełny wywód: problem, wzór z dowodem dla licealisty, testy, granice metody |
 | [strona/wprowadzenie.md](strona/wprowadzenie.md) | Wprowadzenie — czym jest Talent i do czego służy |
+| [strona/faq.md](strona/faq.md) | FAQ — krótkie, uczciwe odpowiedzi na typowe wątpliwości |
 | [strona/regula_publikacyjna.md](strona/regula_publikacyjna.md) | Specyfikacja techniczna: definicje nóg, kalendarz publikacji, bezpieczniki |
 | [TIP/](TIP/) | Talent Improvement Proposals — jawny proces zmian formuły (wzorzec BIP/EIP) |
 | [talent_strona.html](talent_strona.html) | Strona z wartością bieżącą i wykresami (statyczna, działa z GitHub Pages) |

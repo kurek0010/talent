@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+(function(){
+ try{
+  var t=localStorage.getItem('tln-theme');
+  if(t!=='dark'&&t!=='sepia'&&t!=='light') t=window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';
+  document.documentElement.setAttribute('data-theme',t);
+ }catch(e){document.documentElement.setAttribute('data-theme','dark');}
+})();
+</script>
+<title>Najczęstsze pytania o Talenta — Talent (TLN)</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.47/katex.min.css">
+<style>
+:root[data-theme="dark"]{--bg:#0f1419;--card:#1a2129;--tx:#e8e6e3;--mut:#8b949e;--ac:#d4a017;--border:#2a323c}
+:root[data-theme="sepia"]{--bg:#f2e8d5;--card:#fbf3e3;--tx:#3a2f1e;--mut:#7a6a52;--ac:#9c6b1f;--border:#ded0b0}
+:root[data-theme="light"]{--bg:#faf9f6;--card:#ffffff;--tx:#1c1c1c;--mut:#6b6b6b;--ac:#a8720b;--border:#e2ded4}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.65 Georgia,serif;padding:24px;max-width:900px;margin:0 auto;transition:background-color .2s,color .2s}
+h1{font-size:1.6em;margin:0 0 14px}
+h2{font-size:1.2em;margin:28px 0 10px;color:var(--ac)}
+h3{font-size:1.05em;margin:18px 0 8px}
+p,li{margin:0 0 10px}
+ul,ol{padding-left:22px;margin:0 0 12px}
+code{font:.88em ui-monospace,Menlo,Consolas,monospace;background:var(--card);border-radius:6px;padding:1px 6px}
+pre{background:var(--card);border-radius:8px;border-left:3px solid var(--ac);padding:14px 16px;overflow-x:auto;margin:0 0 14px}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;width:100%;margin:0 0 16px;font-size:.92em}
+th,td{border:1px solid var(--border);padding:6px 10px;text-align:left;vertical-align:top}
+th{color:var(--mut);font-weight:normal}
+a{color:var(--ac)}
+hr{border:0;border-top:1px solid var(--border);margin:22px 0}
+em{color:var(--mut)}
+blockquote{border-left:3px solid var(--border);padding-left:14px;color:var(--mut);margin:0 0 12px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.top{font-size:.9em;margin:0}
+.theme-switch{display:flex;gap:6px;flex-shrink:0}
+.theme-btn{background:var(--border);color:var(--mut);border:1px solid transparent;border-radius:6px;padding:5px 11px;font:.8em/1.2 Georgia,serif;cursor:pointer;white-space:nowrap}
+.theme-btn:hover{color:var(--tx)}
+.theme-btn.active{border-color:var(--ac);color:var(--ac)}
+.gen{color:var(--mut);font-size:.78em;border-top:1px solid var(--border);margin-top:30px;padding-top:12px}
+</style>
+</head>
+<body>
+<div class="topbar">
+<p class="top"><a href="index.html">← strona główna Talenta</a></p>
+<div class="theme-switch" role="group" aria-label="Wybierz motyw strony">
+<button class="theme-btn" data-theme-btn="dark">Ciemny</button>
+<button class="theme-btn" data-theme-btn="sepia">Sepia</button>
+<button class="theme-btn" data-theme-btn="light">Jasny</button>
+</div>
+</div>
+<h1>Najczęstsze pytania o Talenta</h1>
+<p>Krótkie, uczciwe odpowiedzi na wątpliwości, które ma prawie każdy, kto pierwszy raz słyszy o Talencie. Gdzie warto, prowadzą głębiej — do <a href="wprowadzenie.html">wprowadzenia</a>, <a href="whitepaper.html">whitepapera</a> albo <a href="regula_publikacyjna.html">reguły publikacyjnej</a>.</p>
+<h2>To nie są ukryte odsetki?</h2>
+<p>Nie. W gospodarce, która się bogaci, spłata w Talentach rośnie szybciej niż inflacja — ale dokładnie o <em>połowę</em> realnego wzrostu płac. Ta połowa to nie procent doliczony z góry, tylko jawny udział wierzyciela we wzroście, w zamian za symetryczne zobowiązanie: gdy przyjdą złe czasy, poniesie połowę strat. Pożyczka nominalna też nie jest „darmowa" — po prostu po cichu oddaje całą premię za czas dłużnikowi, a całe ryzyko czasu wierzycielowi, tyle że nigdzie tego nie wypowiada. <a href="whitepaper.html">Więcej w whitepaperze →</a></p>
+<h2>Czy mogę na tym stracić?</h2>
+<p>Talent nie wyczaruje wartości, której nie ma: gdy całe społeczeństwo ubożeje, strata istnieje obiektywnie i ktoś musi ją ponieść. Gwarantuje tylko — i aż tyle — że zostanie podzielona mniej więcej po połowie, zamiast spaść w całości na jedną, słabszą stronę umowy. W praktyce jest to niewiele: przez sto lat danych z USA najgorszy przypadek to 6,1%, przez polską transformację ustrojową 10,4% — wobec setek procent przy pożyczce nominalnej.</p>
+<h2>Czym to się różni od zwykłej indeksacji inflacją?</h2>
+<p>Indeksacja samą inflacją (CPI) chroni tylko wierzyciela — pilnuje, żeby za odzyskane pieniądze kupił tyle samo co kiedyś. Milczy o równie ważnym pytaniu dłużnika: czy oddanie długu kosztuje mnie tyle samo <em>mojej pracy</em>, co w dniu podpisania? Gdy ceny i płace się rozjeżdżają, robi się to dotkliwe — w Argentynie w 2002 roku ceny wzrosły o 41%, a płace o 7%, i indeksacja samą inflacją zmiażdżyła kredytobiorców. Talent traktuje obie miary jako równoprawne, biorąc ich środek geometryczny. <a href="whitepaper.html">Więcej →</a></p>
+<h2>Co, jeśli państwo sfałszuje dane?</h2>
+<p>Dlatego reguła wymaga, by każda „noga" formuły — i cenowa, i płacowa — była medianą co najmniej trzech niezależnych źródeł (np. GUS, Eurostat, ZUS), z automatycznym alarmem, gdy zaczynają się rozjeżdżać. Kiedy rząd Argentyny zaniżał oficjalną inflację (2007–2015), niezależne pomiary wykryły to już w pierwszym roku — cała sztuka w tym, żeby z góry zapisać w kodzie, że się ich słucha. To redukuje ryzyko manipulacji pojedynczego urzędu do poziomu <em>wykrywalnego</em> — nie do zera, i tak to uczciwie nazywamy. <a href="whitepaper.html">Skąd biorą się liczby →</a></p>
+<h2>Co w kryzysie albo hiperinflacji?</h2>
+<p>W zwykłej recesji Talent dzieli wspólną stratę po połowie — w Wielkim Kryzysie w USA rozłożył katastrofę na ~20% na stronę, zamiast zrujnować jedną. Ale powyżej ~50% inflacji miesięcznie (jak w Niemczech w 1923 roku) żadna jednostka indeksowa już nie nadąża, bo wartość ucieka między obliczeniem a wypłatą. Na ten wypadek reguła z góry przewiduje przejście w tryb awaryjny — twardy koszyk walut — zamiast udawać, że działa. <a href="whitepaper.html">Granice metody →</a></p>
+<h2>To jakaś inwestycja albo lokata?</h2>
+<p>Nie. Talent nie pomnaża majątku — utrzymuje wartość pożyczki lub kontraktu uczciwą wobec obu stron. Jego jedynym zadaniem jest sprawić, żeby <em>pomaganie nie kosztowało</em>. Kto szuka zysku, znajdzie go gdzie indziej — to nie jest narzędzie do zarabiania.</p>
+<h2>Skąd mam wiedzieć, że kurs jest liczony uczciwie?</h2>
+<p>Bo nie musisz nikomu wierzyć — możesz sprawdzić sam. Wartość wylicza publiczny program z publicznych danych; każdy odczyt jest ogłaszany z wyprzedzeniem i nigdy nie zmieniany wstecz, a przy nim zapisany jest odcisk (hash) danych wejściowych i wersja kodu. Wystarczy dowolny laptop i kwadrans, by pobrać dane, uruchomić program i potwierdzić dzisiejszy kurs co do grosza. Filozofia jest jedna: nie „zaufaj nam", tylko „sprawdź sam". <a href="dla_agenta.html">Zbuduj Talenta u siebie →</a></p>
+<h2>Czy mogę użyć Talenta w zwykłej umowie?</h2>
+<p>Talent jest jednostką rozliczeniową: w umowie zapisujesz kwotę w TLN, a rozliczasz się w złotówkach po opublikowanym kursie dziennym (ogłaszanym z góry, nigdy nie korygowanym wstecz). Na dziś jest to jednak prototyp badawczy — wartości mają charakter roboczy i nie są oficjalnymi kursami rozliczeniowymi — więc traktuj je odpowiednio, a przy poważnej umowie skonsultuj treść z prawnikiem. To nie jest porada prawna. <a href="regula_publikacyjna.html">Zasady liczenia →</a></p>
+<p class="gen">Strona wygenerowana automatycznie z pliku <code>strona/faq.md</code> w
+<a href="https://github.com/kurek0010/talent">repozytorium</a> —
+wersja markdown jest kanoniczna.</p>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.47/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.47/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '\\(', right: '\\)', display: false}], throwOnError: false});"></script>
+<script>function setTheme(t){
+ document.documentElement.setAttribute('data-theme',t);
+ try{localStorage.setItem('tln-theme',t);}catch(e){}
+ document.querySelectorAll('.theme-btn').forEach(b=>b.classList.toggle('active',b.dataset.themeBtn===t));
+}
+document.querySelectorAll('.theme-btn').forEach(b=>{
+ b.addEventListener('click',()=>setTheme(b.dataset.themeBtn));
+});
+setTheme(document.documentElement.getAttribute('data-theme')||'dark');</script>
+</body>
+</html>
