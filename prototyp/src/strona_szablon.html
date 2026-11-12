@@ -303,7 +303,7 @@ function calcRender(){
  const parts=(from==='TLN')?[]:[`<b>${fmt(tln)}</b> <span>TLN</span>`];
  CALC_CURS.forEach(c=>{ if(c===from) return; parts.push(`<b>${fmt(tln*PRICE[c])}</b> <span>${c}</span>`); });
  breakEl.innerHTML='to&nbsp;odpowiada: '+parts.join(' &middot; ');
- noteEl.textContent=`1 TLN = ${fmt(PRICE.PLN)} zł · wg ostatniej kotwicy walutowej`;
+ noteEl.textContent=`1 TLN = ${fmt(PRICE.PLN)} zł · kotwica i kursy NBP za ${FX.labels.at(-1)}`;
 }
 document.getElementById('calcAmt').addEventListener('input',calcRender);
 document.getElementById('calcFrom').addEventListener('change',calcRender);

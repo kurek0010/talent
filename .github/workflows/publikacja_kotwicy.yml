@@ -91,10 +91,15 @@ jobs:
         if: steps.update.outputs.exit_code != '0'
         run: exit 1
 
-      - name: Czy są nowe kotwice?
+      - name: Aktualizacja przeliczeń walut z NBP
+        continue-on-error: true
+        working-directory: prototyp
+        run: python src/update_fx.py
+
+      - name: Czy są nowe dane?
         id: check
         run: |
-          if git diff --quiet -- prototyp/data/processed/talent_published.json; then
+          if git diff --quiet -- prototyp/data/processed/talent_published.json prototyp/data/processed/talent_w_walutach.csv; then
             echo "nowe=false" >> "$GITHUB_OUTPUT"
           else
             echo "nowe=true" >> "$GITHUB_OUTPUT"
@@ -119,7 +124,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          ANCHOR_LINE=$(grep '^Kotwica po:' /tmp/update_log.txt | tail -1)
+          ANCHOR_LINE=$(sed -n '/^Kotwica po:/p' /tmp/update_log.txt | tail -1)
           MONTH_VAL=$(echo "$ANCHOR_LINE" | sed -E 's/Kotwica po:[[:space:]]*([0-9-]+) = ([0-9.]+).*/\1: \2/')
           ALERTS=$(grep '^ALERT' /tmp/update_log.txt || true)
 
@@ -128,12 +133,15 @@ jobs:
             prototyp/data/processed/talent_anchors.csv \
             prototyp/data/processed/talent_anchors.json \
             prototyp/data/processed/talent_published.json \
+            prototyp/data/processed/talent_w_walutach.csv \
             index.html talent_strona.html whitepaper.html wprowadzenie.html \
             regula_publikacyjna.html wyscig_kandydatow.html \
             wyniki_test_stulecia_usa.html wyniki_kruche_gospodarki.html \
             wyniki_talent_dwustronny.html tip.html
 
-          if [ -n "$ALERTS" ]; then
+          if [ -z "$MONTH_VAL" ]; then
+            git commit -m "Aktualizacja przeliczeń walut TLN"
+          elif [ -n "$ALERTS" ]; then
             git commit -m "Kotwica TLN-PLN za ${MONTH_VAL}" -m "$ALERTS"
           else
             git commit -m "Kotwica TLN-PLN za ${MONTH_VAL}"

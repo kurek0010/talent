@@ -9,6 +9,8 @@ Po zmianach uruchom: python src/build_strona.py
 from __future__ import annotations
 
 import json
+import re
+from datetime import date
 from pathlib import Path
 
 import markdown
@@ -26,6 +28,16 @@ def build_index() -> None:
     tpl = (SRC / "strona_szablon.html").read_text()
 
     anchors = json.load(open(DATA / "talent_anchors.json"))
+    anchor_month = list(anchors)[-1]
+    index_path = ROOT / "index.html"
+    published_on = date.today().isoformat()
+    if index_path.exists():
+        previous = re.search(
+            rf"Ostatnia kotwica: za {anchor_month}, opublikowana (\d{{4}}-\d{{2}}-\d{{2}})",
+            index_path.read_text(),
+        )
+        if previous:
+            published_on = previous[1]
 
     a = pd.read_csv(DATA / "talent_anchors.csv", index_col=0)
     a.index = pd.PeriodIndex(a.index, freq="M")
@@ -51,9 +63,9 @@ def build_index() -> None:
                                           separators=(",", ":")))
             .replace("__CURCARDS__", cur_cards)
             .replace("__HOOK_PCT__", str(hook_pct))
-            .replace("__ANCHORFOR__", list(anchors)[-1])
-            .replace("__UPDATED__", __import__("datetime").date.today().isoformat()))
-    (ROOT / "index.html").write_text(html)
+            .replace("__ANCHORFOR__", anchor_month)
+            .replace("__UPDATED__", published_on))
+    index_path.write_text(html)
     (ROOT / "talent_strona.html").write_text(html)
     print(f"index.html + talent_strona.html: {len(html)//1024} KB")
 
