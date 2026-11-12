@@ -88,11 +88,16 @@ def main() -> None:
 
     ic, iw = float(a.loc[last_published, "I_c"]), float(a.loc[last_published, "I_w"])
     last_A = float(a.loc[last_published, "A"])
-    last_dynamic = cpi_mm.get(str(last_published), 100.0) / 100.0  # fallback: brak zmiany
+    # Odtworz ciag brakow z miesiecy sprzed tego uruchomienia. Pozno
+    # dostarczony odczyt zamyka brak bez zmiany opublikowanej kotwicy.
+    last_cpi_month = last_published
+    while last_cpi_month >= start and str(last_cpi_month) not in cpi_mm:
+        last_cpi_month -= 1
+    consecutive_missing = (last_published - last_cpi_month).n
+    last_dynamic = cpi_mm.get(str(last_cpi_month), 100.0) / 100.0
 
     rows: list[tuple] = []
     alerts: list[str] = []
-    consecutive_missing = 0
     m = last_published + 1
     while m <= target:
         key = str(m)
@@ -113,8 +118,8 @@ def main() -> None:
             dyn = last_dynamic
             alerts.append(
                 f"ALERT: brak CPI za {m} w first_prints_pln.json - zastosowano "
-                f"carry-forward ostatniej znanej dynamiki ({100*dyn:.2f} = "
-                "poprzedni miesiac, POLITYKA §4.1)."
+                f"carry-forward ostatniej znanej dynamiki ({100*dyn:.2f}, "
+                "POLITYKA §4.1)."
             )
 
         ic *= dyn

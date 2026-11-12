@@ -11,7 +11,8 @@ INSTRUKCJA_aktualizacji.md):
    miesiecznego "poprzedni miesiac = 100", wiec nie nadaje sie do publikacji
    25. dnia kazdego miesiaca.
 3. WYBRANE: tabela GUS "Miesieczne wskazniki cen towarow i uslug
-   konsumpcyjnych od 1982 roku" pod stalym adresem CSV (patrz CPI_CSV_URL).
+   konsumpcyjnych od 1982 roku". Strona tabeli wskazuje aktualny plik CSV.
+   Wczesniejsze wersje zalacznika pozostaja dostepne pod osobnymi adresami.
    Format: srednik jako separator, kodowanie cp1250 (polskie znaki), kolumna
    "Sposob prezentacji" == "Poprzedni miesiac = 100" to szukany m/m,
    przecinek jako separator dziesietny. To ten sam zestaw liczb, ktory byl
@@ -37,16 +38,22 @@ import json
 import re
 from datetime import date
 from pathlib import Path
+from urllib.parse import urljoin
 
 import requests
 
 ROOT = Path(__file__).resolve().parents[1]
 FIRST_PRINTS = ROOT / "data" / "first_prints_pln.json"
 
-CPI_CSV_URL = (
-    "https://stat.gov.pl/download/gfx/portalinformacyjny/pl/"
-    "defaultstronaopisowa/4741/1/1/"
-    "miesiecznewskaznikicentowarowiuslugkonsumpcyjnychod1982roku_6.csv"
+CPI_TABLE_URL = (
+    "https://stat.gov.pl/obszary-tematyczne/ceny-handel/wskazniki-cen/"
+    "wskazniki-cen-towarow-i-uslug-konsumpcyjnych-pot-inflacja-/"
+    "miesieczne-wskazniki-cen-towarow-i-uslug-konsumpcyjnych-od-1982-roku/"
+)
+CPI_CSV_LINK_RE = re.compile(
+    r'href="(/download/[^"]*/'
+    r'miesiecznewskaznikicentowarowiuslugkonsumpcyjnychod1982roku(?:_\d+)?\.csv)"',
+    re.IGNORECASE,
 )
 CPI_SOURCE_NAME = (
     'GUS, tabela "Miesięczne wskaźniki cen towarów i usług konsumpcyjnych '
@@ -93,10 +100,19 @@ def fetch_cpi_mm() -> dict[str, float]:
     """Zwraca {"YYYY-MM": wartość} dla miesięcy z opublikowanym m/m w oknie
     ostatnich LOOKBACK_MONTHS miesięcy (kolumna "Poprzedni miesiąc = 100",
     jednostka terytorialna Polska)."""
-    resp = requests.get(CPI_CSV_URL, timeout=30)
+    page = requests.get(CPI_TABLE_URL, timeout=30)
+    page.raise_for_status()
+    link = CPI_CSV_LINK_RE.search(page.text)
+    if not link:
+        raise ValueError("Strona tabeli GUS nie zawiera odnośnika do pliku CSV")
+
+    resp = requests.get(urljoin(CPI_TABLE_URL, link.group(1)), timeout=30)
     resp.raise_for_status()
     text = resp.content.decode("cp1250")
     reader = csv.DictReader(io.StringIO(text), delimiter=";")
+    required = {"Sposób prezentacji", "Jednostka terytorialna", "Rok", "Miesiąc", "Wartość"}
+    if not required.issubset(reader.fieldnames or ()):
+        raise ValueError("Nieoczekiwane kolumny w pliku CPI z GUS")
 
     today = date.today()
     cutoff = (today.year * 12 + today.month - 1) - LOOKBACK_MONTHS  # 0-based YYYYMM
@@ -114,6 +130,8 @@ def fetch_cpi_mm() -> dict[str, float]:
         if year * 12 + month - 1 < cutoff:
             continue
         out[f"{year:04d}-{month:02d}"] = float(val.replace(",", "."))
+    if not out:
+        raise ValueError("Plik CPI z GUS nie zawiera ostatnich odczytów m/m dla Polski")
     return out
 
 
