@@ -12,19 +12,18 @@
  }catch(e){document.documentElement.setAttribute('data-theme','dark');}
 })();
 </script>
-<title>Talent (TLN) — jednostka wartości</title>
-<meta name="description" content="Talent (TLN): niezależna jednostka rozliczeniowa licząca sprawiedliwą wartość umów i pożyczek na podstawie cen i płac — środek geometryczny √(ceny × płace).">
-<meta property="og:title" content="Talent (TLN) — sprawiedliwa miara wartości w zmiennym świecie">
-<meta property="og:description" content="Codzienne odczyty jednostki, która chroni obie strony umowy przed inflacją i utratą siły nabywczej pracy.">
+<title>Talent (TLN) — jednostka do waloryzacji umów</title>
+<meta name="description" content="Talent to jednostka rozliczeniowa oparta na zmianach cen i wynagrodzeń. Sprawdź indeks, historię jego wartości i przeliczenia walutowe.">
+<meta property="og:title" content="Talent (TLN) — jednostka do waloryzacji umów">
+<meta property="og:description" content="Indeks Talenta dla Polski, przelicznik oraz metoda waloryzacji opartej na cenach i wynagrodzeniach.">
 <meta property="og:type" content="website">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.47/katex.min.css">
 <style>
 :root[data-theme="dark"]{--bg:#0f1419;--card:#1a2129;--tx:#e8e6e3;--mut:#8b949e;--ac:#d4a017;--pos:#4c9f70;--neg:#c0504d;--grid:#232b34;--border:#2a323c;--border-hover:#3a4550;--tint:rgba(212,160,23,.08);--tint-border:rgba(212,160,23,.35)}
 :root[data-theme="sepia"]{--bg:#f2e8d5;--card:#fbf3e3;--tx:#3a2f1e;--mut:#7a6a52;--ac:#9c6b1f;--pos:#3f7d4f;--neg:#a1503d;--grid:#e9dfc4;--border:#ded0b0;--border-hover:#c9b98e;--tint:rgba(156,107,31,.10);--tint-border:rgba(156,107,31,.4)}
 :root[data-theme="light"]{--bg:#faf9f6;--card:#ffffff;--tx:#1c1c1c;--mut:#6b6b6b;--ac:#a8720b;--pos:#2e7d4f;--neg:#a83d3d;--grid:#eae7e0;--border:#e2ded4;--border-hover:#c9c2b2;--tint:rgba(168,114,11,.08);--tint-border:rgba(168,114,11,.4)}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--tx);font:16px/1.6 Georgia,serif;padding:24px;max-width:1000px;margin:0 auto;transition:background-color .2s,color .2s}
+body{background:var(--bg);color:var(--tx);font:16px/1.6 Georgia,serif;padding:24px 32px 48px;max-width:1120px;margin:0 auto;transition:background-color .2s,color .2s}
 .topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
 .theme-switch{display:flex;gap:6px;flex-shrink:0}
 .theme-btn{background:var(--grid);color:var(--mut);border:1px solid transparent;border-radius:6px;padding:5px 11px;font:.8em/1.2 Georgia,serif;cursor:pointer;white-space:nowrap}
@@ -33,30 +32,15 @@ body{background:var(--bg);color:var(--tx);font:16px/1.6 Georgia,serif;padding:24
 h1{font-size:1.9em;letter-spacing:.02em}
 h1 span{color:var(--ac)}
 h2{font-size:1.15em;margin:26px 0 10px;color:var(--tx)}
-.sub{color:var(--mut);margin:4px 0 24px}
-.hook{font-size:1.25em;line-height:1.5;margin:0 0 24px;color:var(--tx)}
-.hook a{color:var(--ac)}
-.intro{margin:0 0 14px}
-ul.docs{list-style:none}
-ul.docs li{margin:0 0 12px;padding-left:14px;border-left:2px solid var(--border)}
-ul.docs i{color:var(--mut)}
-.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px}
 .card{background:var(--card);border-radius:10px;padding:16px 18px}
 .card .l{color:var(--mut);font-size:.78em;text-transform:uppercase;letter-spacing:.08em}
 .card .v{font-size:1.7em;color:var(--ac);font-variant-numeric:tabular-nums}
 .card .d{color:var(--mut);font-size:.8em}
-.wrap{background:var(--card);border-radius:10px;padding:18px;margin-bottom:8px}
 .cap{color:var(--mut);font-size:.8em;margin:0 4px 20px}
 .foot{color:var(--mut);font-size:.85em;border-top:1px solid var(--border);padding-top:14px;margin-top:16px}
-.foot b{color:var(--tx)}
-.warn{background:var(--tint);border:1px solid var(--tint-border);border-radius:10px;padding:14px 16px;margin:0 0 24px;font-size:.9em;color:var(--tx)}
-.warn b{color:var(--ac)}
-ul.docs li.featured{border-left-color:var(--ac);background:var(--tint);padding:10px 14px;border-radius:0 8px 8px 0}
 a{color:var(--ac)}
-@media(max-width:600px){.grid{grid-template-columns:1fr 1fr}}
 
 /* --- sekcja rynkowa --- */
-.market{display:grid;grid-template-columns:38% 62%;gap:16px;margin-bottom:8px}
 .tiles-col{display:flex;flex-direction:column;gap:10px}
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .mtile{cursor:pointer;border:1px solid transparent;transition:border-color .15s}
@@ -73,13 +57,10 @@ a{color:var(--ac)}
 .tab{background:var(--grid);color:var(--mut);border:none;border-radius:6px;padding:5px 10px;font:.8em/1.2 Georgia,serif;cursor:pointer}
 .tab:hover:not(.disabled){color:var(--tx)}
 .tab.active{background:var(--ac);color:#1a1400}
-.tab.disabled{opacity:.4;cursor:default}
 .periods{display:flex;gap:6px;margin-bottom:12px}
 .period{background:none;border:1px solid var(--border);color:var(--mut);border-radius:6px;padding:4px 12px;font:.85em/1.2 Georgia,serif;cursor:pointer}
 .period:hover{color:var(--tx)}
 .period.active{border-color:var(--ac);color:var(--ac)}
-.market .cap{margin:12px 4px 0}
-@media(max-width:820px){.market{grid-template-columns:1fr}}
 
 /* --- przelicznik --- */
 .calc{border:1px solid var(--tint-border);background:var(--tint)}
@@ -94,33 +75,163 @@ a{color:var(--ac)}
 .calc-break b{color:var(--tx);font-weight:normal}
 .calc-break span{color:var(--mut)}
 .calc-note{color:var(--mut);font-size:.72em;margin-top:10px}
-/* --- zdegradowany wiersz indeksu --- */
 .idxline{font-size:.82em;color:var(--mut);padding:8px 10px;border-radius:8px;border:1px solid transparent;cursor:pointer;font-variant-numeric:tabular-nums}
 .idxline:hover{border-color:var(--border-hover)}
 .idxline.active{border-color:var(--ac);color:var(--tx)}
 .idxline b{color:var(--tx)}
 .idxline .idxdate{font-size:.85em;color:var(--mut)}
+
+.topbar{align-items:center;border-bottom:1px solid var(--border);padding-bottom:16px}
+.brand{font-size:1.25rem;font-weight:bold;text-decoration:none;color:var(--tx)}
+.brand span{color:var(--ac)}
+.topbar nav,.actions{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center}
+.topbar nav,.actions,.calc,.tab,.period,.card .d,.cap,.foot,.status{font-family:Arial,sans-serif}
+.topbar nav a{color:var(--tx);font-size:.875rem;text-decoration:none}
+.topbar nav a:hover{text-decoration:underline}
+.hero{padding:50px 0 34px;max-width:770px}
+.hero h1{font-size:clamp(2rem,5vw,3.75rem);letter-spacing:-.04em;line-height:1.07;margin-bottom:16px;text-wrap:balance}
+.hero p{font-size:1.19rem;line-height:1.55;max-width:63ch}
+.status{color:var(--mut);font-size:.84rem;margin:0 0 12px}
+.actions{margin-top:22px}
+.actions a{font-size:.92rem;font-weight:600;padding:9px 14px;border-radius:6px;text-decoration:none;border:1px solid var(--border)}
+.actions .primary{background:var(--ac);color:var(--bg)}
+:root[data-theme="light"] .actions .primary,:root[data-theme="sepia"] .actions .primary{color:#fff}
+.section{border-top:1px solid var(--border);padding:20px 0 24px;scroll-margin-top:12px}
+.section h2{font-size:clamp(1.5rem,3vw,2rem);line-height:1.2;margin:0 0 12px}
+.section p{max-width:72ch;margin-bottom:12px}
+.panel,.read-card,.example{border:1px solid var(--border);background:var(--card)}
+.panel,.read-card{border-radius:10px}
+.panel h3,.read-card h3{font-size:1.16rem;line-height:1.25;margin:0 0 8px}
+.panel .cap{margin:12px 0 0}
+.read-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.read-card{padding:18px}
+.read-card p{font-size:.95rem}
+.read-card ul{padding-left:18px}
+.read-card li{margin:7px 0;font-size:.92rem}
+.example{border-radius:8px;overflow:hidden;margin:16px 0;width:min(100%,620px);border-spacing:0;font-variant-numeric:tabular-nums}
+.example th,.example td{padding:8px 14px;text-align:left;border-bottom:1px solid var(--border)}
+.example th:last-child,.example td:last-child{text-align:right;white-space:nowrap}
+.example tbody tr:last-child td{border-bottom:0;background:var(--tint)}
+.example caption{font-size:.85rem;text-align:left;padding:0 0 8px;color:var(--mut)}
+@media(max-width:820px){.read-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){body{padding:16px}.hero{padding:34px 0 24px}.read-grid{grid-template-columns:1fr}.topbar nav{order:3;width:100%;row-gap:5px}.card .v{font-size:1.35em}}
+
+.chart-frame{position:relative;height:clamp(215px,29vw,305px)}
+.panel-head .mvalue{font-size:1.8rem;line-height:1.15}
+.panel .cap{line-height:1.5}
+.variant-calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);align-items:start;gap:12px 20px}
+.variant-calc .tiles{grid-template-columns:repeat(3,minmax(0,1fr))}
+.variant-calc .idxline{grid-column:1/-1;justify-self:start}
+@media(max-width:700px){.variant-calc{grid-template-columns:1fr}}
+@media(max-width:450px){.variant-calc .tiles{grid-template-columns:1fr 1fr}.periods{gap:5px}.period{padding:5px 8px}.panel{padding:13px}.chart-frame{height:215px}}
+
+.split-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:32px;align-items:center;padding:28px 0}
+.split-hero .hero{padding:0}
+.split-hero .hero h1{font-size:clamp(1.7rem,3vw,2.3rem);line-height:1.15;text-wrap:balance}
+.split-hero .hero p:not(.status){font-size:1.04rem;line-height:1.6;margin-bottom:12px}
+#jak-dziala p{max-width:none}
+.split-hero .chart-frame{height:clamp(165px,17vw,190px)}
+.scenarios{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.scenario{display:flex;flex-direction:column;padding:16px;border:1px solid var(--border);border-radius:10px;background:var(--card)}
+.scenario-note{margin-top:12px}
+.scenario h3{font-size:1.13rem;margin-bottom:4px}
+.scenario .example{width:100%;margin:auto 0 0}
+.scenario .example th,.scenario .example td{padding:8px 10px}
+@media(max-width:760px){.scenarios{grid-template-columns:1fr}}
+@media(max-width:780px){.split-hero{grid-template-columns:1fr;gap:16px}.split-hero .hero h1{margin-bottom:9px}.split-hero .hero p{font-size:1.05rem}.split-hero .actions{margin-top:12px}}
 </style>
 </head>
 <body>
-<div class="topbar">
-<div>
-<h1>Talent <span>TLN</span></h1>
-<p class="sub">Sprawiedliwa miara wartości w zmiennym świecie &middot; prototyp badawczy, Polska, baza I&nbsp;1996&nbsp;=&nbsp;100</p>
-</div>
-<div class="theme-switch" role="group" aria-label="Wybierz motyw strony">
+<header class="topbar">
+<a class="brand" href="#poczatek">Talent <span>TLN</span></a>
+<nav aria-label="Nawigacja główna">
+<a href="#jak-dziala">Jak działa</a>
+<a href="#dane">Przelicznik</a>
+<a href="#zastosowania">Zastosowania</a>
+<a href="#badania">Badania</a>
+<a href="#metoda">Metodologia</a>
+</nav>
+<div class="theme-switch" role="group" aria-label="Motyw strony">
 <button class="theme-btn" data-theme-btn="dark">Ciemny</button>
 <button class="theme-btn" data-theme-btn="sepia">Sepia</button>
 <button class="theme-btn" data-theme-btn="light">Jasny</button>
 </div>
+</header>
+<main id="poczatek">
+<section class="split-hero" aria-label="Talent i jego wartość">
+<div class="hero" aria-labelledby="tytul">
+<p class="status">Prototyp badawczy · Polska</p>
+<h1 id="tytul">Talent (TLN) — jednostka do waloryzacji umów</h1>
+<p>Talent pomaga ustalić, jak kwota do zapłaty ma zmieniać się między zawarciem umowy a jej rozliczeniem. Można go rozważyć na przykład przy pożyczce prywatnej lub płatności odroczonej.</p>
+<p>Wartość Talenta zależy od zmian cen i przeciętnych wynagrodzeń. Ceny pokazują, ile można kupić za otrzymaną kwotę, a wynagrodzenia pozwalają ocenić, jak duża jest płatność w relacji do przeciętnej pensji.</p>
+<p>Wykres pokazuje, jak zmieniał się indeks Talenta. Przelicznik pozwala sprawdzić wartość wybranej kwoty w talentach, złotych i innych walutach według ostatniej opublikowanej wartości miesięcznej.</p>
+<div class="actions"><a class="primary" href="#jak-dziala">Jak działa Talent</a><a href="#dane">Przelicz kwotę</a></div>
 </div>
+<div class="panel">
+<h3>Wykres Talenta</h3>
+<div class="panel-head">
+<span class="mname" id="mname">—</span>
+<span class="mvalue" id="mvalue">—</span>
+<span class="chg" id="mchange">—</span>
+</div>
+<div class="tabs">
+<button class="tab" data-series="idx">Indeks TLN-PLN</button>
+<button class="tab" data-series="PLN">w PLN</button>
+<button class="tab" data-series="USD">w USD</button>
+<button class="tab" data-series="EUR">w EUR</button>
+<button class="tab" data-series="CHF">w CHF</button>
+<button class="tab" data-series="GBP">w GBP</button>
+<button class="tab" data-series="JPY">w JPY</button>
+</div>
+<div class="periods">
+<button class="period active" data-period="1R">1 rok</button>
+<button class="period" data-period="5L">5 lat</button>
+<button class="period" data-period="10L">10 lat</button>
+<button class="period" data-period="Max">Całość</button>
+</div>
+<div class="chart-frame"><canvas id="mchart" role="img" aria-label="Historia wartości Talenta"></canvas></div>
+<p class="cap">Ostatnia kotwica: za __ANCHORFOR__, opublikowana __UPDATED__. Indeks przyjmuje wartość 100 w styczniu 1996 r. <a href="regula_publikacyjna.html">Zasady publikacji</a>.</p>
+</div>
+</section>
+<section class="section" id="jak-dziala">
+<h2>Jak działa Talent</h2>
+<p>Wzrost cen zmniejsza siłę nabywczą kwoty ustalonej w umowie. Zmiana wynagrodzeń wpływa z kolei na to, jaką część przeciętnej pensji trzeba przeznaczyć na zapłatę. Talent łączy oba wskaźniki za pomocą średniej geometrycznej.</p>
+<p>Porównajmy trzy sposoby rozliczenia kwoty 10 000 zł przy dwóch różnych zmianach cen i płac.</p>
+<div class="scenarios">
+<article class="scenario">
+<h3>Ceny rosną szybciej niż płace</h3>
+<p>Ceny rosną o 20%, a przeciętne wynagrodzenia o 10%.</p>
+<table class="example" aria-label="Ceny rosną szybciej niż płace">
+<thead><tr><th scope="col">Sposób rozliczenia</th><th scope="col">Kwota do zapłaty</th></tr></thead>
+<tbody>
+<tr><td>Kwota stała</td><td>10 000,00 zł</td></tr>
+<tr><td>Waloryzacja cenami</td><td>12 000,00 zł</td></tr>
+<tr><td>Waloryzacja Talentem</td><td>11 489,13 zł</td></tr>
+</tbody>
+</table>
+</article>
+<article class="scenario">
+<h3>Płace rosną szybciej niż ceny</h3>
+<p>Ceny rosną o 10%, a przeciętne wynagrodzenia o 20%.</p>
+<table class="example" aria-label="Płace rosną szybciej niż ceny">
+<thead><tr><th scope="col">Sposób rozliczenia</th><th scope="col">Kwota do zapłaty</th></tr></thead>
+<tbody>
+<tr><td>Kwota stała</td><td>10 000,00 zł</td></tr>
+<tr><td>Waloryzacja cenami</td><td>11 000,00 zł</td></tr>
+<tr><td>Waloryzacja Talentem</td><td>11 489,13 zł</td></tr>
+</tbody>
+</table>
+</article>
+</div>
+<p class="scenario-note">Talent daje tę samą kwotę w obu przykładach, bo średnia geometryczna zależy od iloczynu obu wskaźników. Zamiana ich miejscami daje ten sam wynik.</p>
+</section>
 
-<p class="hook">Pożyczasz 1000, oddajesz 1000, a obie strony odzyskują tę samą wartość. Złotówka tego nie gwarantuje — <a href="wprowadzenie.html">Talent</a> tak, bo mierzy umowę cenami i płacami, nie nominałem.</p>
-
-<div class="market">
-<div class="tiles-col">
+<section class="section" id="dane">
+<h2>Przelicznik i kursy walutowe</h2>
+<p>Przeliczenia walutowe łączą kotwicę Talenta z ostatnim średnim kursem NBP z tego samego miesiąca.</p>
+<div class="tiles-col variant-calc">
 <div class="card calc">
-<div class="calc-h">Przelicznik — ile to Talentów?</div>
+<div class="calc-h">Przelicznik Talenta</div>
 <div class="calc-in">
 <input id="calcAmt" type="number" min="0" step="any" value="1000" inputmode="decimal" aria-label="Kwota">
 <select id="calcFrom" aria-label="Jednostka">
@@ -137,84 +248,51 @@ a{color:var(--ac)}
 <div class="calc-note" id="calcNote"></div>
 </div>
 <div class="tiles">__CURCARDS__</div>
-<div class="idxline mtile active" data-series="idx" title="Pokaż wykres indeksu TLN-PLN">Indeks TLN-PLN dziś: <b id="today">—</b> <span class="idxdate" id="todaydate"></span></div>
+<div class="idxline mtile active" data-series="idx" title="Pokaż wykres indeksu TLN-PLN">Ostatnia kotwica TLN-PLN: <b id="anchorValue">—</b> <span class="idxdate" id="anchorMonth"></span></div>
 </div>
-<div class="panel">
-<div class="panel-head">
-<span class="mname" id="mname">—</span>
-<span class="mvalue" id="mvalue">—</span>
-<span class="chg" id="mchange">—</span>
-</div>
-<div class="tabs">
-<button class="tab" data-series="idx">Indeks TLN-PLN</button>
-<button class="tab" data-series="PLN">w PLN</button>
-<button class="tab" data-series="USD">w USD</button>
-<button class="tab" data-series="EUR">w EUR</button>
-<button class="tab" data-series="CHF">w CHF</button>
-<button class="tab" data-series="GBP">w GBP</button>
-<button class="tab" data-series="JPY">w JPY</button>
-<button class="tab disabled" disabled>TLN-USD — wkrótce</button>
-<button class="tab disabled" disabled>TLN-EUR — wkrótce</button>
-</div>
-<div class="periods">
-<button class="period" data-period="1R">1R</button>
-<button class="period" data-period="5L">5L</button>
-<button class="period" data-period="10L">10L</button>
-<button class="period active" data-period="Max">Max</button>
-</div>
-<canvas id="mchart" height="140"></canvas>
-<p class="cap"><b>Harmonogram publikacji:</b> kotwica miesięczna — 25. dnia każdego miesiąca (z danych GUS za miesiąc poprzedni); wartości dzienne ogłaszane z góry na całe kolejne okno i nigdy nie rewidowane. Ostatnia kotwica: za __ANCHORFOR__, opublikowana __UPDATED__. Zasady: <a href="regula_publikacyjna.html">reguła publikacyjna</a>.</p>
-</div>
-</div>
-
-<div class="warn"><b>Uwaga:</b> to wartości robocze prototypu badawczego — nie są to oficjalne kursy rozliczeniowe.</div>
-
-<h2>Dlaczego czas niszczy tradycyjne umowy?</h2>
-<p class="intro">Pieniądz jest fundamentem gospodarki, ale ma jedną wadę: z czasem traci realną wartość. „Oddajesz dokładnie 10&nbsp;000 zł" brzmi uczciwie, dopóki nie zauważysz, że liczba na papierze się nie zmienia, a jej siła nabywcza nieustannie płynie. Kto pożyczył w Polsce w 1989 roku i odzyskał nominalnie 30 lat później, odzyskał realnie mniej niż 1% wartości. Kontrakt z 2019 rozliczony w 2024 to strata ok. 30% względem cen i aż 40% względem zarobków.</p>
-<p class="intro">Powiązanie umowy z samą inflacją (CPI) chroni tylko jedną stronę — nie odpowiada na pytanie dłużnika: „czy ta płatność kosztuje mnie tyle samo mojej pracy, co wcześniej?". W Argentynie 2002 ceny skoczyły o 41%, płace o 7% — umowy indeksowane samą inflacją doprowadziły do masowych bankructw. <b>Wartość ma dwie równoprawne miary: ceny i płace.</b> Talent to ich środek geometryczny — pierwiastek z iloczynu obu, \(\sqrt{C \times W}\), gdzie \(C\) to indeks cen, a \(W\) indeks płac — punkt, w którym w dobrych czasach obie strony dzielą owoce wzrostu po równo, a w złych po równo dzielą stratę.</p>
-<p class="intro">Formuła jest w pełni otwarta: kod jest metodologią, dane publiczne, a wyniki nigdy nie są rewidowane wstecz. <a href="wprowadzenie.html"><b>Czytaj pełne wprowadzenie i zastosowania →</b></a></p>
-
-<h2>Dwa główne zastosowania</h2>
-<div class="wrap">
-<ul class="docs">
-<li><b>Uczciwe pożyczki prywatne i koleżeńskie (P2P)</b> — pomoc finansowa rodzinie czy znajomym bez lichwiarskich odsetek, ale też bez ryzyka, że inflacja „zje" realną wartość pożyczonego kapitału.</li>
-<li><b>Długoterminowe kontrakty handlowe i zakupowe</b> — cena sprzętu czy towaru z odroczoną płatnością wyrażona w Talentach chroni sprzedawcę przed wzrostem kosztów, a kupującego przed ceną przerastającą jego możliwości.</li>
+</section>
+<section class="section" aria-label="Zastosowania, badania i metodologia">
+<div class="read-grid">
+<article class="read-card" id="zastosowania">
+<h3>Zastosowania i ograniczenia</h3>
+<p>Talent można rozważyć przy pożyczce prywatnej lub płatności odroczonej. Przeciętne wynagrodzenie opisuje zmianę płac w gospodarce i może zmieniać się inaczej niż dochód osoby, która ma zapłacić.</p>
+<ul>
+<li><a href="wprowadzenie.html">Wprowadzenie i zastosowania</a></li>
+<li><a href="faq.html">Najczęstsze pytania</a></li>
 </ul>
-</div>
-
-<h2>Przeczytaj więcej</h2>
-<div class="wrap">
-<ul class="docs">
-<li class="featured"><a href="wprowadzenie.html"><b>Wprowadzenie</b></a> — zacznij tutaj: czym jest Talent i do czego służy.</li>
-<li><a href="faq.html"><b>Najczęstsze pytania (FAQ)</b></a> — krótkie, uczciwe odpowiedzi na typowe wątpliwości nowych użytkowników.</li>
-<li><a href="whitepaper.html"><b>Whitepaper</b></a> — pełny wywód od problemu do formuły, z dowodem zrozumiałym dla licealisty i uczciwą listą granic metody.</li>
-<li><a href="regula_publikacyjna.html"><b>Reguła publikacyjna</b></a> — jak dokładnie liczymy: definicje obu nóg, kalendarz publikacji, bezpieczniki kryzysowe.</li>
-<li><a href="tip.html"><b>TIP — proces zmian</b></a> — każda zmiana formuły przechodzi jawną procedurę z testem na danych (wzorzec BIP z Bitcoina).</li>
-<li><a href="https://github.com/kurek0010/talent"><b>Repozytorium</b></a> — kod, dane i pełna historia zmian (licencja MIT).</li>
+</article>
+<article class="read-card" id="badania">
+<h3>Wyniki badań</h3>
+<p>Jak różne sposoby waloryzacji wypadają na danych historycznych? Zobacz wyniki dla konkretnych okresów i założenia użyte w obliczeniach.</p>
+<ul>
+<li><a href="wyscig_kandydatow.html">Porównanie metod waloryzacji</a></li>
+<li><a href="wyniki_kruche_gospodarki.html">Polska w latach 1989–2024 i epizody kryzysowe</a></li>
+<li><a href="wyniki_test_stulecia_usa.html">Testy historyczne na danych z USA</a></li>
+<li><a href="wyniki_talent_dwustronny.html">Talent w umowach międzynarodowych</a></li>
 </ul>
-</div>
-
-<h2>Dla wnikliwych i niedowiarków</h2>
-<div class="wrap">
-<ul class="docs">
-<li><a href="specyfikacja.html"><b>Specyfikacja obliczeń</b></a> — wszystkie wzory krok po kroku, linki do źródeł danych i wartości kontrolne: wszystko, czego potrzebujesz, by napisać własną, niezależną implementację.</li>
-<li><a href="dla_agenta.html"><b>Zbuduj Talenta u siebie</b></a> — gotowy prompt dla agenta-programisty (Claude Code i podobne): wklejasz, agent buduje niezależną implementację na Twoim komputerze i sam sprawdza, czy wychodzą mu te same liczby co nam.</li>
+</article>
+<article class="read-card" id="metoda">
+<h3>Metodologia i dane</h3>
+<p>Wzór, źródła danych, harmonogram publikacji oraz dokumentacja pozwalająca odtworzyć obliczenia.</p>
+<ul>
+<li><a href="whitepaper.html">Metoda obliczeń i jej uzasadnienie</a></li>
+<li><a href="regula_publikacyjna.html">Reguła publikacyjna</a></li>
+<li><a href="specyfikacja.html">Specyfikacja obliczeń</a></li>
+<li><a href="tip.html">Propozycje zmian metody (TIP)</a></li>
+<li><a href="dla_agenta.html">Odtwórz obliczenia z pomocą agenta</a></li>
+<li><a href="https://github.com/kurek0010/talent">Kod i dane na GitHubie</a></li>
 </ul>
+</article>
 </div>
-
-<p class="foot">Prototyp badawczy — wartości robocze, nie do rozliczeń. Wszystkie liczby na tej stronie można odtworzyć z publicznych danych kodem z repozytorium.</p>
+</section>
+</main>
+<footer class="foot">Prototyp badawczy. Publikowane wartości mają charakter roboczy.</footer>
 
 <script>
 const A=__DATA__;
 const per=Object.keys(A),val=Object.values(A);
-const n=per.length,last=val[n-1],prev=val[n-2],g=last/prev;
-const now=new Date(),base=new Date(per[n-1]+"-01T00:00:00");
-const win=new Date(base.getFullYear(),base.getMonth()+1,1);
-const K=new Date(win.getFullYear(),win.getMonth()+1,0).getDate();
-const k=Math.min(Math.max(now>=win?now.getDate():K,1),K);
-const today=last*Math.pow(g,k/K);
-document.getElementById('today').textContent=today.toFixed(2);
-document.getElementById('todaydate').textContent=now.toISOString().slice(0,10)+" (pre-commitment)";
+document.getElementById('anchorValue').textContent=val.at(-1).toLocaleString('pl-PL',{minimumFractionDigits:2,maximumFractionDigits:2});
+document.getElementById('anchorMonth').textContent=per.at(-1);
 
 function themeAxisColors(){
  const cs=getComputedStyle(document.documentElement);
@@ -234,7 +312,7 @@ const SERIES={
  JPY:{name:'TLN w JPY',labels:FX.labels,values:FX.series.JPY,color:cols.JPY},
 };
 
-let curSeries='idx', curPeriod='Max';
+let curSeries='idx', curPeriod='1R';
 
 function sliceWindow(key,period){
  const s=SERIES[key], n=s.labels.length;
@@ -247,7 +325,7 @@ function sliceWindow(key,period){
 
 const mChart=new Chart(document.getElementById('mchart'),{type:'line',
  data:{labels:[],datasets:[{data:[],borderColor:cols.PLN,backgroundColor:'rgba(212,160,23,.1)',fill:true,pointRadius:0,borderWidth:2,tension:.25}]},
- options:{plugins:{legend:{display:false}},interaction:{intersect:false,mode:'index'},
+ options:{maintainAspectRatio:false,plugins:{legend:{display:false}},interaction:{intersect:false,mode:'index'},
  scales:{x:{...axis,ticks:{...axis.ticks,maxTicksLimit:10}},y:axis}}});
 
 function hexToRgba(hex,a){
@@ -268,9 +346,9 @@ function renderMarket(){
  const lastV=values[values.length-1], firstV=values[0];
  const chg=(lastV/firstV-1)*100;
  document.getElementById('mname').textContent=s.name;
- document.getElementById('mvalue').textContent=lastV.toFixed(2);
+ document.getElementById('mvalue').textContent=lastV.toLocaleString('pl-PL',{minimumFractionDigits:2,maximumFractionDigits:2});
  const chgEl=document.getElementById('mchange');
- chgEl.textContent=(chg>=0?'+':'')+chg.toFixed(1)+'% ('+curPeriod+')';
+ chgEl.textContent=(chg>=0?'+':'')+chg.toLocaleString('pl-PL',{minimumFractionDigits:1,maximumFractionDigits:1})+'% w widocznym okresie';
  chgEl.className='chg '+(chg>=0?'pos':'neg');
 
  document.querySelectorAll('.mtile').forEach(el=>el.classList.toggle('active',el.dataset.series===curSeries));
@@ -325,7 +403,5 @@ document.querySelectorAll('.theme-btn').forEach(b=>{
 });
 setTheme(document.documentElement.getAttribute('data-theme')||'dark');
 </script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.47/katex.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.47/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});"></script>
 </body>
 </html>
