@@ -12,9 +12,9 @@
  }catch(e){document.documentElement.setAttribute('data-theme','dark');}
 })();
 </script>
-<title>Talent (TLN) — jednostka do waloryzacji umów</title>
-<meta name="description" content="Talent to jednostka rozliczeniowa oparta na zmianach cen i wynagrodzeń. Sprawdź indeks, historię jego wartości i przeliczenia walutowe.">
-<meta property="og:title" content="Talent (TLN) — jednostka do waloryzacji umów">
+<title>Talent (TLN) — propozycja standardu rozliczania umów</title>
+<meta name="description" content="Prototyp wspólnego standardu rozliczania umów w PLN oparty na zmianach cen i przeciętnych wynagrodzeń.">
+<meta property="og:title" content="Talent (TLN) — propozycja standardu rozliczania umów">
 <meta property="og:description" content="Indeks Talenta dla Polski, przelicznik oraz metoda waloryzacji opartej na cenach i wynagrodzeniach.">
 <meta property="og:type" content="website">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -137,6 +137,28 @@ a{color:var(--ac)}
 .scenario h3{font-size:1.13rem;margin-bottom:4px}
 .scenario .example{width:100%;margin:auto 0 0}
 .scenario .example th,.scenario .example td{padding:8px 10px}
+.contract-form{margin:16px 0}
+.contract-inputs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.contract-inputs label{display:grid;gap:4px;font:bold .875rem/1.4 Arial,sans-serif}
+.contract-inputs input{width:100%;min-width:0;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--bg);color:var(--tx);font:1rem Arial,sans-serif}
+:root[data-theme="dark"] .contract-inputs input{color-scheme:dark}
+.contract-form button{min-height:40px;padding:8px 12px;border:1px solid var(--border-hover);border-radius:6px;background:var(--card);color:var(--tx);font:.875rem Arial,sans-serif;cursor:pointer}
+.contract-form .contract-submit{background:var(--ac);color:var(--card);border-color:var(--ac);font-weight:bold}
+:root[data-theme="light"] .contract-submit,:root[data-theme="sepia"] .contract-submit{color:#fff}
+.contract-form :focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.contract-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.contract-meta,.contract-readings{color:var(--mut);font-size:.85rem}
+.contract-meta{margin-top:8px}
+.contract-readings{display:block;font-weight:normal}
+.contract-result{width:100%;max-width:640px;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.contract-result th,.contract-result td{padding:8px 4px;text-align:left;border-bottom:1px solid var(--border)}
+.contract-result td,.contract-result thead th:last-child{text-align:right}
+.contract-result td{overflow-wrap:anywhere}
+.contract-result tbody tr:last-child{background:var(--tint)}
+#contract-status{margin:0}
+#contract-status:not(:empty){margin-bottom:12px}
+#contract-loan-note{margin:12px 0 0}
+@media(max-width:560px){.contract-inputs{grid-template-columns:1fr}}
 @media(max-width:760px){.scenarios{grid-template-columns:1fr}}
 @media(max-width:780px){.split-hero{grid-template-columns:1fr;gap:16px}.split-hero .hero h1{margin-bottom:9px}.split-hero .hero p{font-size:1.05rem}.split-hero .actions{margin-top:12px}}
 </style>
@@ -147,6 +169,7 @@ a{color:var(--ac)}
 <nav aria-label="Nawigacja główna">
 <a href="#jak-dziala">Jak działa</a>
 <a href="#dane">Przelicznik</a>
+<a href="#waloryzacja">Waloryzacja umowy</a>
 <a href="#zastosowania">Zastosowania</a>
 <a href="#badania">Badania</a>
 <a href="#metoda">Metodologia</a>
@@ -161,11 +184,11 @@ a{color:var(--ac)}
 <section class="split-hero" aria-label="Talent i jego wartość">
 <div class="hero" aria-labelledby="tytul">
 <p class="status">Prototyp badawczy · Polska</p>
-<h1 id="tytul">Talent (TLN) — jednostka do waloryzacji umów</h1>
-<p>Talent pomaga ustalić, jak kwota do zapłaty ma zmieniać się między zawarciem umowy a jej rozliczeniem. Można go rozważyć na przykład przy pożyczce prywatnej lub płatności odroczonej.</p>
-<p>Wartość Talenta zależy od zmian cen i przeciętnych wynagrodzeń. Ceny pokazują, ile można kupić za otrzymaną kwotę, a wynagrodzenia pozwalają ocenić, jak duża jest płatność w relacji do przeciętnej pensji.</p>
-<p>Wykres pokazuje, jak zmieniał się indeks Talenta. Przelicznik pozwala sprawdzić wartość wybranej kwoty w talentach, złotych i innych walutach według ostatniej opublikowanej wartości miesięcznej.</p>
-<div class="actions"><a class="primary" href="#jak-dziala">Jak działa Talent</a><a href="#dane">Przelicz kwotę</a></div>
+<h1 id="tytul">Talent (TLN) — propozycja standardu rozliczania umów</h1>
+<p>Talent to propozycja wspólnego standardu rozliczania umów dla osób prywatnych i przedsiębiorstw. W rozwijanej obecnie polskiej wersji opiera się na otwartej regule waloryzacji, która według uzgodnionej wcześniej zasady dzieli między strony wpływ zmian cen i przeciętnych wynagrodzeń. Strony przyjmują tę regułę dobrowolnie.</p>
+<p>Jawność reguły, danych i obliczeń ma umożliwiać niezależne odtworzenie wyniku oraz ocenę skutków przyjętej zasady. Projekt pozostaje prototypem badawczym. Jego zastosowania i ograniczenia są przedmiotem weryfikacji. Obecny zakres to polska gospodarka i rozliczenia w PLN.</p>
+<p>Wykres pokazuje, jak zmieniał się indeks Talenta. Przelicznik pozwala sprawdzić wartość wybranej kwoty w talentach, złotych i innych walutach według ostatniego miesiąca dostępnego w tabeli przeliczeń.</p>
+<div class="actions"><a class="primary" href="#jak-dziala">Jak działa Talent</a><a href="#waloryzacja">Oblicz waloryzację</a></div>
 </div>
 <div class="panel">
 <h3>Wykres Talenta</h3>
@@ -195,7 +218,7 @@ a{color:var(--ac)}
 </section>
 <section class="section" id="jak-dziala">
 <h2>Jak działa Talent</h2>
-<p>Wzrost cen zmniejsza siłę nabywczą kwoty ustalonej w umowie. Zmiana wynagrodzeń wpływa z kolei na to, jaką część przeciętnej pensji trzeba przeznaczyć na zapłatę. Talent łączy oba wskaźniki za pomocą średniej geometrycznej.</p>
+<p>Wzrost cen zmniejsza siłę nabywczą kwoty ustalonej w umowie. Zmiana wynagrodzeń wpływa z kolei na to, jaką część przeciętnej pensji trzeba przeznaczyć na zapłatę. Talent łączy oba wskaźniki za pomocą średniej geometrycznej. Uczciwość oznacza tu uzgodnioną wcześniej zasadę podziału skutków zmian gospodarczych. Symetria dotyczy zmian w skali logarytmicznej.</p>
 <p>Porównajmy trzy sposoby rozliczenia kwoty 10 000 zł przy dwóch różnych zmianach cen i płac.</p>
 <div class="scenarios">
 <article class="scenario">
@@ -228,7 +251,7 @@ a{color:var(--ac)}
 
 <section class="section" id="dane">
 <h2>Przelicznik i kursy walutowe</h2>
-<p>Przeliczenia walutowe łączą kotwicę Talenta z ostatnim średnim kursem NBP z tego samego miesiąca.</p>
+<p>Przeliczenia pokazują odpowiednik polskiego TLN w innych walutach. Bieżące wiersze tabeli wykorzystują średnie kursy NBP z ostatniego dostępnego dnia notowań w danym miesiącu. Rozliczenia w rozwijanym standardzie są w PLN.</p>
 <div class="tiles-col variant-calc">
 <div class="card calc">
 <div class="calc-h">Przelicznik Talenta</div>
@@ -251,11 +274,40 @@ a{color:var(--ac)}
 <div class="idxline mtile active" data-series="idx" title="Pokaż wykres indeksu TLN-PLN">Ostatnia kotwica TLN-PLN: <b id="anchorValue">—</b> <span class="idxdate" id="anchorMonth"></span></div>
 </div>
 </section>
+<section class="section" id="waloryzacja" aria-labelledby="contract-heading">
+<h2 id="contract-heading">Kalkulator waloryzacji umowy</h2>
+<p id="contract-help">Porównaj trzy sposoby rozliczenia jednej płatności w PLN, bez odsetek i opłat. Każda data wskazuje miesiąc odczytu.</p>
+<form class="contract-form card" id="contract-form" aria-describedby="contract-help contract-series" novalidate>
+<div class="contract-inputs">
+<label>Kwota początkowa w PLN <input name="amount" type="text" inputmode="decimal" placeholder="10 000,00" required></label>
+<label>Data początkowa <input name="start" type="date" required></label>
+<label>Data rozliczenia <input name="end" type="date" required></label>
+</div>
+<div class="contract-actions">
+<button class="contract-submit" type="submit">Oblicz</button>
+<button type="button" data-contract-example="invoice">Przykład faktury</button>
+<button type="button" data-contract-example="loan">Przykład pożyczki</button>
+</div>
+</form>
+<p class="contract-meta" id="contract-series">Historyczna seria badawcza TLN-PLN, baza 01.1996 = 100. Odczyty miesięczne mogły ukazać się po wybranym dniu. <a href="regula_publikacyjna.html">Źródła i status serii</a>.</p>
+<p id="contract-status" role="status"></p>
+<div id="contract-result" hidden>
+<table class="contract-result">
+<thead><tr><th scope="col">Sposób rozliczenia</th><th scope="col">Do zapłaty</th></tr></thead>
+<tbody>
+<tr><th scope="row">Kwota nominalna</th><td id="contract-nominal"></td></tr>
+<tr><th scope="row">Waloryzacja CPI <small class="contract-readings" id="contract-cpi-readings"></small></th><td id="contract-cpi"></td></tr>
+<tr><th scope="row">Waloryzacja Talentem <small class="contract-readings" id="contract-talent-readings"></small></th><td id="contract-talent"></td></tr>
+</tbody>
+</table>
+<p class="contract-meta" id="contract-loan-note" hidden></p>
+</div>
+</section>
 <section class="section" aria-label="Zastosowania, badania i metodologia">
 <div class="read-grid">
 <article class="read-card" id="zastosowania">
 <h3>Zastosowania i ograniczenia</h3>
-<p>Talent można rozważyć przy pożyczce prywatnej lub płatności odroczonej. Przeciętne wynagrodzenie opisuje zmianę płac w gospodarce i może zmieniać się inaczej niż dochód osoby, która ma zapłacić.</p>
+<p>Pierwsze zastosowania do zbadania to pożyczka i płatność odroczona, na przykład za maszynę zamówioną przez przedsiębiorstwo. Dochód kontrahenta może zmieniać się inaczej niż przeciętne wynagrodzenie, a koszty produkcji firmy mogą odbiegać od CPI.</p>
 <ul>
 <li><a href="wprowadzenie.html">Wprowadzenie i zastosowania</a></li>
 <li><a href="faq.html">Najczęstsze pytania</a></li>
@@ -265,15 +317,15 @@ a{color:var(--ac)}
 <h3>Wyniki badań</h3>
 <p>Jak różne sposoby waloryzacji wypadają na danych historycznych? Zobacz wyniki dla konkretnych okresów i założenia użyte w obliczeniach.</p>
 <ul>
-<li><a href="wyscig_kandydatow.html">Porównanie metod waloryzacji</a></li>
+<li><a href="wyscig_kandydatow.html">Archiwalne porównanie metod, w tym AUV</a></li>
 <li><a href="wyniki_kruche_gospodarki.html">Polska w latach 1989–2024 i epizody kryzysowe</a></li>
-<li><a href="wyniki_test_stulecia_usa.html">Testy historyczne na danych z USA</a></li>
-<li><a href="wyniki_talent_dwustronny.html">Talent w umowach międzynarodowych</a></li>
+<li><a href="wyniki_test_stulecia_usa.html">Badanie porównawcze na danych z USA</a></li>
+<li><a href="wyniki_talent_dwustronny.html">Eksperyment PL–US</a></li>
 </ul>
 </article>
 <article class="read-card" id="metoda">
 <h3>Metodologia i dane</h3>
-<p>Wzór, źródła danych, harmonogram publikacji oraz dokumentacja pozwalająca odtworzyć obliczenia.</p>
+<p>Wzór, źródła danych, harmonogram publikacji oraz dokumentacja do sprawdzania obliczeń.</p>
 <ul>
 <li><a href="whitepaper.html">Metoda obliczeń i jej uzasadnienie</a></li>
 <li><a href="regula_publikacyjna.html">Reguła publikacyjna</a></li>
@@ -288,6 +340,10 @@ a{color:var(--ac)}
 </main>
 <footer class="foot">Prototyp badawczy. Publikowane wartości mają charakter roboczy.</footer>
 
+<script type="application/json" id="contract-rates">__CONTRACT_DATA__</script>
+<script id="contract-script">
+__CONTRACT_SCRIPT__
+</script>
 <script>
 const A=__DATA__;
 const per=Object.keys(A),val=Object.values(A);

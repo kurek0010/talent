@@ -9,6 +9,8 @@ Po zmianach uruchom: python src/build_strona.py
 from __future__ import annotations
 
 import json
+import math
+import posixpath
 import re
 from datetime import date
 from pathlib import Path
@@ -41,6 +43,14 @@ def build_index() -> None:
 
     a = pd.read_csv(DATA / "talent_anchors.csv", index_col=0)
     a.index = pd.PeriodIndex(a.index, freq="M")
+    # Miesięczne odczyty obu indeksów jako tysięczne punktu. Kalkulator
+    # używa tych samych poziomów, które pokazuje obok wyniku.
+    contract_data = {}
+    for month, price in a["I_c"].items():
+        key = str(month)
+        anchor = anchors.get(key)
+        if anchor is not None and all(math.isfinite(v) and v >= 0.001 for v in (price, anchor)):
+            contract_data[key] = [round(price * 1000), round(anchor * 1000)]
     avg_ic_2020 = a.loc[a.index.year == 2020, "I_c"].mean()
     hook_pct = round(avg_ic_2020 / a["I_c"].iloc[-1] * 100)
 
@@ -48,7 +58,12 @@ def build_index() -> None:
     fx_last_date = fx.index[-1]
     fx.index = fx.index.to_period("M").astype(str)
 
-    fxd = {c.replace("TLN_", ""): [round(v, 3) for v in fx[c]] for c in fx.columns}
+    # Odetnij szum ostatniej cyfry float przed zaokrągleniem na wykresie.
+    # Odczyt CSV może różnić się o ten bit między platformami.
+    fxd = {
+        c.replace("TLN_", ""): [round(float(f"{v:.15g}"), 3) for v in fx[c]]
+        for c in fx.columns
+    }
     last = fx.iloc[-1]
     fx_date = f"{RZYMSKIE[fx_last_date.month - 1]} {fx_last_date.year}"
     cur_cards = "".join(
@@ -59,6 +74,8 @@ def build_index() -> None:
 
     html = (tpl
             .replace("__DATA__", json.dumps(anchors, separators=(",", ":")))
+            .replace("__CONTRACT_DATA__", json.dumps(contract_data, separators=(",", ":")))
+            .replace("__CONTRACT_SCRIPT__", (SRC / "kalkulator_umowy.js").read_text().rstrip())
             .replace("__FX__", json.dumps({"labels": list(fx.index), "series": fxd},
                                           separators=(",", ":")))
             .replace("__CURCARDS__", cur_cards)
@@ -94,8 +111,10 @@ LINK_REWRITES = {
     "TIP/README.md": [
         ("(TIP-0001-noga-placowa-v02.md)", f"({GITHUB_BLOB}/TIP/TIP-0001-noga-placowa-v02.md)"),
         ("(TIP-0002-mediana-wynagrodzen.md)", f"({GITHUB_BLOB}/TIP/TIP-0002-mediana-wynagrodzen.md)"),
+        ("(TIP-0003-tln-pln-prospektywny.md)", f"({GITHUB_BLOB}/TIP/TIP-0003-tln-pln-prospektywny.md)"),
     ],
 }
+SITE_LINKS = {**DOCS, "specyfikacja.html": "specyfikacja.html", "dla_agenta.html": "dla_agenta.html"}
 
 # KaTeX auto-render (cdnjs). Delimitery: $$ dla wzorow blokowych; celowo BEZ
 # pojedynczego $ (kolizja z kwotami typu "147 $" w tresciach finansowych) -
@@ -202,6 +221,10 @@ def build_docs() -> None:
             print(f"POMINIETO (brak pliku): {src_name}")
             continue
         text = src_path.read_text()
+        # Linki między źródłami Markdown działają w repozytorium i na stronie.
+        for target, html in SITE_LINKS.items():
+            relative = posixpath.relpath(target, posixpath.dirname(src_name))
+            text = text.replace(f"]({relative})", f"]({html})")
         for old, new in LINK_REWRITES.get(src_name, []):
             text = text.replace(old, new)
         title = next((l.lstrip("# ").strip() for l in text.splitlines()

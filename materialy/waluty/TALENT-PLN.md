@@ -1,19 +1,18 @@
-# TALENT-PLN — karta walutowa
+# TLN-PLN — karta polskiego prototypu
 
-**Poziom: A** · waluta bazowa projektu · prototyp działa (`../talent_strona.html`)
+**Status:** prototyp badawczy dla polskiej gospodarki i rozliczeń w PLN. [Strona główna](../../index.html) · [Reguła publikacyjna](../../strona/regula_publikacyjna.md)
 
-## Noga cen
-- **C1:** GUS, komunikat „Wskaźniki cen towarów i usług konsumpcyjnych", dynamika m/m, publikacja ~15. dnia m+1; miesięczny szereg użyteczny od 1989 (wcześniej gospodarka niedoborów — ceny urzędowe bez treści informacyjnej).
-- **C2:** Eurostat HICP-PL (`prc_hicp_midx`), ~17.–19. dnia m+1, od 1996. Liczony z danych GUS inną metodą — częściowo niezależny.
-- **C3 (do zbudowania):** indeks cen online; do tego czasu tripwire na parze C1/C2.
+## Dane używane przez aktualizator
 
-## Noga płac
-- **W1/W2:** GUS „Przeciętne zatrudnienie i wynagrodzenie w sektorze przedsiębiorstw" (~21. dnia m+1) → fundusz/MA12 wg TIP-0001. Ograniczenie: firmy ≥9 osób, bez umów cywilnoprawnych.
-- **W3 (kierunek docelowy, TIP-0002):** mediana z „Rozkładu wynagrodzeń w gospodarce narodowej" — rejestry ZUS+MF, miesięcznie, od I 2010, opóźnienie ~2 mies. Dane administracyjne, praktycznie niemanipulowalne ankietowo — unikatowa przewaga Polski w tym gronie.
-- Historia do backtestów: przeciętne wynagrodzenie roczne od 1950 (ZUS/GUS), z przełomami: denominacja 1995, ubruttowienie 1999.
+- **Ceny:** miesięczna dynamika CPI GUS z rejestru `first_prints_pln.json`.
+- **Płace:** roczne przeciętne wynagrodzenia, interpolowane logarytmicznie między punktami lipcowymi. Po końcu interpolacji kod zachowuje ostatni poziom.
 
-## Ryzyka specyficzne
-Przełomy metodologiczne (1995, 1999) — obsłużone łańcuchowaniem; polityczna presja na GUS niska (członkostwo w UE = nadzór Eurostatu nad HICP); szara strefa poza pomiarem płac.
+## Kandydaci do weryfikacji
 
-## Werdykt
-Pełna jakość od zaraz; po wdrożeniu TIP-0002 (mediana) — prawdopodobnie najlepsza noga płacowa w całym projekcie. Zmierzone pasmo żalu 1989–2024: maks. 10,4% (przez transformację ustrojową).
+HICP Polski ma wspólną bazę danych z CPI i może służyć do porównania metod. [Metadane HICP, §18.5.2](https://ec.europa.eu/eurostat/cache/metadata/EN/prc_hicp_esmshi4_pl.htm)
+
+[TIP-0001](../../TIP/TIP-0001-noga-placowa-v02.md) opisuje badany wariant funduszu płac i wygładzonego zatrudnienia. [TIP-0002](../../TIP/TIP-0002-mediana-wynagrodzen.md) dotyczy mediany poziomów wynagrodzeń GUS. Dane nowego badania zaczynają się od stycznia 2024 r., a odczyt za marzec 2026 r. opublikowano 2 września 2026 r. [Zapowiedź GUS](https://stat.gov.pl/dla-mediow/informacje-prasowe/informacja-o-badaniu-rozklad-wynagrodzen-w-gospodarce-narodowej%2C2%2C1.html?contrast=default) · [Kalendarium GUS](https://stat.gov.pl/kalendarium/02-09-2026.html)
+
+## Próba historyczna
+
+Maksimum 10,4% w [próbie Polski 1989–2024](../wyniki_kruche_gospodarki.md) jest warunkowe na użytym szeregu płac i badanych horyzontach. Wszystkie poziomy potwierdzono w GUS po uwzględnieniu denominacji. Łączenie szeregów przy zmianie definicji płac w 1999 r. pozostaje przybliżeniem. [Audyt](../audyt_kotwic_2026.md)

@@ -1,35 +1,29 @@
 # Najczęstsze pytania o Talenta
 
-Krótkie, uczciwe odpowiedzi na wątpliwości, które ma prawie każdy, kto pierwszy raz słyszy o Talencie. Gdzie warto, prowadzą głębiej — do [wprowadzenia](wprowadzenie.html), [whitepapera](whitepaper.html) albo [reguły publikacyjnej](regula_publikacyjna.html).
+## Czym jest Talent i dla kogo powstaje?
 
-## To nie są ukryte odsetki?
+Talent to propozycja wspólnego, dobrowolnie przyjmowanego standardu rozliczania umów dla osób prywatnych i przedsiębiorstw. Polski prototyp opiera się na krajowych cenach i przeciętnych wynagrodzeniach, a płatność jest określana w PLN. Jako pierwsze zastosowania badamy pożyczkę i płatność odroczoną. [Wprowadzenie](wprowadzenie.md)
 
-Nie. W gospodarce, która się bogaci, spłata w Talentach rośnie szybciej niż inflacja — ale dokładnie o *połowę* realnego wzrostu płac. Ta połowa to nie procent doliczony z góry, tylko jawny udział wierzyciela we wzroście, w zamian za symetryczne zobowiązanie: gdy przyjdą złe czasy, poniesie połowę strat. Pożyczka nominalna też nie jest „darmowa" — po prostu po cichu oddaje całą premię za czas dłużnikowi, a całe ryzyko czasu wierzycielowi, tyle że nigdzie tego nie wypowiada. [Więcej w whitepaperze →](whitepaper.html)
+## Od czego zależy kwota spłaty?
 
-## Czy mogę na tym stracić?
+Mnożnik waloryzacji jest średnią geometryczną zmian cen i przeciętnych płac. Gdy płace rosną szybciej od cen, kwota indeksowana rośnie szybciej niż CPI. Połowa realnego wzrostu płac oznacza tu połowę zmiany **logarytmicznej**. Wzór wyznacza waloryzację kwoty. Odsetki i opłaty, jeśli występują, są odrębnymi elementami warunków umowy. [Wzór i dowód](whitepaper.md)
 
-Talent nie wyczaruje wartości, której nie ma: gdy całe społeczeństwo ubożeje, strata istnieje obiektywnie i ktoś musi ją ponieść. Gwarantuje tylko — i aż tyle — że zostanie podzielona mniej więcej po połowie, zamiast spaść w całości na jedną, słabszą stronę umowy. W praktyce jest to niewiele: przez sto lat danych z USA najgorszy przypadek to 6,1%, przez polską transformację ustrojową 10,4% — wobec setek procent przy pożyczce nominalnej.
+## Czy któraś ze stron może ponieść stratę?
 
-## Czym to się różni od zwykłej indeksacji inflacją?
+Tak. Gdy ceny rosną szybciej niż płace, rośnie obciążenie względem przeciętnego wynagrodzenia i spada siła nabywcza spłaty względem CPI. Symetria dotyczy ilorazów przyjętych w modelu. Sytuacja konkretnego dłużnika lub wierzyciela zależy także od jego dochodów, kosztów i płynności.
 
-Indeksacja samą inflacją (CPI) chroni tylko wierzyciela — pilnuje, żeby za odzyskane pieniądze kupił tyle samo co kiedyś. Milczy o równie ważnym pytaniu dłużnika: czy oddanie długu kosztuje mnie tyle samo *mojej pracy*, co w dniu podpisania? Gdy ceny i płace się rozjeżdżają, robi się to dotkliwe — w Argentynie w 2002 roku ceny wzrosły o 41%, a płace o 7%, i indeksacja samą inflacją zmiażdżyła kredytobiorców. Talent traktuje obie miary jako równoprawne, biorąc ich środek geometryczny. [Więcej →](whitepaper.html)
+## Jakie wyniki dały testy historyczne?
 
-## Co, jeśli państwo sfałszuje dane?
+W polskiej próbie z lat 1989–2024 maksimum projektowej miary żalu wyniosło 10,4% dla horyzontów 3, 5, 10, 20 i 30 lat, przy założeniach historycznego szeregu płac. Roczne poziomy zweryfikowano w GUS, a porównywalność przy zmianie definicji w 1999 r. wymaga dalszej weryfikacji. W próbie USA z tymi samymi horyzontami uzyskano 6,1% dla CPI i płac z lat 1939–2025 oraz 19,7% dla CPI i PKB na osobę z lat 1929–2025. Wyniki dotyczą symulacji opartych na danych historycznych. [Raport polski](../materialy/wyniki_kruche_gospodarki.md) · [Raport USA](../materialy/wyniki_test_stulecia_usa.md)
 
-Dlatego reguła wymaga, by każda „noga" formuły — i cenowa, i płacowa — była medianą co najmniej trzech niezależnych źródeł (np. GUS, Eurostat, ZUS), z automatycznym alarmem, gdy zaczynają się rozjeżdżać. Kiedy rząd Argentyny zaniżał oficjalną inflację (2007–2015), niezależne pomiary wykryły to już w pierwszym roku — cała sztuka w tym, żeby z góry zapisać w kodzie, że się ich słucha. To redukuje ryzyko manipulacji pojedynczego urzędu do poziomu *wykrywalnego* — nie do zera, i tak to uczciwie nazywamy. [Skąd biorą się liczby →](whitepaper.html)
+## Jak projekt radzi sobie z brakami danych i silną inflacją?
 
-## Co w kryzysie albo hiperinflacji?
+Aktualizator korzysta z jednego źródła CPI. Przy jednym brakującym miesiącu może przenieść ostatnią znaną dynamikę, a przy drugim kolejnym braku przerywa aktualizację. Silną zmianę kotwicy oznacza flagą. Porównania alternatywnych źródeł, publikacja dekadowa i koszyk awaryjny pozostają propozycjami. CPI i HICP Polski korzystają częściowo z tych samych danych, więc ich porównanie ma ograniczoną wartość przy wykrywaniu błędów źródłowych. [Reguła publikacyjna](regula_publikacyjna.md)
 
-W zwykłej recesji Talent dzieli wspólną stratę po połowie — w Wielkim Kryzysie w USA rozłożył katastrofę na ~20% na stronę, zamiast zrujnować jedną. Ale powyżej ~50% inflacji miesięcznie (jak w Niemczech w 1923 roku) żadna jednostka indeksowa już nie nadąża, bo wartość ucieka między obliczeniem a wypłatą. Na ten wypadek reguła z góry przewiduje przejście w tryb awaryjny — twardy koszyk walut — zamiast udawać, że działa. [Granice metody →](whitepaper.html)
+## Co można zweryfikować samodzielnie?
 
-## To jakaś inwestycja albo lokata?
+Publiczny kod pozwala sprawdzić, jak wynik zależy od wejść. Pełne odtworzenie publikacji wymaga także dokładnych migawek danych i wersji kodu. Archiwum wiążące te elementy z każdym odczytem pozostaje do zbudowania. [Weryfikacja obliczeń](../dla_agenta.html)
 
-Nie. Talent nie pomnaża majątku — utrzymuje wartość pożyczki lub kontraktu uczciwą wobec obu stron. Jego jedynym zadaniem jest sprawić, żeby *pomaganie nie kosztowało*. Kto szuka zysku, znajdzie go gdzie indziej — to nie jest narzędzie do zarabiania.
+## Co strony musiałyby uzgodnić w umowie?
 
-## Skąd mam wiedzieć, że kurs jest liczony uczciwie?
-
-Bo nie musisz nikomu wierzyć — możesz sprawdzić sam. Wartość wylicza publiczny program z publicznych danych; każdy odczyt jest ogłaszany z wyprzedzeniem i nigdy nie zmieniany wstecz, a przy nim zapisany jest odcisk (hash) danych wejściowych i wersja kodu. Wystarczy dowolny laptop i kwadrans, by pobrać dane, uruchomić program i potwierdzić dzisiejszy kurs co do grosza. Filozofia jest jedna: nie „zaufaj nam", tylko „sprawdź sam". [Zbuduj Talenta u siebie →](dla_agenta.html)
-
-## Czy mogę użyć Talenta w zwykłej umowie?
-
-Talent jest jednostką rozliczeniową: w umowie zapisujesz kwotę w TLN, a rozliczasz się w złotówkach po opublikowanym kursie dziennym (ogłaszanym z góry, nigdy nie korygowanym wstecz). Na dziś jest to jednak prototyp badawczy — wartości mają charakter roboczy i nie są oficjalnymi kursami rozliczeniowymi — więc traktuj je odpowiednio, a przy poważnej umowie skonsultuj treść z prawnikiem. To nie jest porada prawna. [Zasady liczenia →](regula_publikacyjna.html)
+Przykładowa konstrukcja wiąże zmianę kwoty w PLN z ilorazem dwóch odczytów TLN-PLN. Wymaga wskazania serii, wersji reguły, dat i postępowania w razie braku odczytu. Publikowane wartości mają charakter badawczy, a dzienny szereg jest demonstracją. Wzorzec klauzuli i jego weryfikacja prawna są osobnymi pracami.

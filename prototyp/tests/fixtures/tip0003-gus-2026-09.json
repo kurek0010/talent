@@ -1,0 +1,71 @@
+{
+  "cpi": {
+    "2026-09": {
+      "value": "100.7",
+      "available_by": "2026-10-15T00:00:00+02:00",
+      "source": "https://stat.gov.pl/obszary-tematyczne/ceny-handel/wskazniki-cen/wskazniki-cen-towarow-i-uslug-konsumpcyjnych-we-wrzesniu-2026-r-%2C2%2C179.html"
+    }
+  },
+  "wages": {
+    "2025-10": {
+      "value": "8865.12",
+      "available_by": "2026-10-24T00:00:00+02:00",
+      "source": "https://bazydanych.new.stat.gov.pl/file/199294/download"
+    },
+    "2025-11": {
+      "value": "9078.16",
+      "available_by": "2026-10-24T00:00:00+02:00",
+      "source": "https://bazydanych.new.stat.gov.pl/file/199294/download"
+    },
+    "2025-12": {
+      "value": "9583.31",
+      "available_by": "2026-10-24T00:00:00+02:00",
+      "source": "https://bazydanych.new.stat.gov.pl/file/199294/download"
+    },
+    "2026-01": {
+      "value": "9002.47",
+      "available_by": "2026-10-24T00:00:00+02:00",
+      "source": "https://bazydanych.new.stat.gov.pl/file/199294/download"
+    },
+    "2026-02": {
+      "value": "9135.69",
+      "available_by": "2026-10-24T00:00:00+02:00",
+      "source": "https://bazydanych.new.stat.gov.pl/file/199294/download"
+    },
+    "2026-03": {
+      "value": "9652.19",
+      "available_by": "2026-10-24T00:00:00+02:00",
+      "source": "https://bazydanych.new.stat.gov.pl/file/199294/download"
+    },
+    "2026-04": {
+      "value": "9530.74",
+      "available_by": "2026-10-24T00:00:00+02:00",
+      "source": "https://bazydanych.new.stat.gov.pl/file/199294/download"
+    },
+    "2026-05": {
+      "value": "9173.24",
+      "available_by": "2026-10-24T00:00:00+02:00",
+      "source": "https://bazydanych.new.stat.gov.pl/file/199294/download"
+    },
+    "2026-06": {
+      "value": "9401.58",
+      "available_by": "2026-10-24T00:00:00+02:00",
+      "source": "https://bazydanych.new.stat.gov.pl/file/199294/download"
+    },
+    "2026-07": {
+      "value": "9509.02",
+      "available_by": "2026-10-24T00:00:00+02:00",
+      "source": "https://bazydanych.new.stat.gov.pl/file/199294/download"
+    },
+    "2026-08": {
+      "value": "9259.54",
+      "available_by": "2026-10-24T00:00:00+02:00",
+      "source": "https://bazydanych.new.stat.gov.pl/file/199294/download"
+    },
+    "2026-09": {
+      "value": "9266.48",
+      "available_by": "2026-10-24T00:00:00+02:00",
+      "source": "https://bazydanych.new.stat.gov.pl/file/199294/download"
+    }
+  }
+}

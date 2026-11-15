@@ -55,11 +55,13 @@ blockquote{border-left:3px solid var(--border);padding-left:14px;color:var(--mut
 </div>
 <h1>Talent umowy międzynarodowej — wyniki PL-US (2002–2024)</h1>
 <p><strong>Data:</strong> 2026-07-04 · <strong>Kod:</strong> <code>prototyp/src/regret_bilateral.py</code></p>
+<p><strong>Korekta 2026-11-15.</strong> Zawężono zakres wniosku do porównanych wariantów i poprawiono długość okna z maksimum. Tabela zachowuje opublikowane liczby.</p>
+<p><strong>Status:</strong> eksperyment PL–US do dalszego zbadania. Obecnie rozwijany TLN-PLN opiera się na danych Polski i rozliczeniach w PLN.</p>
 <h2>Konstrukcja</h2>
 <p>Talent dwustronny (TLN-2) dla umowy polsko-amerykańskiej: <strong>środek geometryczny obu Talentów krajowych z kursem rozłożonym po połowie</strong>:</p>
 <p>$$V_{PLN}(t) = \sqrt{TLN_{PL}(t) \cdot TLN_{US}(t) \cdot \frac{S(t)}{S(0)}} \qquad V_{USD}(t) = \frac{V_{PLN}(t)}{S(t)/S(0)}$$</p>
 <p>gdzie S to kurs PLN/USD; po stronie USD wzór jest symetryczny.</p>
-<p>Żal liczony w obu krajach naraz: jednostka oceniana w PLN względem korytarza [CPI-PL, płaca-PL] i w USD względem [CPI-US, płaca-US]; żal okna = największe przekroczenie któregokolwiek z 4 brzegów (każda strona może być dłużnikiem lub wierzycielem). Horyzonty 3–20 lat, wszystkie okna.</p>
+<p>Żal liczony w obu krajach naraz: jednostka oceniana w PLN względem korytarza [CPI-PL, płaca-PL] i w USD względem [CPI-US, płaca-US]; żal okna = największe przekroczenie któregokolwiek z 4 brzegów (każda strona może być dłużnikiem lub wierzycielem). Wszystkie dostępne lata startu dla horyzontów 3, 5, 10 i 20 lat. „Zero-żal” oznacza wynik poniżej 0,02 w logarytmach, czyli poniżej około 2,02% w skali raportu.</p>
 <h2>Wyniki</h2>
 <table>
 <thead>
@@ -117,13 +119,9 @@ blockquote{border-left:3px solid var(--border);padding-left:14px;color:var(--mut
 </tbody>
 </table>
 <p>Kontekst próby: płace PL ×3,84 vs płace US ×1,82 (konwergencja), CPI PL ×2,01 vs US ×1,74, kurs bez zmian (×0,98) — realny rozjazd gospodarek ~2×.</p>
-<h2>Odczyt</h2>
-<ol>
-<li><strong>TLN-2 tnie najgorszy przypadek o połowę względem najlepszej jednostki jednostronnej</strong> (34% vs 61–77%) i niemal trzykrotnie względem walut nominalnych (85–93%). Minimaksowa własność środka geometrycznego przenosi się na przypadek międzynarodowy.</li>
-<li><strong>Uczciwa granica:</strong> w umowie międzynarodowej istnieje ryzyko, którego żadna formuła nie usunie — realny rozjazd dwóch gospodarek (tu: konwergencja płacowa Polski, ×2 w 22 lata). To ryzyko musi gdzieś wylądować; jednostki jednostronne i waluty zrzucają je w całości na jedną stronę, TLN-2 dzieli po połowie w logarytmach. 34% na 20 lat to cena uczestniczenia w parze z gospodarką doganiającą — nie wada formuły.</li>
-<li>Para PL-US jest blisko najtrudniejszego przypadku (transatlantycki + konwergencja). Dla par o zbieżnych trajektoriach (US-EU, US-UK) korytarze niemal się pokrywają i TLN-2 powinien mieć pasmo jednocyfrowe — do policzenia, gdy dodamy płace strefy euro.</li>
-<li>Uogólnienie na N stron: średnia geometryczna Talentów uczestników (równe wagi lub wagi udziałów w kontrakcie) — kandydat na jednostkę rozliczeń konsorcjów i handlu wielostronnego.</li>
-</ol>
+<h2>Interpretacja</h2>
+<p>W tej próbie TLN-2 ma najniższe maksimum spośród wymienionych wariantów, 34,3%, w oknie 2003–2008 (pięć lat). Porównanie wariantów nie ustanawia własności minimaksowej względem czterech ograniczeń. Kontrola dla tego pojedynczego okna dała minimum ex post około 27,95%, wobec około 34,34% dla TLN-2. Minimum jednego okna nie rozstrzyga, jak zaprojektować jedną regułę dla wszystkich okien.</p>
+<p>Porównanie innych par gospodarek oraz wersje wielostronne pozostają tematami dalszych badań.</p>
 <h2>Zastrzeżenia</h2>
 <p>Dane roczne; płace PL z tablic GUS/ZUS (do weryfikacji, jak w <code>materialy/wyniki_kruche_gospodarki.md</code>); płace US = produkcyjni w przemyśle; kurs = średnia roczna NBP. Wyniki wrażliwe na dobór próby 2002–2024 (jedna wielka konwergencja) — wskazany test na dłuższej parze (np. US-UK od 1939).</p>
 <p class="gen">Strona wygenerowana automatycznie z pliku <code>materialy/wyniki_talent_dwustronny.md</code> w

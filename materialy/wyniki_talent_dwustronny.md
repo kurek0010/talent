@@ -2,6 +2,10 @@
 
 **Data:** 2026-07-04 · **Kod:** `prototyp/src/regret_bilateral.py`
 
+**Korekta 2026-11-15.** Zawężono zakres wniosku do porównanych wariantów i poprawiono długość okna z maksimum. Tabela zachowuje opublikowane liczby.
+
+**Status:** eksperyment PL–US do dalszego zbadania. Obecnie rozwijany TLN-PLN opiera się na danych Polski i rozliczeniach w PLN.
+
 ## Konstrukcja
 
 Talent dwustronny (TLN-2) dla umowy polsko-amerykańskiej: **środek geometryczny obu Talentów krajowych z kursem rozłożonym po połowie**:
@@ -10,7 +14,7 @@ $$V_{PLN}(t) = \sqrt{TLN_{PL}(t) \cdot TLN_{US}(t) \cdot \frac{S(t)}{S(0)}} \qqu
 
 gdzie S to kurs PLN/USD; po stronie USD wzór jest symetryczny.
 
-Żal liczony w obu krajach naraz: jednostka oceniana w PLN względem korytarza [CPI-PL, płaca-PL] i w USD względem [CPI-US, płaca-US]; żal okna = największe przekroczenie któregokolwiek z 4 brzegów (każda strona może być dłużnikiem lub wierzycielem). Horyzonty 3–20 lat, wszystkie okna.
+Żal liczony w obu krajach naraz: jednostka oceniana w PLN względem korytarza [CPI-PL, płaca-PL] i w USD względem [CPI-US, płaca-US]; żal okna = największe przekroczenie któregokolwiek z 4 brzegów (każda strona może być dłużnikiem lub wierzycielem). Wszystkie dostępne lata startu dla horyzontów 3, 5, 10 i 20 lat. „Zero-żal” oznacza wynik poniżej 0,02 w logarytmach, czyli poniżej około 2,02% w skali raportu.
 
 ## Wyniki
 
@@ -25,12 +29,11 @@ gdzie S to kurs PLN/USD; po stronie USD wzór jest symetryczny.
 
 Kontekst próby: płace PL ×3,84 vs płace US ×1,82 (konwergencja), CPI PL ×2,01 vs US ×1,74, kurs bez zmian (×0,98) — realny rozjazd gospodarek ~2×.
 
-## Odczyt
+## Interpretacja
 
-1. **TLN-2 tnie najgorszy przypadek o połowę względem najlepszej jednostki jednostronnej** (34% vs 61–77%) i niemal trzykrotnie względem walut nominalnych (85–93%). Minimaksowa własność środka geometrycznego przenosi się na przypadek międzynarodowy.
-2. **Uczciwa granica:** w umowie międzynarodowej istnieje ryzyko, którego żadna formuła nie usunie — realny rozjazd dwóch gospodarek (tu: konwergencja płacowa Polski, ×2 w 22 lata). To ryzyko musi gdzieś wylądować; jednostki jednostronne i waluty zrzucają je w całości na jedną stronę, TLN-2 dzieli po połowie w logarytmach. 34% na 20 lat to cena uczestniczenia w parze z gospodarką doganiającą — nie wada formuły.
-3. Para PL-US jest blisko najtrudniejszego przypadku (transatlantycki + konwergencja). Dla par o zbieżnych trajektoriach (US-EU, US-UK) korytarze niemal się pokrywają i TLN-2 powinien mieć pasmo jednocyfrowe — do policzenia, gdy dodamy płace strefy euro.
-4. Uogólnienie na N stron: średnia geometryczna Talentów uczestników (równe wagi lub wagi udziałów w kontrakcie) — kandydat na jednostkę rozliczeń konsorcjów i handlu wielostronnego.
+W tej próbie TLN-2 ma najniższe maksimum spośród wymienionych wariantów, 34,3%, w oknie 2003–2008 (pięć lat). Porównanie wariantów nie ustanawia własności minimaksowej względem czterech ograniczeń. Kontrola dla tego pojedynczego okna dała minimum ex post około 27,95%, wobec około 34,34% dla TLN-2. Minimum jednego okna nie rozstrzyga, jak zaprojektować jedną regułę dla wszystkich okien.
+
+Porównanie innych par gospodarek oraz wersje wielostronne pozostają tematami dalszych badań.
 
 ## Zastrzeżenia
 

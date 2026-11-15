@@ -1,24 +1,21 @@
-# TIP-0002: Noga płacowa — mediana wynagrodzeń z rejestrów administracyjnych (ZUS+MF)
+# TIP-0002 — mediana wynagrodzeń w gospodarce narodowej
 
 **Autor:** Mariusz Kurowski · **Data:** 2026-07-07 · **Status:** Szkic
 
+**Korekta 2026-11-15.** Poprawiono datę początku szeregu i opis opóźnienia. Doprecyzowano różnicę między medianą poziomów a medianą dynamik indywidualnych.
+
 ## Problem
 
-Obecna noga płacowa (TIP-0001: fundusz płac sektora przedsiębiorstw / wygładzone zatrudnienie) dziedziczy dwie słabości źródła: (1) pomija firmy <9 pracowników i umowy cywilnoprawne; (2) opiera się na **średniej**, którą zawyża górny ogon rozkładu — średnia rośnie systematycznie szybciej niż płaca typowego pracownika, więc Talent na średniej lekko sprzyja wierzycielowi względem „typowego żalu".
+Aktualizator używa interpolowanych rocznych przeciętnych wynagrodzeń. W badaniu alternatywnych miar warto ocenić wrażliwość na zmiany składu populacji i na skrajne obserwacje. Wyższy poziom średniej od mediany sam w sobie nie wskazuje, która miara rośnie szybciej.
 
-## Proponowana zmiana
+## Kandydat
 
-Drugie (docelowo główne) źródło nogi płacowej: **mediana wynagrodzeń brutto z badania GUS „Rozkład wynagrodzeń w gospodarce narodowej"** — miesięcznego, opartego na rejestrach administracyjnych ZUS i MF (nie na ankietach), z szeregiem od stycznia 2010. Dane rejestrowe obejmują całą gospodarkę narodową i są z natury odporne na manipulację ankietową (powstają jako produkt uboczny płacenia składek). Publikacja z opóźnieniem ~2 miesięcy — zgodna z kaskadą awaryjną §4 polityki danych (carry-forward jednej dynamiki).
+Mediana miesięcznych wynagrodzeń brutto z badania GUS „Rozkład wynagrodzeń w gospodarce narodowej” opartego na źródłach administracyjnych. Pierwsze dane dotyczą stycznia 2024 r. i ukazały się we wrześniu 2024 r. Dane za marzec 2026 r. opublikowano 2 września 2026 r., około pięciu miesięcy po końcu badanego miesiąca. Potrzebna jest analiza rzeczywistych dat dostępności. [Zapowiedź GUS](https://stat.gov.pl/dla-mediow/informacje-prasowe/informacja-o-badaniu-rozklad-wynagrodzen-w-gospodarce-narodowej%2C2%2C1.html?contrast=default) · [Kalendarium GUS](https://stat.gov.pl/kalendarium/02-09-2026.html)
 
-## Test wymagany przed akceptacją (do wykonania)
+Zmiana mediany poziomów wynagrodzeń może odzwierciedlać zmianę składu badanej populacji. Mediana indywidualnych zmian wynagrodzenia tych samych osób wymaga odrębnych danych i definicji. Aktualizator nie korzysta z żadnej z tych miar.
 
-1. Pobrać pełny szereg mediany (I 2010 → dziś) i porównać z obecną nogą: dynamiki roczne, rozjazd skumulowany, zachowanie w epizodach 2020 i 2022–23.
-2. Sprawdzić stabilność publikacji: częstotliwość rewizji, opóźnienie faktyczne vs deklarowane, zmiany metodologiczne serii.
-3. Przeliczyć test polski (regret 1989–2024 nie obejmie mediany — szereg od 2010; test na oknach 2010–2025) w wariantach: średnia, mediana, mediana z korektą składu.
-4. Kryterium akceptacji: mediana nie pogarsza żadnej statystyki żalu, a zmniejsza systematyczny dryf na korzyść wierzyciela.
+## Testy przed decyzją
 
-## Uwagi
-
-- Efekt składu (TIP-0001) dotyczy mediany słabiej niż średniej, ale nie zerowo — do zbadania w teście 1, czy korekta MA12 zatrudnienia pozostaje potrzebna.
-- Do czasu akceptacji mediana pełni rolę **drugiego źródła** w tripwire nogi płacowej (rozjazd dynamik > 3 p.p. → alert).
-- Źródła: [GUS — Rozkład wynagrodzeń w gospodarce narodowej](https://stat.gov.pl/obszary-tematyczne/rynek-pracy/pracujacy-zatrudnieni-wynagrodzenia-koszty-pracy/) (komunikaty miesięczne); zapowiedź zmiany częstotliwości: [Bankier.pl](https://bankier.pl/amp/wiadomosc/Mediana-wynagrodzen-bedzie-publikowana-co-miesiac-Rewolucja-w-statystykach-GUS-8714108); przykład odczytu: [prawo.pl — mediana X 2025 = 7414 zł](https://www.prawo.pl/kadry/mediana-wynagrodzen-pazdziernik-2025-r-gus,1542164.html).
+1. Porównać dynamiki na wspólnym odcinku szeregu, począwszy od 2024 r., z uwzględnieniem różnic w populacji i definicjach.
+2. Zbadać rewizje i opóźnienia oraz zasymulować dostępność danych w dniu publikacji.
+3. Ocenić, czy krótki szereg wystarcza do wniosków o skutkach dla obu stron. Przed przyjęciem wariantu ustalić kryteria porównania oraz zasady postępowania w okresach braku odczytu.

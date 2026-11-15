@@ -1,11 +1,11 @@
 # TIP-0001: Noga płacowa v0.2 — fundusz płac / wygładzone zatrudnienie
 
-**Autor:** Mariusz Kurowski · **Data:** 2026-07-05 · **Status:** Wdrożony
-*(TIP udokumentowany retroaktywnie — zmiana przeszła pełny proces przed formalizacją systemu TIP.)*
+**Autor:** Mariusz Kurowski · **Data:** 2026-07-05 · **Status:** Testowany na danych USA. Aktualizator miesięczny TLN-PLN używa interpolowanych płac rocznych.
+**Korekta 2026-11-15.** Status dopasowano do kodu aktualizatora. Część testową zachowano jako wynik historyczny.
 
 ## Problem
 
-Przeciętne wynagrodzenie = fundusz płac / bieżąca liczba pracujących. W kryzysie pracę tracą najpierw najsłabiej zarabiający, więc średnia płaca pozostałych **rośnie dokładnie wtedy, gdy dochody społeczeństwa spadają** (efekt składu). Noga płacowa oparta na przeciętnej zawyżałaby ciężar zobowiązań w najgorszym momencie — dokładnie tam, gdzie własność minimaksowa Talenta ma znaczenie.
+Zmiana składu zatrudnionych może wpłynąć na przeciętną płacę. Na przykład odpływ osób mniej zarabiających może podnieść średnią w pozostałej grupie nawet przy spadku funduszu płac.
 
 ## Proponowana zmiana
 
@@ -13,7 +13,7 @@ Przeciętne wynagrodzenie = fundusz płac / bieżąca liczba pracujących. W kry
 W(m) = FunduszPłac(m) / MA12(Zatrudnienie)(m)     (średnia krocząca, przyczynowa)
 ```
 
-Mianownik wygładzony 12-miesięcznie „pamięta" pełne zatrudnienie: w kryzysie miara uczciwie opada, przy odbiciu symetrycznie tłumi fałszywy spadek. Zero nowych źródeł danych — oba składniki pochodzą z tych samych sprawozdań firm (GUS; w teście: BLS/FRED).
+Wygładzenie mianownika może zmniejszyć reakcję na krótkotrwałe wahania zatrudnienia. Wariant wykorzystuje fundusz płac i zatrudnienie. Dawna reguła opisywała również dalsze wygładzenie całego indeksu przez MA12. Wyniki poniżej dotyczą wariantu z tabeli.
 
 ## Test na danych (przed zmianą reguły)
 
@@ -21,14 +21,12 @@ Dane: USA, miesięczne 2000-01–2026-06 (FRED: AHETPI, PAYEMS; `data/raw/fred_*
 
 | Epizod | Przeciętna (stara) | Fundusz/MA12 (nowa) |
 |---|---|---|
-| IV 2020 (szok COVID), m/m | **+4,2%** (artefakt) | **−8,9%** (realny ubytek) |
+| IV 2020 (szok COVID), m/m | **+4,2%** | **−8,9%** |
 | Wielka recesja IX 2008→XII 2009 | +3,5% | +3,2% |
 | Dryf 2000→2026 (26,5 roku) | +135,7% | +136,2% |
 
-## Czego zmiana NIE psuje
+## Interpretacja i stan decyzji
 
-Dryf długookresowy identyczny (różnica 0,5 p.p. na ćwierć wieku — opóźnienie mianownika znosi się w dynamikach przy stabilnym wzroście zatrudnienia). Powolne recesje: obie metody zbieżne. Zmiana działa wyłącznie przy gwałtownych szokach zatrudnienia — zgodnie z intencją.
+W próbie USA różnica między zmianami skumulowanymi wyniosła 0,5 p.p. Efekt miesięczny w kwietniu 2020 r. nie wyznacza zachowania tej miary w innych kryzysach ani w Polsce.
 
-## Decyzja
-
-Wdrożono do `strona/regula_publikacyjna.md` (definicja I_w v0.2) dnia 2026-07-05. Wykres porównawczy obu metod: `talent_strona.html`. Docelowym rozszerzeniem pozostaje mediana wzrostu płac tych samych osób z danych ZUS (osobny TIP, gdy dostępność danych zostanie zbadana).
+Wariant opisano w dokumentacji 2026-07-05. Przed ewentualnym wdrożeniem w TLN-PLN potrzebne są polskie dane, test dostępności w dniu publikacji i decyzja z datą wejścia w życie.

@@ -28,6 +28,7 @@ on:
       - "materialy/wyniki_talent_dwustronny.md"
       - "TIP/README.md"
       - "prototyp/src/strona_szablon.html"
+      - "prototyp/src/kalkulator_umowy.js"
       - "prototyp/src/build_strona.py"
 
 permissions:
@@ -60,7 +61,7 @@ jobs:
         id: check
         run: |
           if git diff --quiet -- \
-            index.html talent_strona.html whitepaper.html wprowadzenie.html \
+            index.html talent_strona.html whitepaper.html wprowadzenie.html faq.html \
             regula_publikacyjna.html wyscig_kandydatow.html \
             wyniki_test_stulecia_usa.html wyniki_kruche_gospodarki.html \
             wyniki_talent_dwustronny.html tip.html; then
@@ -75,7 +76,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add \
-            index.html talent_strona.html whitepaper.html wprowadzenie.html \
+            index.html talent_strona.html whitepaper.html wprowadzenie.html faq.html \
             regula_publikacyjna.html wyscig_kandydatow.html \
             wyniki_test_stulecia_usa.html wyniki_kruche_gospodarki.html \
             wyniki_talent_dwustronny.html tip.html

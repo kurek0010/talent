@@ -1,70 +1,36 @@
-# Talent (TLN) — jednostka wartości minimalnego żalu
+# Talent (TLN) — propozycja standardu rozliczania umów
 
-**Talent** to otwarta, deterministyczna jednostka rozliczeniowa do umów wieloletnich: pożyczasz 1000 TLN — oddajesz 1000 TLN, a obie strony odzyskują w przybliżeniu tę samą wartość. Formuła: **środek geometryczny indeksu cen i indeksu płac**, √(C×W). Matematycznie minimalizuje największą możliwą krzywdę którejkolwiek strony (kryterium minimax regret); empirycznie: najgorszy przypadek 6,1% przez sto lat danych USA (1929–2025) i 10,4% przez polską transformację ustrojową (1989–2024) — wobec setek procent dla pożyczek nominalnych.
+Talent to propozycja wspólnego standardu rozliczania umów dla osób prywatnych i przedsiębiorstw. W rozwijanej obecnie polskiej wersji opiera się na otwartej regule waloryzacji, która według uzgodnionej wcześniej zasady dzieli między strony wpływ zmian cen i przeciętnych wynagrodzeń. Strony przyjmują tę regułę dobrowolnie. Obecny zakres to polska gospodarka i rozliczenia w PLN.
 
-Zasada projektu: **kod jest metodologią**. Wszystkie wartości są odtwarzalne z publicznych danych, publikowane z wyprzedzeniem i nigdy nie rewidowane wstecz.
+Jawność reguły, danych i obliczeń ma umożliwiać niezależne odtworzenie wyniku oraz ocenę skutków przyjętej zasady. Projekt pozostaje prototypem badawczym. Jego zastosowania i ograniczenia są przedmiotem weryfikacji.
 
-## Zacznij tutaj
+## Dokumentacja
 
-| Dokument | Co zawiera |
-|---|---|
-| [strona/whitepaper.md](strona/whitepaper.md) | **Whitepaper** — pełny wywód: problem, wzór z dowodem dla licealisty, testy, granice metody |
-| [strona/wprowadzenie.md](strona/wprowadzenie.md) | Wprowadzenie — czym jest Talent i do czego służy |
-| [strona/faq.md](strona/faq.md) | FAQ — krótkie, uczciwe odpowiedzi na typowe wątpliwości |
-| [strona/regula_publikacyjna.md](strona/regula_publikacyjna.md) | Specyfikacja techniczna: definicje nóg, kalendarz publikacji, bezpieczniki |
-| [TIP/](TIP/) | Talent Improvement Proposals — jawny proces zmian formuły (wzorzec BIP/EIP) |
-| [talent_strona.html](talent_strona.html) | Strona z wartością bieżącą i wykresami (statyczna, działa z GitHub Pages) |
+- [Wprowadzenie](strona/wprowadzenie.md) i [FAQ](strona/faq.md) omawiają zasadę waloryzacji na przykładach pożyczki i płatności odroczonej.
+- [Whitepaper](strona/whitepaper.md) definiuje indeks jako średnią geometryczną cen i płac. Dowód minimalizacji dotyczy konkretnej dwustronnej miary żalu w modelu jednej płatności.
+- [Reguła publikacyjna](strona/regula_publikacyjna.md) i [polityka danych](POLITYKA_danych_v0.1.md) opisują miesięczną aktualizację i ograniczenia prototypu. Zmiany metody przechodzą przez [TIP](TIP/).
+- [Kalkulator waloryzacji umowy](index.html#waloryzacja) porównuje płatność nominalną, CPI i Talent na historycznych odczytach miesięcznych. [Przelicznik walutowy](index.html#dane) pokazuje odpowiedniki polskiej kotwicy.
 
-## Dowody empiryczne
+## Wyniki historyczne
 
-- [materialy/wyscig_kandydatow.md](materialy/wyscig_kandydatow.md) — porównanie kandydatów na jednostkę (CPI, złoto, surowce, płace, mieszanki), 1996–2025
-- [materialy/wyniki_test_stulecia_usa.md](materialy/wyniki_test_stulecia_usa.md) — USA 1929–2025: Wielki Kryzys, wojna, stagflacja, 2022
-- [materialy/wyniki_kruche_gospodarki.md](materialy/wyniki_kruche_gospodarki.md) — Polska 1989–2024, Niemcy 1923, Argentyna (granice metody)
-- [materialy/wyniki_talent_dwustronny.md](materialy/wyniki_talent_dwustronny.md) — jednostka umów międzynarodowych (PL-US)
-- [materialy/ZRODLA_backtest_historyczny.md](materialy/ZRODLA_backtest_historyczny.md) — źródła danych do testów wstecznych
+- [Polska 1989–2024](materialy/wyniki_kruche_gospodarki.md). Maksimum żalu w badanych oknach wynosi 10,4%. Poziomy płac są zgodne z tablicą GUS, a łącznik przy zmianie definicji w 1999 r. pozostaje przybliżeniem. Epizody zagraniczne opisano jako materiał porównawczy.
+- [USA](materialy/wyniki_test_stulecia_usa.md). W badanych horyzontach 3, 5, 10, 20 i 30 lat maksimum wynosi 6,1% dla CPI i płac (1939–2025) oraz 19,7% dla CPI i PKB na osobę (1929–2025).
+- [Eksperyment PL–US](materialy/wyniki_talent_dwustronny.md) i [karty zagraniczne](materialy/waluty/) dokumentują dalsze tematy badawcze.
+- [Porównanie kandydatów](materialy/wyscig_kandydatow.md) i [źródła historycznego testu AUV](materialy/ZRODLA_backtest_historyczny.md) są archiwalne i mają ograniczoną odtwarzalność. AUV (Absolute Unit of Value) był wcześniejszym projektem opartym m.in. na koszyku surowców.
 
-## Odtwórz obliczenia
+W [walidacji polskich umów](materialy/walidacja_talent_pl.md) porównano cztery reguły dla rat i płatności odroczonej, z analizą płynności oraz kontrolą czterech historycznych publikacji. Dalsza walidacja odczytów na dzień publikacji wymaga archiwum cykli TIP-0003.
+
+## Przebudowa strony i odtwarzanie badań
 
 ```bash
 cd prototyp
-python -m venv .venv && source .venv/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env        # wpisz własny (darmowy) klucz API FRED
-python src/talent_daily.py  # kotwice miesięczne + ścieżka dzienna
-python src/regret_century.py  # test stulecia USA
-python src/build_strona.py  # przebudowa strony
+python src/build_strona.py
 ```
 
-Dane wejściowe są w `prototyp/data/` (surowe pobrania + przetworzone wyniki), więc skrypty analiz działają bez pobierania.
-
-## Struktura repozytorium
-
-```
-├── strona/                              # źródła MD artykułów witryny (nazwa md == nazwa html)
-│   ├── whitepaper.md                    # whitepaper
-│   ├── wprowadzenie.md                  # wprowadzenie
-│   └── regula_publikacyjna.md           # specyfikacja
-├── materialy/                           # strony dowodowe + dokumenty robocze (materiał pod podręcznik)
-│   ├── wyniki_*.md, wyscig_*.md         # raporty z testów (kompilowane na stronę)
-│   ├── ZRODLA_, SZKIC_, TALENTY_*.md    # zaplecze i szkice
-│   └── waluty/                          # karty walutowe TALENT-XXX
-├── TIP/                                 # proces zmian
-├── *.html                               # strony publiczne (generowane przez builder)
-├── prototyp/
-│   ├── src/                             # aktywny kod (talent_daily, regret_*, build_strona)
-│   └── data/                            # dane surowe i przetworzone
-└── .github/workflows/                   # automatyzacja: miesięczna kotwica + przebudowa strony
-```
-
-## Skąd wziął się Talent
-
-Talent nie powstał od razu. Wyrósł z szerszej, ambitniejszej próby — projektu **AUV (Absolute Unit of Value)**: zbudowania „absolutnej" miary wartości na koszyku surowców, produkcji i populacji. Krytyczna ocena ekonomiczna i testy na danych wykazały, że taka jednostka nie istnieje — a najcenniejszą częścią tamtej konstrukcji okazał się jej *mianownik* (dochód/praca), nie cały koszyk. Stąd zwrot: od „miary absolutnej" do wąskiej, weryfikowalnej **jednostki minimalnego żalu dla umów** — Talenta.
-
-To repozytorium zawiera wyłącznie dojrzały wynik tej drogi. Pełna historia prób i błędów (AUV, FDI, AUV-T, recenzje, plany) jest zachowana osobno, w repozytorium-archiwum `globalny-wskaznik-wartosci`, wraz z dokumentem `PODSUMOWANIE_projektu.md` domykającym tamten etap. Zgodnie z filozofią projektu nie ukrywamy tej historii: błędy są częścią dowodu — po prostu nie muszą już zaśmiecać repozytorium o Talencie.
-
-## Status
-
-Prototyp badawczy. Znane prowizoria wymienione są jawnie w regule publikacyjnej (§7) i w artykule (§7 i §9). Dane płacowe GUS/ZUS dla Polski wymagają weryfikacji u źródła przed publikacją produkcyjną.
+Builder korzysta z zapisanych danych. Skrypt dzienny zapisuje demonstrację w `prototyp/data/research/`. Odrębna reguła prospektywna jest w testach [TIP-0003](TIP/TIP-0003-tln-pln-prospektywny.md). [Dokumentacja prototypu](prototyp/README.md)
 
 ## Licencja
 

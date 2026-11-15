@@ -1,5 +1,7 @@
 # Talenty światowe — audyt dostępności danych (v0.1)
 
+**Status (2026-11-15):** archiwalny plan badań poza bieżącym zakresem projektu. Klasyfikacja dotyczy oceny dostępności danych w dawnym szkicu. Rozwój i publikacje prototypu dotyczą polskiej gospodarki i rozliczeń w PLN.
+
 **Data:** 2026-07-07 · **Cel:** dla których głównych walut da się liczyć Talenta (√(CPI × płace)) na poziomie jakości Talenta-PL/US — i co z tego wynika dla rozliczeń międzynarodowych.
 **Metoda oceny:** noga cen (CPI/HICP: częstotliwość, historia, liczba niezależnych źródeł) + noga płac (miesięczna > kwartalna > roczna; rejestrowa > ankietowa) + wiarygodność instytucjonalna (kazus INDEC). Wpisy oznaczone ✻ pochodzą z wiedzy i wymagają potwierdzenia u źródła przed wdrożeniem.
 
@@ -10,7 +12,7 @@
 | Waluta | Noga cen | Noga płac | Uwagi |
 |---|---|---|---|
 | **USD** | CPI-U (BLS, od 1913) + PCE + chained CPI — 3 miary od ręki | CES miesięcznie (od 1939), ECI kwartalnie, mediana Atlanta Fed | wzorzec; wszystko w FRED |
-| **PLN** | GUS m/m (od 1989) + HICP | sektor przedsiębiorstw miesięcznie + **mediana z rejestrów ZUS+MF miesięcznie** (od 2010) | nasz rdzeń; TIP-0002 |
+| **PLN** | GUS m/m (od 1989) + HICP | sektor przedsiębiorstw miesięcznie + **mediana z rejestrów ZUS+MF miesięcznie** (od stycznia 2024 r., korekta 2026-11-15 według TIP-0002) | nasz rdzeń; TIP-0002 |
 | **GBP** | CPI/CPIH (ONS, miesięcznie) | Average Weekly Earnings miesięcznie (od 2000; wcześniej AEI od 1963 ✻) | b. dobra |
 | **JPY** | CPI (Statistics Bureau, miesięcznie, od 1946 ✻) | Monthly Labour Survey — płace miesięcznie, długa historia | uwaga: skandal metodologiczny MLS 2018 (zaniżone próbkowanie) — podręcznikowy argument za tripwire; poza tym GREEN |
 | **CAD** | CPI (StatCan, miesięcznie) | SEPH — przeciętne tygodniówki miesięcznie + płace z LFS miesięcznie (2 źródła!) | b. dobra |

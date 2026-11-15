@@ -1,5 +1,7 @@
 # Źródła danych do backtestu AUV 1900–1995
 
+**Status (2026-11-15):** archiwum prac nad AUV, poza rozwojem TLN-PLN. Skrypt `prototyp/src/backtest_1900.py` zależy od ścieżki `.auv_t`, której brakuje w repozytorium. Dane ręczne zawierają przybliżone kotwice i wymagają udokumentowania u źródła. Rejestr źródeł poniżej opisuje zamierzenia badawcze.
+
 **Cel:** zastąpić rekonstrukcję ilustracyjną (wykres 47) prawdziwym obliczeniem na twardych, cytowalnych danych historycznych. Format wpisywania: `prototyp/data/manual/backtest_historyczny.csv` (kolumny opisane niżej). Skrypt liczący: `src/backtest_1900.py`.
 
 Potrzebujemy trzech serii rocznych za okres 1900–1995. Wszystkie są publiczne i darmowe.

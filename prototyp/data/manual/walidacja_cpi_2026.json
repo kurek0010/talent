@@ -1,0 +1,30 @@
+{
+  "published_revision": "f11da704cb8ffa8215e92e2f60ef1292728dd24f",
+  "late_workflow": "https://github.com/kurek0010/talent/actions/runs/43265001848",
+  "cpi": {
+    "2026-06": {
+      "regular_release_date": "2026-07-15",
+      "regular_rate": 99.5,
+      "november_table_rate": 99.5,
+      "source": "https://stat.gov.pl/obszary-tematyczne/ceny-handel/wskazniki-cen/wskazniki-cen-towarow-i-uslug-konsumpcyjnych-w-czerwcu-2026-r-%2C2%2C176.html"
+    },
+    "2026-07": {
+      "regular_release_date": "2026-08-13",
+      "regular_rate": 100.8,
+      "november_table_rate": 100.8,
+      "source": "https://stat.gov.pl/kalendarium/13-08-2026.html"
+    },
+    "2026-08": {
+      "regular_release_date": "2026-09-15",
+      "regular_rate": 100.3,
+      "november_table_rate": 100.3,
+      "source": "https://publikacje.new.stat.gov.pl/portal-publikacje/wskazniki-cen-towarow-i-uslug-konsumpcyjnych-w-sierpniu-2026-r"
+    },
+    "2026-09": {
+      "regular_release_date": "2026-10-14",
+      "regular_rate": 100.7,
+      "november_table_rate": 100.7,
+      "source": "https://stat.gov.pl/obszary-tematyczne/ceny-handel/wskazniki-cen/wskazniki-cen-towarow-i-uslug-konsumpcyjnych-we-wrzesniu-2026-r-%2C2%2C179.html"
+    }
+  }
+}

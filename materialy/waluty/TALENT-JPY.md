@@ -1,5 +1,7 @@
 # TALENT-JPY — karta walutowa
 
+**Status (2026-11-15):** historyczna karta dostępności danych do dalszych badań. Oceny i kalendarz to założenia robocze sprzed zawężenia projektu do TLN-PLN. Przeliczenia polskiej kotwicy po kursach NBP są odrębną funkcją.
+
 **Poziom: A−** · pełne dane miesięczne · z wpisaną lekcją skandalu 2018
 
 ## Noga cen

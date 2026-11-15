@@ -1,65 +1,46 @@
-# Polityka wprowadzania danych — v0.1
+# Polityka danych TLN-PLN — v0.1
 
-**Data:** 2026-07-07 · **Status:** projekt · **Uzupełnia:** `strona/regula_publikacyjna.md`
-Reguła publikacyjna mówi *co* i *dlaczego*; ten dokument mówi *którędy dokładnie* — co do serii, tabeli urzędu i dnia. Zasada nadrzędna bez zmian: kod jest metodologią; ta polityka jest jego opisem słownym.
+**Stan dokumentacji:** 2026-11-15. Opis polskiego prototypu i założeń do rozstrzygnięcia przed wdrożeniem reguły rozliczeniowej. [Reguła publikacyjna](strona/regula_publikacyjna.md)
 
-## 1. Rejestr serii produkcyjnych (Talent-PL)
+## 1. Rejestr serii
 
-| # | Seria | Źródło i publikacja | Dzień publikacji | Rola |
-|---|---|---|---|---|
-| C1 | Wskaźnik cen towarów i usług konsumpcyjnych (m/m) | GUS, komunikat „Wskaźniki cen towarów i usług konsumpcyjnych" | ~15. dzień m+1 | noga cen |
-| C2 | HICP Polska (m/m) | Eurostat, tabela `prc_hicp_midx`, geo=PL | ~17.–19. dzień m+1 | noga cen |
-| C3 *(docelowo)* | Indeks cen online | do zbudowania/wyboru (scraping koszyka) | dziennie | noga cen, 3. źródło |
-| W1 | Przeciętne wynagrodzenie w sektorze przedsiębiorstw | GUS, komunikat „Przeciętne zatrudnienie i wynagrodzenie w sektorze przedsiębiorstw" | ~21. dzień m+1 | noga płac (fundusz) |
-| W2 | Przeciętne zatrudnienie w sektorze przedsiębiorstw | ten sam komunikat co W1 | ~21. dzień m+1 | noga płac (mianownik MA12) |
-| W3 *(kandydat, TIP-0002)* | Mediana wynagrodzeń w gospodarce narodowej | GUS, „Rozkład wynagrodzeń w gospodarce narodowej" (rejestry ZUS+MF, miesięcznie, szereg od I 2010) | ~2 miesiące po m | noga płac, 2. źródło |
-| F1 | Kursy średnie walut | NBP, tabela A | każdy dzień roboczy | tryb awaryjny; przeliczenia |
+| Seria | Źródło | Rola |
+|---|---|---|
+| CPI m/m | GUS, „Miesięczne wskaźniki cen towarów i usług konsumpcyjnych od 1982 roku” | wejście aktualizatora z `first_prints_pln.json` |
+| Roczne przeciętne wynagrodzenie w gospodarce narodowej | wartości zapisane w `first_prints_pln.json`, w tym przybliżenie oznaczone jako proxy | wejście aktualizatora, interpolacja logarytmiczna między punktami lipcowymi |
+| HICP Polski | Eurostat, geo=PL | kandydat do porównań, wspólna baza źródłowa z CPI |
+| Przeciętne wynagrodzenie i zatrudnienie w sektorze przedsiębiorstw | miesięczny komunikat GUS | kandydat na fundusz płac i mianownik MA12 w [TIP-0001](TIP/TIP-0001-noga-placowa-v02.md) |
+| Mediana wynagrodzeń w gospodarce narodowej | GUS, „Rozkład wynagrodzeń w gospodarce narodowej” | kandydat w [TIP-0002](TIP/TIP-0002-mediana-wynagrodzen.md) |
+| Indeks cen online | źródło do wyboru | dalsza propozycja porównawcza |
+| Kursy średnie walut | NBP, tabela A | poglądowe przeliczenia polskiej kotwicy |
 
-Serie testów historycznych (FRED: CPIAUCNS, CES3000000008, A939RC0A052NBEA, AHETPI, PAYEMS; POLCPIALLMINMEI) są **zamrożonymi migawkami** w `prototyp/data/raw/` z datą pobrania w nagłówku raportów — nie podlegają tej polityce, bo nie zasilają publikacji.
+Polski CPI i HICP mają wspólne dane i początkowe etapy obliczeń. Rozbieżność dwóch miar może sygnalizować problem, ale sama nie identyfikuje błędnego źródła. [Metadane HICP dla Polski, §18.5.2](https://ec.europa.eu/eurostat/cache/metadata/EN/prc_hicp_esmshi4_pl.htm)
 
-## 2. Kalendarz jednego cyklu (miesiąc m)
+Miesięczny szereg mediany z nowego badania GUS zaczyna się w styczniu 2024 r. Dane za marzec 2026 r. opublikowano 2 września 2026 r. Analiza ewentualnego użycia powinna uwzględniać faktyczne daty publikacji. Dynamika mediany poziomów wynagrodzeń jest inną miarą niż mediana zmian płac tych samych osób. [Zapowiedź GUS](https://stat.gov.pl/dla-mediow/informacje-prasowe/informacja-o-badaniu-rozklad-wynagrodzen-w-gospodarce-narodowej%2C2%2C1.html?contrast=default) · [Kalendarium GUS](https://stat.gov.pl/kalendarium/02-09-2026.html)
 
-| Dzień | Zdarzenie |
-|---|---|
-| ~15. m+1 | GUS publikuje C1 za m |
-| ~17.–19. m+1 | Eurostat publikuje C2 za m |
-| ~21. m+1 | GUS publikuje W1, W2 za m |
-| **24. m+1, 12:00 CET** | **odcięcie danych** — do obliczeń wchodzi wyłącznie to, co opublikowano do tej chwili |
-| **25. m+1** | obliczenie kotwicy A(m); publikacja A(m) + pełnej ścieżki dziennej na okno 26. m+1 → 25. m+2; publikacja hasha danych wejściowych i tagu wersji kodu |
+Serie z `prototyp/data/raw/` służą badaniom historycznym. Metryki obliczone na tych migawkach nie ustalają wyniku, który byłby dostępny w konkretnym dniu w przeszłości.
 
-## 3. Co dokładnie wchodzi do wzoru
+## 2. Cykl miesięczny
 
-1. **Dynamiki, nie poziomy.** Z każdego źródła bierzemy **oficjalnie opublikowaną dynamikę m/m z pierwszego odczytu** (first print). Indeksy nóg budujemy łańcuchowo z tych dynamik. Dzięki temu późniejsze rewizje poziomów niczego nie psują — patrz §5.
-2. **Noga cen:** dynamika = mediana dynamik dostępnych źródeł C (przy dwóch źródłach: średnia geometryczna).
-3. **Noga płac:** `W(m) = W1(m)×W2(m) / MA12(W2)(m)` (fundusz / wygładzone zatrudnienie, TIP-0001), potem MA12 całego indeksu.
+Workflow zaplanowano na 25. dzień miesiąca. Kod aktualizacji oczekuje wtedy kotwicy za poprzedni miesiąc. Wcześniejszy projekt przewidywał odcięcie 24. dnia o 12:00. Pobranie aktualnej tabeli 25. dnia nie wystarcza do potwierdzenia, że dane były dostępne przed odcięciem.
 
-## 4. Kaskada awaryjna opóźnień (fallback)
+## 3. Dane używane w obliczeniu
 
-Zapisana z góry, uruchamiana mechanicznie:
+CPI jest łańcuchowany od ostatniego zapisanego poziomu, na podstawie miesięcznej dynamiki zapisanej w rejestrze. Noga płac wykorzystuje roczne punkty przypisane do lipca. Poza zakresem interpolacji aktualizator przenosi ostatni poziom składnika płacowego. Wariant TIP-0001 i mediana nie są w tej ścieżce używane.
 
-1. **Źródło spóźnione w dniu odcięcia** → jego dynamika za m = dynamika z ostatniej dostępnej publikacji tego źródła (carry-forward); gdy publikacja nadejdzie, różnica wchodzi wyłącznie w dynamikę kolejnego cyklu. Publiczny alert w metadanych odczytu.
-2. **Źródło spóźnione ≥2 cykle** → nogę liczy mediana pozostałych źródeł; alert eskalowany.
-3. **Źródło ogłasza zaprzestanie publikacji** → wypada z rejestru przy najbliższej rewizji wg procedury TIP (chain-linking, test nakładania); do tego czasu pkt 2.
-4. **Wszystkie źródła nogi niedostępne** (stan nadzwyczajny) → kotwica za m = kotwica за m−1 przedłużona ostatnią znaną dynamiką; jeśli stan trwa >3 cykle — procedura trybu awaryjnego z reguły §5.2.
+## 4. Braki danych
 
-## 5. Rewizje danych źródłowych
+1. Jeden brak dynamiki CPI dla oczekiwanego miesiąca pozwala użyć ostatniej znanej dynamiki. Aktualizator wypisuje alert.
+2. Drugi kolejny brak przerywa uruchomienie przed dopisaniem nowych kotwic. Zastąpienie źródła lub przejście na koszyk walut wymaga osobnej decyzji metodologicznej.
 
-- Wiąże **pierwszy oficjalny odczyt** dynamiki m/m. Opublikowane wartości Talenta są ostateczne — rozliczona umowa nigdy nie jest „przeliczana po rewizji" (odpowiedź na pytanie: *nie*, umowa nie była rozliczona krzywdząco — była rozliczona po jedynej wartości, którą obie strony mogły znać; symetrycznie działa to w obie strony).
-- Rewizje wpływają na przyszłość wyłącznie pośrednio: kolejne dynamiki first-print urzędy liczą już od zrewidowanych poziomów — łańcuch sam się koryguje bez naszej ingerencji.
-- Rozjazd skumulowany: raz w roku publikujemy **raport pojednawczy** (indeks z first-printów vs indeks z danych ostatecznych) — jawna miara kosztu zasady nierewidowania; sama publikacja, zero korekt.
+## 5. Rewizje pierwszych odczytów
 
-## 6. Zmiany bazy, wag i metodologii urzędów
+Zasadą projektu jest zachowanie opublikowanych wartości. Łańcuch pierwszych odczytów może odbiegać od łańcucha na danych zrewidowanych. Jeśli pierwsza dynamika wynika z przejścia 100 → 110, urząd rewiduje drugi poziom do 105, a kolejna dynamika wynosi +10% (105 → 115,5), łańcuch pierwszych dynamik daje 121. Poziom zrewidowany wynosi 115,5. Porównanie tych ścieżek w okresowym raporcie pozostaje propozycją.
 
-- Pracujemy na dynamikach m/m, więc **zmiana roku bazowego urzędu (np. 2015=100 → 2020=100) jest neutralna** — dynamika nie zależy od bazy.
-- Zmiana koszyka/wag CPI (coroczna, styczniowa u GUS): przyjmujemy dynamikę publikowaną przez urząd (już łańcuchowaną przez GUS/Eurostat wg standardu HICP); w metadanych odczytu odnotowujemy miesiąc zmiany wag.
-- Zmiana **definicji** serii (np. rozszerzenie próby W1): traktowana jak wymiana źródła → procedura TIP z oknem nakładania i testem zgodności dynamik (korelacja > próg), zszycie łańcuchowe, nigdy wstecz.
+## 6. Zmiany źródeł i integralność publikacji
 
-## 7. Świadome kompromisy (jawna lista decyzji)
+Zmiany definicji serii, źródeł i reguł obsługi rewizji wymagają [TIP](TIP/README.md), testu nakładania serii oraz udokumentowanej daty wejścia. Rejestr publikacji przechowuje listę miesięcy. Archiwum z wartościami, datami publikacji wejść, skrótami plików i wersją kodu dla każdej kotwicy wymaga wdrożenia. Raportowanie i odtwarzanie należy prowadzić na odrębnych kopiach danych.
 
-1. **Średnia zamiast mediany (na dziś).** Przeciętne wynagrodzenie sektora przedsiębiorstw pomija firmy <9 osób i rośnie szybciej niż płaca typowego pracownika (górny ogon rozkładu) — noga płac na średniej lekko sprzyja wierzycielowi. To decyzja świadoma, wymuszona historyczną dostępnością danych, częściowo złagodzona przez TIP-0001 (fundusz/zatrudnienie — usuwa artefakt kryzysowy). **Kierunek docelowy: mediana z rejestrów ZUS+MF** — GUS publikuje ją już miesięcznie („Rozkład wynagrodzeń w gospodarce narodowej", od I 2010) — przejście wg szkicu TIP-0002 po zbadaniu opóźnienia i stabilności serii.
-2. **Dwa źródła cen zamiast trzech.** C3 (indeks online) pozostaje do zbudowania; do tego czasu tripwire działa na parze C1/C2, które nie są w pełni niezależne (HICP liczony z danych GUS inną metodą). Odnotowane jako słabość.
-3. **First print zamiast prawdy ostatecznej.** Koszt mierzony raportem pojednawczym (§5); wybór podyktowany rozstrzygalnością umów.
+## 7. Odrębna seria próbna
 
-## 8. Integralność publikacji
-
-Każdy odczyt zawiera: wartości, listę użytych publikacji źródłowych (nazwa komunikatu + data), hash SHA-256 plików wejściowych, tag wersji kodu, flagi alertów (§4). Odtworzenie: `python src/talent_daily.py` na tych samych wejściach musi dać identyczny wynik co do grosza.
+[TIP-0003](TIP/TIP-0003-tln-pln-prospektywny.md) testuje CPI z pierwszej regularnej publikacji i 12-miesięczną średnią z płac w sektorze przedsiębiorstw. Granicą dostępności jest 24. dzień o 12:00 w czasie polskim. Braki wstrzymują cykl. Próbne odczyty, ich wejścia i skróty trafiają do oddzielnego archiwum. Publikacje dotychczasowej serii opisuje [audyt kotwic z 2026 r.](materialy/audyt_kotwic_2026.md).

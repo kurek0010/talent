@@ -12,9 +12,9 @@
  }catch(e){document.documentElement.setAttribute('data-theme','dark');}
 })();
 </script>
-<title>Talent (TLN) — jednostka do waloryzacji umów</title>
-<meta name="description" content="Talent to jednostka rozliczeniowa oparta na zmianach cen i wynagrodzeń. Sprawdź indeks, historię jego wartości i przeliczenia walutowe.">
-<meta property="og:title" content="Talent (TLN) — jednostka do waloryzacji umów">
+<title>Talent (TLN) — propozycja standardu rozliczania umów</title>
+<meta name="description" content="Prototyp wspólnego standardu rozliczania umów w PLN oparty na zmianach cen i przeciętnych wynagrodzeń.">
+<meta property="og:title" content="Talent (TLN) — propozycja standardu rozliczania umów">
 <meta property="og:description" content="Indeks Talenta dla Polski, przelicznik oraz metoda waloryzacji opartej na cenach i wynagrodzeniach.">
 <meta property="og:type" content="website">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -137,6 +137,28 @@ a{color:var(--ac)}
 .scenario h3{font-size:1.13rem;margin-bottom:4px}
 .scenario .example{width:100%;margin:auto 0 0}
 .scenario .example th,.scenario .example td{padding:8px 10px}
+.contract-form{margin:16px 0}
+.contract-inputs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.contract-inputs label{display:grid;gap:4px;font:bold .875rem/1.4 Arial,sans-serif}
+.contract-inputs input{width:100%;min-width:0;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--bg);color:var(--tx);font:1rem Arial,sans-serif}
+:root[data-theme="dark"] .contract-inputs input{color-scheme:dark}
+.contract-form button{min-height:40px;padding:8px 12px;border:1px solid var(--border-hover);border-radius:6px;background:var(--card);color:var(--tx);font:.875rem Arial,sans-serif;cursor:pointer}
+.contract-form .contract-submit{background:var(--ac);color:var(--card);border-color:var(--ac);font-weight:bold}
+:root[data-theme="light"] .contract-submit,:root[data-theme="sepia"] .contract-submit{color:#fff}
+.contract-form :focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.contract-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.contract-meta,.contract-readings{color:var(--mut);font-size:.85rem}
+.contract-meta{margin-top:8px}
+.contract-readings{display:block;font-weight:normal}
+.contract-result{width:100%;max-width:640px;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.contract-result th,.contract-result td{padding:8px 4px;text-align:left;border-bottom:1px solid var(--border)}
+.contract-result td,.contract-result thead th:last-child{text-align:right}
+.contract-result td{overflow-wrap:anywhere}
+.contract-result tbody tr:last-child{background:var(--tint)}
+#contract-status{margin:0}
+#contract-status:not(:empty){margin-bottom:12px}
+#contract-loan-note{margin:12px 0 0}
+@media(max-width:560px){.contract-inputs{grid-template-columns:1fr}}
 @media(max-width:760px){.scenarios{grid-template-columns:1fr}}
 @media(max-width:780px){.split-hero{grid-template-columns:1fr;gap:16px}.split-hero .hero h1{margin-bottom:9px}.split-hero .hero p{font-size:1.05rem}.split-hero .actions{margin-top:12px}}
 </style>
@@ -147,6 +169,7 @@ a{color:var(--ac)}
 <nav aria-label="Nawigacja główna">
 <a href="#jak-dziala">Jak działa</a>
 <a href="#dane">Przelicznik</a>
+<a href="#waloryzacja">Waloryzacja umowy</a>
 <a href="#zastosowania">Zastosowania</a>
 <a href="#badania">Badania</a>
 <a href="#metoda">Metodologia</a>
@@ -161,11 +184,11 @@ a{color:var(--ac)}
 <section class="split-hero" aria-label="Talent i jego wartość">
 <div class="hero" aria-labelledby="tytul">
 <p class="status">Prototyp badawczy · Polska</p>
-<h1 id="tytul">Talent (TLN) — jednostka do waloryzacji umów</h1>
-<p>Talent pomaga ustalić, jak kwota do zapłaty ma zmieniać się między zawarciem umowy a jej rozliczeniem. Można go rozważyć na przykład przy pożyczce prywatnej lub płatności odroczonej.</p>
-<p>Wartość Talenta zależy od zmian cen i przeciętnych wynagrodzeń. Ceny pokazują, ile można kupić za otrzymaną kwotę, a wynagrodzenia pozwalają ocenić, jak duża jest płatność w relacji do przeciętnej pensji.</p>
-<p>Wykres pokazuje, jak zmieniał się indeks Talenta. Przelicznik pozwala sprawdzić wartość wybranej kwoty w talentach, złotych i innych walutach według ostatniej opublikowanej wartości miesięcznej.</p>
-<div class="actions"><a class="primary" href="#jak-dziala">Jak działa Talent</a><a href="#dane">Przelicz kwotę</a></div>
+<h1 id="tytul">Talent (TLN) — propozycja standardu rozliczania umów</h1>
+<p>Talent to propozycja wspólnego standardu rozliczania umów dla osób prywatnych i przedsiębiorstw. W rozwijanej obecnie polskiej wersji opiera się na otwartej regule waloryzacji, która według uzgodnionej wcześniej zasady dzieli między strony wpływ zmian cen i przeciętnych wynagrodzeń. Strony przyjmują tę regułę dobrowolnie.</p>
+<p>Jawność reguły, danych i obliczeń ma umożliwiać niezależne odtworzenie wyniku oraz ocenę skutków przyjętej zasady. Projekt pozostaje prototypem badawczym. Jego zastosowania i ograniczenia są przedmiotem weryfikacji. Obecny zakres to polska gospodarka i rozliczenia w PLN.</p>
+<p>Wykres pokazuje, jak zmieniał się indeks Talenta. Przelicznik pozwala sprawdzić wartość wybranej kwoty w talentach, złotych i innych walutach według ostatniego miesiąca dostępnego w tabeli przeliczeń.</p>
+<div class="actions"><a class="primary" href="#jak-dziala">Jak działa Talent</a><a href="#waloryzacja">Oblicz waloryzację</a></div>
 </div>
 <div class="panel">
 <h3>Wykres Talenta</h3>
@@ -195,7 +218,7 @@ a{color:var(--ac)}
 </section>
 <section class="section" id="jak-dziala">
 <h2>Jak działa Talent</h2>
-<p>Wzrost cen zmniejsza siłę nabywczą kwoty ustalonej w umowie. Zmiana wynagrodzeń wpływa z kolei na to, jaką część przeciętnej pensji trzeba przeznaczyć na zapłatę. Talent łączy oba wskaźniki za pomocą średniej geometrycznej.</p>
+<p>Wzrost cen zmniejsza siłę nabywczą kwoty ustalonej w umowie. Zmiana wynagrodzeń wpływa z kolei na to, jaką część przeciętnej pensji trzeba przeznaczyć na zapłatę. Talent łączy oba wskaźniki za pomocą średniej geometrycznej. Uczciwość oznacza tu uzgodnioną wcześniej zasadę podziału skutków zmian gospodarczych. Symetria dotyczy zmian w skali logarytmicznej.</p>
 <p>Porównajmy trzy sposoby rozliczenia kwoty 10 000 zł przy dwóch różnych zmianach cen i płac.</p>
 <div class="scenarios">
 <article class="scenario">
@@ -228,7 +251,7 @@ a{color:var(--ac)}
 
 <section class="section" id="dane">
 <h2>Przelicznik i kursy walutowe</h2>
-<p>Przeliczenia walutowe łączą kotwicę Talenta z ostatnim średnim kursem NBP z tego samego miesiąca.</p>
+<p>Przeliczenia pokazują odpowiednik polskiego TLN w innych walutach. Bieżące wiersze tabeli wykorzystują średnie kursy NBP z ostatniego dostępnego dnia notowań w danym miesiącu. Rozliczenia w rozwijanym standardzie są w PLN.</p>
 <div class="tiles-col variant-calc">
 <div class="card calc">
 <div class="calc-h">Przelicznik Talenta</div>
@@ -251,11 +274,40 @@ a{color:var(--ac)}
 <div class="idxline mtile active" data-series="idx" title="Pokaż wykres indeksu TLN-PLN">Ostatnia kotwica TLN-PLN: <b id="anchorValue">—</b> <span class="idxdate" id="anchorMonth"></span></div>
 </div>
 </section>
+<section class="section" id="waloryzacja" aria-labelledby="contract-heading">
+<h2 id="contract-heading">Kalkulator waloryzacji umowy</h2>
+<p id="contract-help">Porównaj trzy sposoby rozliczenia jednej płatności w PLN, bez odsetek i opłat. Każda data wskazuje miesiąc odczytu.</p>
+<form class="contract-form card" id="contract-form" aria-describedby="contract-help contract-series" novalidate>
+<div class="contract-inputs">
+<label>Kwota początkowa w PLN <input name="amount" type="text" inputmode="decimal" placeholder="10 000,00" required></label>
+<label>Data początkowa <input name="start" type="date" required></label>
+<label>Data rozliczenia <input name="end" type="date" required></label>
+</div>
+<div class="contract-actions">
+<button class="contract-submit" type="submit">Oblicz</button>
+<button type="button" data-contract-example="invoice">Przykład faktury</button>
+<button type="button" data-contract-example="loan">Przykład pożyczki</button>
+</div>
+</form>
+<p class="contract-meta" id="contract-series">Historyczna seria badawcza TLN-PLN, baza 01.1996 = 100. Odczyty miesięczne mogły ukazać się po wybranym dniu. <a href="regula_publikacyjna.html">Źródła i status serii</a>.</p>
+<p id="contract-status" role="status"></p>
+<div id="contract-result" hidden>
+<table class="contract-result">
+<thead><tr><th scope="col">Sposób rozliczenia</th><th scope="col">Do zapłaty</th></tr></thead>
+<tbody>
+<tr><th scope="row">Kwota nominalna</th><td id="contract-nominal"></td></tr>
+<tr><th scope="row">Waloryzacja CPI <small class="contract-readings" id="contract-cpi-readings"></small></th><td id="contract-cpi"></td></tr>
+<tr><th scope="row">Waloryzacja Talentem <small class="contract-readings" id="contract-talent-readings"></small></th><td id="contract-talent"></td></tr>
+</tbody>
+</table>
+<p class="contract-meta" id="contract-loan-note" hidden></p>
+</div>
+</section>
 <section class="section" aria-label="Zastosowania, badania i metodologia">
 <div class="read-grid">
 <article class="read-card" id="zastosowania">
 <h3>Zastosowania i ograniczenia</h3>
-<p>Talent można rozważyć przy pożyczce prywatnej lub płatności odroczonej. Przeciętne wynagrodzenie opisuje zmianę płac w gospodarce i może zmieniać się inaczej niż dochód osoby, która ma zapłacić.</p>
+<p>Pierwsze zastosowania do zbadania to pożyczka i płatność odroczona, na przykład za maszynę zamówioną przez przedsiębiorstwo. Dochód kontrahenta może zmieniać się inaczej niż przeciętne wynagrodzenie, a koszty produkcji firmy mogą odbiegać od CPI.</p>
 <ul>
 <li><a href="wprowadzenie.html">Wprowadzenie i zastosowania</a></li>
 <li><a href="faq.html">Najczęstsze pytania</a></li>
@@ -265,15 +317,15 @@ a{color:var(--ac)}
 <h3>Wyniki badań</h3>
 <p>Jak różne sposoby waloryzacji wypadają na danych historycznych? Zobacz wyniki dla konkretnych okresów i założenia użyte w obliczeniach.</p>
 <ul>
-<li><a href="wyscig_kandydatow.html">Porównanie metod waloryzacji</a></li>
+<li><a href="wyscig_kandydatow.html">Archiwalne porównanie metod, w tym AUV</a></li>
 <li><a href="wyniki_kruche_gospodarki.html">Polska w latach 1989–2024 i epizody kryzysowe</a></li>
-<li><a href="wyniki_test_stulecia_usa.html">Testy historyczne na danych z USA</a></li>
-<li><a href="wyniki_talent_dwustronny.html">Talent w umowach międzynarodowych</a></li>
+<li><a href="wyniki_test_stulecia_usa.html">Badanie porównawcze na danych z USA</a></li>
+<li><a href="wyniki_talent_dwustronny.html">Eksperyment PL–US</a></li>
 </ul>
 </article>
 <article class="read-card" id="metoda">
 <h3>Metodologia i dane</h3>
-<p>Wzór, źródła danych, harmonogram publikacji oraz dokumentacja pozwalająca odtworzyć obliczenia.</p>
+<p>Wzór, źródła danych, harmonogram publikacji oraz dokumentacja do sprawdzania obliczeń.</p>
 <ul>
 <li><a href="whitepaper.html">Metoda obliczeń i jej uzasadnienie</a></li>
 <li><a href="regula_publikacyjna.html">Reguła publikacyjna</a></li>
@@ -288,6 +340,147 @@ a{color:var(--ac)}
 </main>
 <footer class="foot">Prototyp badawczy. Publikowane wartości mają charakter roboczy.</footer>
 
+<script type="application/json" id="contract-rates">{"1996-01":[100000,100000],"1996-02":[101461,101187],"1996-03":[102922,102378],"1996-04":[105195,103976],"1996-05":[106656,105177],"1996-06":[107792,106223],"1996-07":[107630,106634],"1996-08":[108117,107358],"1996-09":[110227,108883],"1996-10":[111851,110166],"1996-11":[113312,111369],"1996-12":[114773,112574],"1997-01":[118019,115139],"1997-02":[119318,116760],"1997-03":[120292,118229],"1997-04":[121429,119784],"1997-05":[122078,121105],"1997-06":[123864,122995],"1997-07":[123539,123841],"1997-08":[123701,124918],"1997-09":[125487,126808],"1997-10":[126786,128448],"1997-11":[128247,130166],"1997-12":[129545,131796],"1998-01":[133604,134821],"1998-02":[135877,136935],"1998-03":[136688,138306],"1998-04":[137662,139751],"1998-05":[138149,140940],"1998-06":[138636,142120],"1998-07":[138149,142787],"1998-08":[137338,143261],"1998-09":[138474,144729],"1998-10":[139286,146012],"1998-11":[139935,147192],"1998-12":[140422,148269],"1999-01":[142532,150185],"1999-02":[143344,151399],"1999-03":[144805,152938],"1999-04":[145942,154288],"1999-05":[146916,155533],"1999-06":[147240,156414],"1999-07":[146753,156842],"1999-08":[147565,157975],"1999-09":[149675,159816],"1999-10":[151299,161412],"1999-11":[152597,162850],"1999-12":[153896,164303],"2000-01":[156656,166550],"2000-02":[157955,168034],"2000-03":[159416,169621],"2000-04":[160065,170792],"2000-05":[161201,172237],"2000-06":[162338,173700],"2000-07":[163474,175178],"2000-08":[162987,175759],"2000-09":[164610,177451],"2000-10":[165909,178942],"2000-11":[166558,180058],"2000-12":[166883,180972],"2001-01":[168182,182387],"2001-02":[168344,183159],"2001-03":[169156,184256],"2001-04":[170455,185591],"2001-05":[172403,187252],"2001-06":[172240,187737],"2001-07":[171753,188013],"2001-08":[171266,188266],"2001-09":[171753,189031],"2001-10":[172403,189864],"2001-11":[172565,190408],"2001-12":[172890,191019],"2002-01":[174351,192236],"2002-02":[174513,192714],"2002-03":[174838,193260],"2002-04":[175649,194053],"2002-05":[175325,194196],"2002-06":[174675,194134],"2002-07":[173864,193957],"2002-08":[173214,193868],"2002-09":[173701,194412],"2002-10":[174188,194955],"2002-11":[174026,195134],"2002-12":[174188,195493],"2003-01":[174838,196125],"2003-02":[175000,196482],"2003-03":[175487,197021],"2003-04":[175812,197467],"2003-05":[175812,197730],"2003-06":[175649,197900],"2003-07":[175000,197793],"2003-08":[174351,197690],"2003-09":[175162,198421],"2003-10":[176136,199249],"2003-11":[176623,199808],"2003-12":[176948,200282],"2004-01":[177597,200945],"2004-02":[177760,201339],"2004-03":[178247,201923],"2004-04":[179708,203065],"2004-05":[181494,204394],"2004-06":[183117,205637],"2004-07":[182955,205882],"2004-08":[182143,205761],"2004-09":[182630,206372],"2004-10":[183766,207351],"2004-11":[184253,207964],"2004-12":[184416,208395],"2005-01":[184578,208826],"2005-02":[184416,209074],"2005-03":[184578,209506],"2005-04":[185390,210307],"2005-05":[185877,210925],"2005-06":[185552,211082],"2005-07":[185227,211239],"2005-08":[185065,211490],"2005-09":[185877,212298],"2005-10":[186688,213108],"2005-11":[186364,213271],"2005-12":[186039,213434],"2006-01":[186382,213982],"2006-02":[186382,214334],"2006-03":[186194,214580],"2006-04":[187321,215584],"2006-05":[188448,216590],"2006-06":[187885,216625],"2006-07":[188073,217094],"2006-08":[188636,217814],"2006-09":[188824,218352],"2006-10":[188636,218706],"2006-11":[188824,219312],"2006-12":[188636,219734],"2007-01":[189388,220738],"2007-02":[189952,221668],"2007-03":[190891,222854],"2007-04":[191830,224076],"2007-05":[192770,225335],"2007-06":[192770,226081],"2007-07":[192206,226530],"2007-08":[191455,226874],"2007-09":[192958,228561],"2007-10":[194085,230038],"2007-11":[195400,231636],"2007-12":[195964,232801],"2008-01":[197279,234423],"2008-02":[198031,235721],"2008-03":[198782,237031],"2008-04":[199534,238352],"2008-05":[201037,240134],"2008-06":[201413,241254],"2008-07":[201413,242158],"2008-08":[200661,242579],"2008-09":[201225,243765],"2008-10":[201976,245038],"2008-11":[202352,246055],"2008-12":[202164,246700],"2009-01":[203103,248004],"2009-02":[204982,249853],"2009-03":[206485,251445],"2009-04":[207988,253008],"2009-05":[209116,254314],"2009-06":[209492,255133],"2009-07":[209679,255808],"2009-08":[208928,255897],"2009-09":[208928,256433],"2009-10":[209116,257073],"2009-11":[209679,257933],"2009-12":[209679,258436],"2010-01":[210995,259737],"2010-02":[211370,260449],"2010-03":[211934,261266],"2010-04":[212874,262303],"2010-05":[213437,263098],"2010-06":[214001,263882],"2010-07":[213625,264074],"2010-08":[212686,263930],"2010-09":[214001,265197],"2010-10":[215128,266362],"2010-11":[215316,266960],"2010-12":[216255,268038],"2011-01":[218886,270178],"2011-02":[219262,270939],"2011-03":[221328,272758],"2011-04":[222456,274014],"2011-05":[223771,275400],"2011-06":[222831,275412],"2011-07":[222080,275552],"2011-08":[222080,276141],"2011-09":[222268,276831],"2011-10":[223771,278325],"2011-11":[225274,279803],"2011-12":[226213,280916],"2012-01":[227716,282364],"2012-02":[228656,283447],"2012-03":[229783,284631],"2012-04":[231098,285916],"2012-05":[231474,286603],"2012-06":[231850,287275],"2012-07":[230723,286998],"2012-08":[229971,286952],"2012-09":[230159,287493],"2012-10":[231098,288505],"2012-11":[231286,289049],"2012-12":[231474,289594],"2013-01":[231662,290141],"2013-02":[231662,290572],"2013-03":[232038,291240],"2013-04":[232977,292263],"2013-05":[232789,292580],"2013-06":[232789,293017],"2013-07":[233541,293928],"2013-08":[232789,293892],"2013-09":[232977,294450],"2013-10":[233353,295128],"2013-11":[232977,295331],"2013-12":[233165,295891],"2014-01":[233353,296453],"2014-02":[233541,297016],"2014-03":[233729,297580],"2014-04":[233729,298025],"2014-05":[233541,298351],"2014-06":[233541,298797],"2014-07":[233165,299004],"2014-08":[232226,298841],"2014-09":[232226,299277],"2014-10":[232226,299707],"2014-11":[231850,299889],"2014-12":[231098,299821],"2015-01":[230723,299990],"2015-02":[230535,300276],"2015-03":[230910,300923],"2015-04":[231850,301933],"2015-05":[231850,302326],"2015-06":[231850,302713],"2015-07":[231662,302972],"2015-08":[230723,302746],"2015-09":[229971,302649],"2015-10":[230159,303177],"2015-11":[229971,303465],"2015-12":[229595,303636],"2016-01":[228468,303315],"2016-02":[228280,303624],"2016-03":[228468,304191],"2016-04":[229219,305141],"2016-05":[229407,305724],"2016-06":[229783,306440],"2016-07":[229032,306412],"2016-08":[228656,306653],"2016-09":[228656,307164],"2016-10":[229783,308451],"2016-11":[229971,309128],"2016-12":[231662,310835],"2017-01":[232601,312057],"2017-02":[233353,313174],"2017-03":[233165,313680],"2017-04":[233917,314837],"2017-05":[233917,315510],"2017-06":[233541,315948],"2017-07":[233165,316404],"2017-08":[232977,317007],"2017-09":[233917,318398],"2017-10":[235044,319940],"2017-11":[236171,321505],"2017-12":[236735,322709],"2018-01":[237486,324064],"2018-02":[236923,324542],"2018-03":[236735,325298],"2018-04":[237862,326979],"2018-05":[238426,328296],"2018-06":[238614,329378],"2018-07":[238050,329961],"2018-08":[238050,330935],"2018-09":[238614,332304],"2018-10":[239553,333939],"2018-11":[239553,334923],"2018-12":[239553,335909],"2019-01":[238989,336500],"2019-02":[239929,338152],"2019-03":[240680,339675],"2019-04":[243311,342528],"2019-05":[243874,343930],"2019-06":[244626,345469],"2019-07":[244626,346480],"2019-08":[244626,347468],"2019-09":[244626,348433],"2019-10":[245190,349778],"2019-11":[245378,350833],"2019-12":[247256,353076],"2020-01":[249511,355564],"2020-02":[251202,357629],"2020-03":[251766,358870],"2020-04":[251578,359552],"2020-05":[251014,359940],"2020-06":[252517,361786],"2020-07":[251954,362127],"2020-08":[251766,362793],"2020-09":[252329,364057],"2020-10":[252517,365107],"2020-11":[252705,366214],"2020-12":[252893,367379],"2021-01":[256087,370785],"2021-02":[257402,372889],"2021-03":[260033,376007],"2021-04":[262099,378779],"2021-05":[262851,380663],"2021-06":[263039,382200],"2021-07":[264166,384481],"2021-08":[264918,386529],"2021-09":[266796,389442],"2021-10":[269803,393222],"2021-11":[272433,396771],"2021-12":[274875,400228],"2022-01":[280136,405778],"2022-02":[279385,407009],"2022-03":[288591,415504],"2022-04":[294415,421579],"2022-05":[299488,427156],"2022-06":[303998,432376],"2022-07":[305501,435507],"2022-08":[307943,439336],"2022-09":[312828,444934],"2022-10":[318465,451092],"2022-11":[320719,454880],"2022-12":[321095,457363],"2023-01":[329174,465346],"2023-02":[333120,470426],"2023-03":[336877,475405],"2023-04":[339320,479489],"2023-05":[339320,481874],"2023-06":[339320,484280],"2023-07":[338569,486169],"2023-08":[338569,488632],"2023-09":[337253,490177],"2023-10":[338193,493395],"2023-11":[340635,497757],"2023-12":[341011,500655],"2024-01":[342326,504286],"2024-02":[343265,507687],"2024-03":[344017,510993],"2024-04":[347775,516582],"2024-05":[348151,519707],"2024-06":[348526,522876],"2024-07":[353411,529476],"2024-08":[353787,532462],"2024-09":[354163,535206],"2024-10":[355290,538279],"2024-11":[356981,541541],"2024-12":[356981,543279],"2025-01":[360551,547490],"2025-02":[361678,549602],"2025-03":[362430,551182],"2025-04":[363880,554568],"2025-05":[363152,555968],"2025-06":[363515,558209],"2025-07":[364606,561019],"2025-08":[364606,562338],"2025-09":[364606,563661],"2025-10":[364970,565269],"2025-11":[365335,566881],"2025-12":[365335,568215],"2026-01":[367892,571541],"2026-02":[368996,573744],"2026-03":[373055,578248],"2026-04":[375293,581344],"2026-05":[374167,581836],"2026-06":[373044,582329],"2026-07":[373044,583698],"2026-08":[373044,583698],"2026-09":[373044,583698]}</script>
+<script id="contract-script">
+// Osobna sekcja strony, działająca również bez wykresu i jego biblioteki.
+(() => {
+  const invoice = {amount: '100000', start: '2021-12-31', end: '2022-12-31'};
+  const loan = {amount: '10000', start: '2026-05-31', end: '2026-09-30'};
+  const loanPaymentDates = ['2026-06-30', '2026-07-31', '2026-08-31', loan.end];
+
+  function parseAmount(value) {
+    const parts = value.trim().match(/^(\d+|\d{1,3}(?:[ \u00a0\u202f]\d{3})+)(?:[,.](\d{1,2}))?$/);
+    if (!parts) throw new Error('Wpisz kwotę w PLN, np. 10 000,00.');
+    const units = BigInt(parts[1].replace(/\D/g, ''));
+    const amount = units * 100n + BigInt((parts[2] || '').padEnd(2, '0'));
+    if (amount === 0n) throw new Error('Kwota początkowa musi być większa od zera.');
+    return amount;
+  }
+
+  function isDate(value) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+    const parsed = new Date(value);
+    return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
+  }
+
+  // Dokładna arytmetyka w groszach, jeden raz na każdą płatność.
+  function indexedAmount(amount, from, to) {
+    const numerator = amount * BigInt(to);
+    const denominator = BigInt(from);
+    return (2n * numerator + denominator) / (2n * denominator);
+  }
+
+  function calculate(rates, amount, start, end) {
+    if (!isDate(start) || !isDate(end)) throw new Error('Podaj obie pełne daty.');
+    if (start > end) throw new Error('Data rozliczenia nie może poprzedzać daty początkowej.');
+
+    const startMonth = start.slice(0, 7);
+    const endMonth = end.slice(0, 7);
+    const from = rates[startMonth];
+    const to = rates[endMonth];
+    if (!from || !to) {
+      const missing = [...new Set([startMonth, endMonth].filter(month => !rates[month]))];
+      throw new Error(`Brak odczytu miesięcznego za ${missing.join(' i ')}.`);
+    }
+
+    return {
+      nominal: amount,
+      cpi: indexedAmount(amount, from[0], to[0]),
+      talent: indexedAmount(amount, from[1], to[1]),
+      from,
+      to,
+      startMonth,
+      endMonth,
+    };
+  }
+
+  function loanInstallments(rates) {
+    return loanPaymentDates.reduce((sum, date) => {
+      const row = calculate(rates, 250000n, loan.start, date);
+      return {
+        nominal: sum.nominal + row.nominal,
+        cpi: sum.cpi + row.cpi,
+        talent: sum.talent + row.talent,
+      };
+    }, {nominal: 0n, cpi: 0n, talent: 0n});
+  }
+
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {parseAmount, calculate, loanInstallments, invoice, loan};
+    return;
+  }
+
+  const form = document.getElementById('contract-form');
+  const rates = JSON.parse(document.getElementById('contract-rates').textContent);
+  const fields = form.elements;
+  const status = document.getElementById('contract-status');
+  const result = document.getElementById('contract-result');
+  const loanNote = document.getElementById('contract-loan-note');
+  const currency = new Intl.NumberFormat('pl-PL', {
+    style: 'currency', currency: 'PLN', useGrouping: 'always',
+  });
+  const index = new Intl.NumberFormat('pl-PL', {minimumFractionDigits: 3, maximumFractionDigits: 3});
+
+  function formatPLN(cents) {
+    const fraction = String(cents % 100n).padStart(2, '0');
+    return currency.formatToParts(cents / 100n).map(
+      part => part.type === 'fraction' ? fraction : part.value
+    ).join('');
+  }
+
+  function render() {
+    result.hidden = true;
+    loanNote.hidden = true;
+    let row;
+    const start = fields.start.value;
+    const end = fields.end.value;
+    try {
+      row = calculate(rates, parseAmount(fields.amount.value), start, end);
+    } catch (error) {
+      status.textContent = error.message;
+      return;
+    }
+
+    for (const method of ['nominal', 'cpi', 'talent']) {
+      document.getElementById(`contract-${method}`).textContent = formatPLN(row[method]);
+    }
+    for (const [position, method] of ['cpi', 'talent'].entries()) {
+      document.getElementById(`contract-${method}-readings`).textContent =
+        `${index.format(row.from[position] / 1000)} → ${index.format(row.to[position] / 1000)} pkt`;
+    }
+    status.textContent = `Odczyty za ${row.startMonth} i ${row.endMonth}.`;
+    result.hidden = false;
+
+    if (row.nominal === 1000000n && start === loan.start && end === loan.end
+        && loanPaymentDates.every(date => rates[date.slice(0, 7)])) {
+      const installments = loanInstallments(rates);
+      loanNote.textContent = 'Suma czterech rat od czerwca do września 2026 r., po 2 500 zł przed waloryzacją.'
+        + ` Nominał ${formatPLN(installments.nominal)}, CPI ${formatPLN(installments.cpi)},`
+        + ` Talent ${formatPLN(installments.talent)}.`;
+      loanNote.hidden = false;
+    }
+  }
+
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    render();
+  });
+  form.addEventListener('input', () => {
+    status.textContent = '';
+    result.hidden = true;
+  });
+
+  for (const button of form.querySelectorAll('[data-contract-example]')) {
+    button.addEventListener('click', () => {
+      const example = button.dataset.contractExample === 'invoice' ? invoice : loan;
+      fields.amount.value = example.amount;
+      fields.start.value = example.start;
+      fields.end.value = example.end;
+      render();
+    });
+  }
+})();
+</script>
 <script>
 const A={"1996-01":100.0,"1996-02":101.187,"1996-03":102.378,"1996-04":103.976,"1996-05":105.177,"1996-06":106.223,"1996-07":106.634,"1996-08":107.358,"1996-09":108.883,"1996-10":110.166,"1996-11":111.369,"1996-12":112.574,"1997-01":115.139,"1997-02":116.76,"1997-03":118.229,"1997-04":119.784,"1997-05":121.105,"1997-06":122.995,"1997-07":123.841,"1997-08":124.918,"1997-09":126.808,"1997-10":128.448,"1997-11":130.166,"1997-12":131.796,"1998-01":134.821,"1998-02":136.935,"1998-03":138.306,"1998-04":139.751,"1998-05":140.94,"1998-06":142.12,"1998-07":142.787,"1998-08":143.261,"1998-09":144.729,"1998-10":146.012,"1998-11":147.192,"1998-12":148.269,"1999-01":150.185,"1999-02":151.399,"1999-03":152.938,"1999-04":154.288,"1999-05":155.533,"1999-06":156.414,"1999-07":156.842,"1999-08":157.975,"1999-09":159.816,"1999-10":161.412,"1999-11":162.85,"1999-12":164.303,"2000-01":166.55,"2000-02":168.034,"2000-03":169.621,"2000-04":170.792,"2000-05":172.237,"2000-06":173.7,"2000-07":175.178,"2000-08":175.759,"2000-09":177.451,"2000-10":178.942,"2000-11":180.058,"2000-12":180.972,"2001-01":182.387,"2001-02":183.159,"2001-03":184.256,"2001-04":185.591,"2001-05":187.252,"2001-06":187.737,"2001-07":188.013,"2001-08":188.266,"2001-09":189.031,"2001-10":189.864,"2001-11":190.408,"2001-12":191.019,"2002-01":192.236,"2002-02":192.714,"2002-03":193.26,"2002-04":194.053,"2002-05":194.196,"2002-06":194.134,"2002-07":193.957,"2002-08":193.868,"2002-09":194.412,"2002-10":194.955,"2002-11":195.134,"2002-12":195.493,"2003-01":196.125,"2003-02":196.482,"2003-03":197.021,"2003-04":197.467,"2003-05":197.73,"2003-06":197.9,"2003-07":197.793,"2003-08":197.69,"2003-09":198.421,"2003-10":199.249,"2003-11":199.808,"2003-12":200.282,"2004-01":200.945,"2004-02":201.339,"2004-03":201.923,"2004-04":203.065,"2004-05":204.394,"2004-06":205.637,"2004-07":205.882,"2004-08":205.761,"2004-09":206.372,"2004-10":207.351,"2004-11":207.964,"2004-12":208.395,"2005-01":208.826,"2005-02":209.074,"2005-03":209.506,"2005-04":210.307,"2005-05":210.925,"2005-06":211.082,"2005-07":211.239,"2005-08":211.49,"2005-09":212.298,"2005-10":213.108,"2005-11":213.271,"2005-12":213.434,"2006-01":213.982,"2006-02":214.334,"2006-03":214.58,"2006-04":215.584,"2006-05":216.59,"2006-06":216.625,"2006-07":217.094,"2006-08":217.814,"2006-09":218.352,"2006-10":218.706,"2006-11":219.312,"2006-12":219.734,"2007-01":220.738,"2007-02":221.668,"2007-03":222.854,"2007-04":224.076,"2007-05":225.335,"2007-06":226.081,"2007-07":226.53,"2007-08":226.874,"2007-09":228.561,"2007-10":230.038,"2007-11":231.636,"2007-12":232.801,"2008-01":234.423,"2008-02":235.721,"2008-03":237.031,"2008-04":238.352,"2008-05":240.134,"2008-06":241.254,"2008-07":242.158,"2008-08":242.579,"2008-09":243.765,"2008-10":245.038,"2008-11":246.055,"2008-12":246.7,"2009-01":248.004,"2009-02":249.853,"2009-03":251.445,"2009-04":253.008,"2009-05":254.314,"2009-06":255.133,"2009-07":255.808,"2009-08":255.897,"2009-09":256.433,"2009-10":257.073,"2009-11":257.933,"2009-12":258.436,"2010-01":259.737,"2010-02":260.449,"2010-03":261.266,"2010-04":262.303,"2010-05":263.098,"2010-06":263.882,"2010-07":264.074,"2010-08":263.93,"2010-09":265.197,"2010-10":266.362,"2010-11":266.96,"2010-12":268.038,"2011-01":270.178,"2011-02":270.939,"2011-03":272.758,"2011-04":274.014,"2011-05":275.4,"2011-06":275.412,"2011-07":275.552,"2011-08":276.141,"2011-09":276.831,"2011-10":278.325,"2011-11":279.803,"2011-12":280.916,"2012-01":282.364,"2012-02":283.447,"2012-03":284.631,"2012-04":285.916,"2012-05":286.603,"2012-06":287.275,"2012-07":286.998,"2012-08":286.952,"2012-09":287.493,"2012-10":288.505,"2012-11":289.049,"2012-12":289.594,"2013-01":290.141,"2013-02":290.572,"2013-03":291.24,"2013-04":292.263,"2013-05":292.58,"2013-06":293.017,"2013-07":293.928,"2013-08":293.892,"2013-09":294.45,"2013-10":295.128,"2013-11":295.331,"2013-12":295.891,"2014-01":296.453,"2014-02":297.016,"2014-03":297.58,"2014-04":298.025,"2014-05":298.351,"2014-06":298.797,"2014-07":299.004,"2014-08":298.841,"2014-09":299.277,"2014-10":299.707,"2014-11":299.889,"2014-12":299.821,"2015-01":299.99,"2015-02":300.276,"2015-03":300.923,"2015-04":301.933,"2015-05":302.326,"2015-06":302.713,"2015-07":302.972,"2015-08":302.746,"2015-09":302.649,"2015-10":303.177,"2015-11":303.465,"2015-12":303.636,"2016-01":303.315,"2016-02":303.624,"2016-03":304.191,"2016-04":305.141,"2016-05":305.724,"2016-06":306.44,"2016-07":306.412,"2016-08":306.653,"2016-09":307.164,"2016-10":308.451,"2016-11":309.128,"2016-12":310.835,"2017-01":312.057,"2017-02":313.174,"2017-03":313.68,"2017-04":314.837,"2017-05":315.51,"2017-06":315.948,"2017-07":316.404,"2017-08":317.007,"2017-09":318.398,"2017-10":319.94,"2017-11":321.505,"2017-12":322.709,"2018-01":324.064,"2018-02":324.542,"2018-03":325.298,"2018-04":326.979,"2018-05":328.296,"2018-06":329.378,"2018-07":329.961,"2018-08":330.935,"2018-09":332.304,"2018-10":333.939,"2018-11":334.923,"2018-12":335.909,"2019-01":336.5,"2019-02":338.152,"2019-03":339.675,"2019-04":342.528,"2019-05":343.93,"2019-06":345.469,"2019-07":346.48,"2019-08":347.468,"2019-09":348.433,"2019-10":349.778,"2019-11":350.833,"2019-12":353.076,"2020-01":355.564,"2020-02":357.629,"2020-03":358.87,"2020-04":359.552,"2020-05":359.94,"2020-06":361.786,"2020-07":362.127,"2020-08":362.793,"2020-09":364.057,"2020-10":365.107,"2020-11":366.214,"2020-12":367.379,"2021-01":370.785,"2021-02":372.889,"2021-03":376.007,"2021-04":378.779,"2021-05":380.663,"2021-06":382.2,"2021-07":384.481,"2021-08":386.529,"2021-09":389.442,"2021-10":393.222,"2021-11":396.771,"2021-12":400.228,"2022-01":405.778,"2022-02":407.009,"2022-03":415.504,"2022-04":421.579,"2022-05":427.156,"2022-06":432.376,"2022-07":435.507,"2022-08":439.336,"2022-09":444.934,"2022-10":451.092,"2022-11":454.88,"2022-12":457.363,"2023-01":465.346,"2023-02":470.426,"2023-03":475.405,"2023-04":479.489,"2023-05":481.874,"2023-06":484.28,"2023-07":486.169,"2023-08":488.632,"2023-09":490.177,"2023-10":493.395,"2023-11":497.757,"2023-12":500.655,"2024-01":504.286,"2024-02":507.687,"2024-03":510.993,"2024-04":516.582,"2024-05":519.707,"2024-06":522.876,"2024-07":529.476,"2024-08":532.462,"2024-09":535.206,"2024-10":538.279,"2024-11":541.541,"2024-12":543.279,"2025-01":547.49,"2025-02":549.602,"2025-03":551.182,"2025-04":554.568,"2025-05":555.968,"2025-06":558.209,"2025-07":561.019,"2025-08":562.338,"2025-09":563.661,"2025-10":565.269,"2025-11":566.881,"2025-12":568.215,"2026-01":571.541,"2026-02":573.744,"2026-03":578.248,"2026-04":581.344,"2026-05":581.836,"2026-06":582.329,"2026-07":583.698,"2026-08":583.698,"2026-09":583.698};
 const per=Object.keys(A),val=Object.values(A);

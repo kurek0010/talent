@@ -1,55 +1,33 @@
-# Reguła publikacyjna Talenta (TLN) — v0.1
+# Reguła publikacyjna TLN-PLN
 
-**Data:** 2026-07-04 · **Status:** projekt do dyskusji · **Kod referencyjny:** `prototyp/src/talent_daily.py`
-Zasada nadrzędna: **kod jest metodologią**. Ten dokument opisuje regułę słowami; w razie rozbieżności wiąże wersjonowany kod z podpisanym tagiem. Operacyjne szczegóły zasilania danymi (konkretne komunikaty, dni publikacji, kaskady awaryjne, rewizje, zmiany bazy): `POLITYKA_danych_v0.1.md`.
+Stan prototypu na 2026-11-15. Polski Talent opiera się na krajowych cenach i przeciętnych wynagrodzeniach. Kotwice to miesięczne odczyty badawcze, z bazą 100 w styczniu 1996 r.
 
-## 1. Definicja jednostki
+## 1. Kotwice miesięczne w obecnym prototypie
 
-Talent to jednostka wartości będąca środkiem geometrycznym kosztów życia i płac:
+Kotwica to średnia geometryczna dodatnich indeksów cen i płac, znormalizowanych do wspólnej bazy.
 
 $$A(m) = 100 \cdot \sqrt{\frac{I_c(m)}{I_c(m_0)} \cdot \frac{I_w(m)}{I_w(m_0)}}$$
 
-- **I_c — noga cen:** indeks cen konsumpcyjnych, łańcuch miesięczny. Docelowo **mediana ≥3 niezależnych źródeł** (GUS CPI, HICP Eurostat, niezależny indeks cen online); do czasu trzeciego źródła: średnia geometryczna GUS i HICP z tripwire (§5.3).
-- **I_w — noga płac (definicja v0.2):** indeks **funduszu płac na wygładzone zatrudnienie**: `W(m) = FunduszPłac(m) / MA12(Zatrudnienie)(m)` (średnia krocząca 12-mies., przyczynowa), następnie wygładzenie 12-mies. całego indeksu (sezonowość premii). Oba składniki pochodzą z tych samych sprawozdań firm do GUS. Uzasadnienie: przeciętna płaca (fundusz/bieżące zatrudnienie) ma procykliczny artefakt składu — w kryzysie zwalniani są najpierw nisko opłacani i średnia *rośnie*, gdy dochody spadają (USA, IV 2020: przeciętna +4,2% m/m, fundusz/MA12 −8,9%; dryf długookresowy obu wariantów identyczny: +135,7% vs +136,2% za 2000–2026). Weryfikacja: `src/wage_leg_v2 — data/processed/wage_leg_v2_monthly.csv`. Źródła: sektor przedsiębiorstw (GUS, miesięczny) łańcuchowany gospodarką narodową (GUS, kwartalny); docelowo mediana wzrostu płac tych samych osób z danych ZUS jako drugie źródło.
-- **m₀ — baza:** pierwszy miesiąc publikacji = 100. Baza jest stała na zawsze; nigdy nie jest przesuwana.
+- **Ceny.** Aktualizator dokłada dynamikę CPI GUS z rejestru `first_prints_pln.json` do ostatniego indeksu cen. Jeden brakujący miesiąc może zostać uzupełniony przez przeniesienie poprzedniej dynamiki. Przy drugim kolejnym braku aktualizator przerywa uruchomienie bez dopisania nowych kotwic.
+- **Płace.** Punkty rocznych przeciętnych wynagrodzeń przypisane do lipca są interpolowane logarytmicznie. Po końcu interpolacji kod przenosi ostatnią wartość indeksu płac. Roczna wartość może być oznaczona jako przybliżenie. Fundusz płac podzielony przez średnią kroczącą zatrudnienia (TIP-0001) był badany osobno i pozostaje poza aktywną ścieżką.
+- **Kalendarz.** Od 25. dnia miesiąca aktualizator oczekuje kotwicy za poprzedni miesiąc. Workflow pobiera aktualnie dostępną tabelę GUS. Planowane odcięcie danych 24. dnia o 12:00 wymaga udokumentowania dat faktycznej dostępności wejść.
 
-Uzasadnienie empiryczne wag 50/50 i wyboru nóg: `WYSCIG_kandydatow_minimalny_zal.md`, `WYNIKI_test_stulecia_USA.md`, `WYNIKI_kruche_gospodarki.md` (minimalizacja dwustronnego regretu/żalu).
+## 2. Demonstracja wartości dziennych
 
-## 2. Kalendarz i wartość dzienna (model UF — pełny pre-commitment)
+Skrypt demonstracyjny oblicza osobne kotwice na potrzeby rekonstrukcji i przedłuża wzrost ostatniej kotwicy według wzoru
 
-1. GUS publikuje CPI za miesiąc *m* ok. 15. dnia *m+1*; płace przedsiębiorstw ok. 21. dnia *m+1*.
-2. **Dzień kotwicy: 25. dzień miesiąca *m+1*.** Liczymy A(m) z danych opublikowanych do tego dnia i **jednocześnie publikujemy pełną ścieżkę dzienną** na okno od 26. dnia *m+1* do 25. dnia *m+2*:
+$$T(d_k) = A(m) \cdot g^{k/K}, \qquad g = \frac{A(m)}{A(m-1)}, \qquad k=1,\ldots,K.$$
 
-$$T(d_k) = A(m) \cdot g^{k/K} \qquad g = \frac{A(m)}{A(m-1)} \qquad k = 1, \dots, K$$
+Kod stosuje miesiąc kalendarzowy m+1, podczas gdy wcześniejszy projekt przewidywał okno od 26. dnia m+1 do 25. dnia m+2. Jest to ekstrapolacja. Dla kotwic 100, 110, 110 pierwszy odcinek kończy się na 121, a następny zaczyna na 110, co daje spadek o 9,09%. Ścieżka dzienna wymaga osobnej decyzji o wzorze, kalendarzu i ciągłości. Miesięczny workflow jej nie aktualizuje. Skrypt demonstracyjny zapisuje wyniki w osobnym katalogu badawczym.
 
-(K to liczba dni okna publikacyjnego.)
+## 3. Historia publikacji
 
-3. Każda wartość dzienna jest więc znana **co najmniej dzień naprzód, a maksymalnie miesiąc naprzód** — strony umowy nigdy nie rozliczają się po wartości, której nie mogły znać wcześniej (wzór: chilijska UF).
+Projekt przyjmuje zasadę zachowania opublikowanych wartości. Rejestr `talent_published.json` przechowuje miesiące wykorzystane przez aktualizator przy dopisywaniu kotwic. Odtworzono cztery kotwice z miesięcy czerwiec–wrzesień 2026 r. oraz przyczynę użycia zastępczych dynamik CPI. Powiązanie odczytów z dokładną migawką wejść, ich datami i skrótem kodu jest testowane w odrębnej serii prospektywnej według TIP-0003. [Rejestr TIP](../TIP/README.md)
 
-## 3. Zakaz rewizji wstecz
+Łańcuch pierwszych odczytów może trwale odbiegać od indeksu obliczonego na danych zrewidowanych. Odtworzenie wyniku wymaga zachowania użytych wersji danych.
 
-Raz opublikowana wartość (kotwica lub dzienna) **nigdy nie jest zmieniana**. Rewizje danych źródłowych (GUS/Eurostat) wpływają wyłącznie na przyszłe łańcuchy m/m. Publikacja każdego odczytu zawiera **hash danych wejściowych** i wersję kodu (tag git), więc każdy może odtworzyć wynik co do grosza.
+## 4. Propozycje do dalszej oceny
 
-## 4. Rewizje składu i źródeł (chain-linking)
+W obecnym kodzie przekroczenie 15% bezwzględnej zmiany kotwicy w miesiącu ustawia flagę. Publikacja dekadowa, przełączenie na koszyk walut przy hiperinflacji i alarm rozbieżności źródeł są propozycjami. Częstsze ogłaszanie wartości mogłoby pomóc tylko przy odpowiednio aktualnych wejściach. Polski CPI i HICP częściowo opierają się na wspólnych danych, a rozbieżność dwóch wskaźników nie wskazuje, który zawiera błąd. [Metadane HICP dla Polski, §18.5.2](https://ec.europa.eu/eurostat/cache/metadata/EN/prc_hicp_esmshi4_pl.htm)
 
-Zmiana źródła/składnika wyłącznie wg procedury niezmienniczości (chain-linking): kryteria kwalifikacji zapisane z góry, ogłoszenie ≥3 miesiące naprzód, łączenie łańcuchowe (bez skoku), test nakładania, nigdy wstecz. Konsensus społeczności (model open source) decyduje **czy kryteria zastosowano poprawnie** — nigdy o pożądanym wyniku.
-
-## 5. Bezpieczniki (deterministyczne, ogłoszone z góry)
-
-1. **Próg podwyższonej inflacji:** jeśli 3-miesięczna średnia |wzrostu kotwicy m/m| > 5%, okno interpolacji skraca się (publikacja dekadowa: 5., 15., 25.) — redukcja strat lagu (lekcja: Polska I 1990, −44% przy lagu miesięcznym).
-2. **Próg Cagana (tryb awaryjny):** inflacja > 50% m/m przez 2 kolejne miesiące → jednostka przechodzi na z góry zadeklarowany twardy koszyk (mediana kursów 3 stabilnych walut), aż inflacja < 15% m/m przez 6 miesięcy; powrót przez chain-linking (lekcja: Niemcy 1923 — powyżej tego progu żaden indeks nie działa i nie wolno udawać, że jest inaczej).
-3. **Tripwire źródeł:** rozjazd rocznych dynamik źródeł jednej nogi > 3 p.p. → automatyczne przejście na medianę pozostałych + publiczny alert (lekcja: INDEC 2007–15).
-4. **Cap kontraktowy (zalecenie do umów, nie do indeksu):** wzrost zobowiązania m/m ponad X% podlega odroczeniu z kapitalizacją, nie umorzeniu (lekcja: zamrożenie UVA dekretem).
-
-## 6. Publikacja i licencja
-
-- Kanały: repozytorium git (dane + kod + podpisane tagi), plik JSON/CSV z kotwicami i ścieżką dzienną, strona statyczna (`talent_strona.html` — działa z GitHub Pages, bez serwera).
-- Licencja: kod i dane wynikowe otwarte (np. MIT + CC-BY); warunek użycia nazwy „Talent/TLN": niemodyfikowana formuła (ochrona przed podszywaniem).
-- Częstotliwość: kotwica miesięcznie, ścieżka dzienna z wyprzedzeniem, alerty bezpieczników natychmiast.
-
-## 7. Znane prowizoria v0.1 (jawna lista)
-
-1. Noga płac w prototypie: dane roczne GUS/ZUS interpolowane — do zastąpienia adapterem GUS BDL (płaca miesięczna sektora przedsiębiorstw).
-2. Noga cen: jedno źródło (CPI PL) — do rozszerzenia o HICP i indeks online.
-3. Baza prototypu: 1996-01 = 100 (dla ciągłości badań); baza produkcyjna zostanie ustalona w dniu pierwszej publikacji.
-4. Wariant Qist (finanse bezodsetkowe): identyczna formuła, odrębna dokumentacja zgodności (mithl/riba) — do opracowania z ekspertem fiqh.
+Zmiany metody i źródeł przechodzą przez [procedurę TIP](../TIP/README.md). [Specyfikacja obliczeń](../specyfikacja.html) · [Polityka danych](https://github.com/kurek0010/talent/blob/main/POLITYKA_danych_v0.1.md)

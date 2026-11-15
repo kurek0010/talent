@@ -16,7 +16,7 @@ Zamiast tego edytuj źródła i uruchom builder:
 | wykresy/dane na stronie | skrypty w `prototyp/src/` (aktualizują `data/processed/`) | j.w. |
 
 Ręcznie utrzymywane strony HTML (wolno edytować): `specyfikacja.html`, `dla_agenta.html`.
-W szablonie markery `__DATA__`, `__FX__`, `__CURCARDS__`, `__HOOK_PCT__`, `__ANCHORFOR__`, `__UPDATED__` wypełnia builder — nie usuwaj ich.
+Markery danych i kodu w szablonie (m.in. `__DATA__`, `__FX__`, `__CONTRACT_DATA__`, `__CONTRACT_SCRIPT__`) wypełnia builder. Logika kalkulatora waloryzacji jest w `prototyp/src/kalkulator_umowy.js` i trafia do wygenerowanego HTML.
 
 ## Zasady merytoryczne projektu (obowiązują też agentów)
 
@@ -32,6 +32,6 @@ Utrzymanie strony i kodu: Claude Code (to repo). Treści, metodologia, decyzje: 
 
 ## Aktualizacja miesięczna
 
-Kotwica: 25. dnia miesiąca wg `INSTRUKCJA_aktualizacji.md` (odcięcie danych 24., first-printy GUS do `talent_update.py`, potem builder). Zakaz rewizji pilnowany przez `talent_published.json`.
+Kotwica: cykl 25. dnia miesiąca wg `INSTRUKCJA_aktualizacji.md`. Aktualizator dopisuje kotwice po ostatnim miesiącu z `talent_published.json`. `talent_daily.py` zapisuje tylko w `prototyp/data/research/`. Próby prospektywne TIP-0003 zapisują oddzielne pliki w `prototyp/data/prospektywny-test/`.
 Od 2026-07-09 dzieje się automatycznie: GitHub Action `.github/workflows/publikacja_kotwicy.yml` (fetch_gus.py → talent_update.py → build_strona.py → commit) — ręczne uruchomienie/wyłączenie opisane w `INSTRUKCJA_aktualizacji.md` → „Automatyzacja".
 Osobny GitHub Action, `.github/workflows/przebudowa_strony.yml`, przebudowuje stronę automatycznie po każdym pushu do `main`, który zmienia plik z `DOCS`, szablon albo builder — patrz `INSTRUKCJA_aktualizacji.md` → „Automatyzacja".

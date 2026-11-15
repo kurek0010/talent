@@ -1,5 +1,7 @@
 # Szkic: „Kredyt w Talentach" — tezy do przyszłego artykułu
 
+**Aktualizacja statusu 2026-11-15.** To hipotezy i liczby orientacyjne do ponownego zbadania. Porównanie powinno objąć identyczne harmonogramy i jawne założenia kosztu oraz ryzyka po obu stronach. Symetria zmian dotyczy ilorazów i logarytmów. Wnioski o płynności, wypłacalności i czyjejkolwiek rzeczywistej stracie wymagają osobnych miar.
+
 **Status:** notatka robocza (2026-07-10), NIE do publikacji. Obliczenia jednorazowe z sesji — do powtórzenia rygorystycznie przed pisaniem.
 
 ## Przypadek policzony

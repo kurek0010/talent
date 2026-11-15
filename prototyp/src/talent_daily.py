@@ -13,7 +13,7 @@ Formula:
 Prototyp: CPI PL miesieczny z monthly.parquet; place - roczne GUS/ZUS
 (tabela z regret_poland.py) interpolowane log-liniowo do miesiecy.
 PROWIZORIUM do czasu adaptera GUS BDL (placa miesieczna sektora
-przedsiebiorstw). Zadnych rewizji wstecz: raz policzona kotwica jest stala.
+przedsiebiorstw). Wyniki demonstracji sa oddzielone od serii publikowanej.
 """
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ from regret_poland import CPI as _CPI_ANNUAL_UNUSED  # noqa: F401 (dok.)
 from regret_poland import W_BRUTTO, W_NETTO, CHAIN_1999, build_wage
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "data" / "processed"
+OUT = ROOT / "data" / "research"
 
 WAGE_SMOOTH_MONTHS = 12
 CAP_MONTHLY = 0.15  # bezpiecznik: |wzrost kotwicy m/m| > 15% -> tryb awaryjny
@@ -83,6 +83,7 @@ def daily_path(a: pd.DataFrame, months: int = 13) -> pd.DataFrame:
 
 def main() -> None:
     a = anchors()
+    OUT.mkdir(parents=True, exist_ok=True)
     a.to_csv(OUT / "talent_anchors.csv")
     d = daily_path(a)
     d.to_csv(OUT / "talent_daily.csv", index=False)
@@ -91,11 +92,11 @@ def main() -> None:
     per = a.dropna(subset=["g"]).index[-1]
     print(f"Kotwica {per}: A={last['A']:.3f}  (I_c={last['I_c']:.1f}, "
           f"I_w={last['I_w']:.1f}, g={last['g']:.5f})")
-    print(f"Dzisiejsza wartosc TLN (sciezka pre-commitment): "
+    print(f"Ostatnia wartosc w demonstracji: "
           f"{d.iloc[-1]['TLN']:.3f}  ({d.iloc[-1]['data']})")
     print(f"Trybow awaryjnych w historii: {int(a['tryb_awaryjny'].sum())}")
 
-    # eksport kotwic do strony www (JSON: okres -> wartosc)
+    # Eksport badawczy (JSON: okres -> wartosc).
     export = {str(p): round(v, 3) for p, v in a["A"].dropna().items()}
     (OUT / "talent_anchors.json").write_text(json.dumps(export))
     print(f"Zapisano: talent_anchors.csv, talent_daily.csv, "
