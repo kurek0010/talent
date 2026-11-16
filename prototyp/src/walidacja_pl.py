@@ -11,7 +11,7 @@ from math import sqrt
 from pathlib import Path
 from statistics import median
 import subprocess
-from typing import Iterable
+from typing import Callable, Iterable
 
 from regret_poland import CHAIN_1999, CPI, build_wage
 
@@ -92,20 +92,25 @@ def compare(
     income_factor: float = 1.0,
     cost_factor: float = 1.0,
     reserve: float = RESERVE,
+    factor_rule: Callable[[float, float], dict[str, float]] = factors,
+    income_series: dict[int, float] | None = None,
 ) -> list[Result]:
     terms = schedule_terms(start, end, schedule, interest)
     prices = [CPI[year] / CPI[start] for year, _ in terms]
     wages = [wage[year] / wage[start] for year, _ in terms]
     bases = [base for _, base in terms]
     total_base = sum(bases)
-    resources = [STARTING_INCOME * w * income_factor for w in wages]
+    income_growth = wages if income_series is None else [
+        income_series[year] / income_series[start] for year, _ in terms
+    ]
+    resources = [STARTING_INCOME * growth * income_factor for growth in income_growth]
     # Faktura jest płatna z kwoty odłożonej już na dzień zapłaty.
     share = FUNDING_SHARE if schedule == "raty" else 1.0
     start_reserve = PRINCIPAL * reserve
     result = []
-    candidates = [factors(c, w) for c, w in zip(prices, wages, strict=True)]
+    candidates = [factor_rule(c, w) for c, w in zip(prices, wages, strict=True)]
 
-    for method in METHODS:
+    for method in candidates[0]:
         multipliers = [candidate[method] for candidate in candidates]
         payments = [base * m for base, m in zip(bases, multipliers, strict=True)]
         real_payments = [payment / c for payment, c in zip(payments, prices, strict=True)]

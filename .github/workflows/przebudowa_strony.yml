@@ -26,6 +26,7 @@ on:
       - "materialy/wyniki_test_stulecia_usa.md"
       - "materialy/wyniki_kruche_gospodarki.md"
       - "materialy/wyniki_talent_dwustronny.md"
+      - "materialy/walidacja_wag_talenta.md"
       - "TIP/README.md"
       - "prototyp/src/strona_szablon.html"
       - "prototyp/src/kalkulator_umowy.js"
@@ -64,7 +65,7 @@ jobs:
             index.html talent_strona.html whitepaper.html wprowadzenie.html faq.html \
             regula_publikacyjna.html wyscig_kandydatow.html \
             wyniki_test_stulecia_usa.html wyniki_kruche_gospodarki.html \
-            wyniki_talent_dwustronny.html tip.html; then
+            wyniki_talent_dwustronny.html walidacja_wag_talenta.html tip.html; then
             echo "zmiany=false" >> "$GITHUB_OUTPUT"
           else
             echo "zmiany=true" >> "$GITHUB_OUTPUT"
@@ -79,6 +80,6 @@ jobs:
             index.html talent_strona.html whitepaper.html wprowadzenie.html faq.html \
             regula_publikacyjna.html wyscig_kandydatow.html \
             wyniki_test_stulecia_usa.html wyniki_kruche_gospodarki.html \
-            wyniki_talent_dwustronny.html tip.html
+            wyniki_talent_dwustronny.html walidacja_wag_talenta.html tip.html
           git commit -m "Przebudowa strony po zmianie treści"
           git push

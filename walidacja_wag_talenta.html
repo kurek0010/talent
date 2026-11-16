@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+(function(){
+ try{
+  var t=localStorage.getItem('tln-theme');
+  if(t!=='dark'&&t!=='sepia'&&t!=='light') t=window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';
+  document.documentElement.setAttribute('data-theme',t);
+ }catch(e){document.documentElement.setAttribute('data-theme','dark');}
+})();
+</script>
+<title>Ceny i płace w umowie — porównanie wag — Talent (TLN)</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.47/katex.min.css">
+<style>
+:root[data-theme="dark"]{--bg:#0f1419;--card:#1a2129;--tx:#e8e6e3;--mut:#8b949e;--ac:#d4a017;--border:#2a323c}
+:root[data-theme="sepia"]{--bg:#f2e8d5;--card:#fbf3e3;--tx:#3a2f1e;--mut:#7a6a52;--ac:#9c6b1f;--border:#ded0b0}
+:root[data-theme="light"]{--bg:#faf9f6;--card:#ffffff;--tx:#1c1c1c;--mut:#6b6b6b;--ac:#a8720b;--border:#e2ded4}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.65 Georgia,serif;padding:24px;max-width:900px;margin:0 auto;transition:background-color .2s,color .2s}
+h1{font-size:1.6em;margin:0 0 14px}
+h2{font-size:1.2em;margin:28px 0 10px;color:var(--ac)}
+h3{font-size:1.05em;margin:18px 0 8px}
+p,li{margin:0 0 10px}
+ul,ol{padding-left:22px;margin:0 0 12px}
+code{font:.88em ui-monospace,Menlo,Consolas,monospace;background:var(--card);border-radius:6px;padding:1px 6px}
+pre{background:var(--card);border-radius:8px;border-left:3px solid var(--ac);padding:14px 16px;overflow-x:auto;margin:0 0 14px}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;width:100%;margin:0 0 16px;font-size:.92em}
+th,td{border:1px solid var(--border);padding:6px 10px;text-align:left;vertical-align:top}
+th{color:var(--mut);font-weight:normal}
+a{color:var(--ac)}
+hr{border:0;border-top:1px solid var(--border);margin:22px 0}
+em{color:var(--mut)}
+blockquote{border-left:3px solid var(--border);padding-left:14px;color:var(--mut);margin:0 0 12px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.top{font-size:.9em;margin:0}
+.theme-switch{display:flex;gap:6px;flex-shrink:0}
+.theme-btn{background:var(--border);color:var(--mut);border:1px solid transparent;border-radius:6px;padding:5px 11px;font:.8em/1.2 Georgia,serif;cursor:pointer;white-space:nowrap}
+.theme-btn:hover{color:var(--tx)}
+.theme-btn.active{border-color:var(--ac);color:var(--ac)}
+.gen{color:var(--mut);font-size:.78em;border-top:1px solid var(--border);margin-top:30px;padding-top:12px}
+</style>
+</head>
+<body>
+<div class="topbar">
+<p class="top"><a href="index.html">← strona główna Talenta</a></p>
+<div class="theme-switch" role="group" aria-label="Wybierz motyw strony">
+<button class="theme-btn" data-theme-btn="dark">Ciemny</button>
+<button class="theme-btn" data-theme-btn="sepia">Sepia</button>
+<button class="theme-btn" data-theme-btn="light">Jasny</button>
+</div>
+</div>
+<h1>Ceny i płace w umowie — porównanie wag</h1>
+<p><strong>16 listopada 2026 r.</strong> Siedem reguł waloryzacji porównaliśmy na tych samych historycznych harmonogramach faktur i pożyczek. Przy równych wagach średnia geometryczna i arytmetyczna dają bardzo zbliżone wyniki w krótszej próbie opartej na dochodach GUS. Zmiana udziału cen lub płac ma większe znaczenie. W symulacji wpływa na to, która strona i w ilu przypadkach potrzebuje dodatkowego finansowania.</p>
+<h2>Co porównaliśmy</h2>
+<p>Punkty odniesienia to kwota nominalna, sam CPI i same płace. Do Talenta dodaliśmy średnią arytmetyczną 50/50 oraz średnie geometryczne 25/75 i 75/25. Pierwsza liczba oznacza wagę cen, druga wagę płac. Dla mnożników cen i płac liczonych od początku umowy średnia arytmetyczna to <code>(C + W)/2</code>, a geometryczna z wagą cen <code>a</code> to <code>C^a × W^(1−a)</code>. W badaniu liczymy średnią arytmetyczną bezpośrednio od początku danej umowy do każdej raty. Można też zbudować osobny indeks arytmetyczny o stałej bazie i dzielić jego poziomy. To inna reguła, z udziałem cen i płac w zmianie między datami zależnym od ich poziomów w chwili startu umowy.</p>
+<p>Każde okno ma ten sam kapitał 100 000 zł i trzy harmonogramy. Faktura jest płatna w całości na końcu. Pożyczkę spłacamy w rocznych ratach z równym kapitałem, bez odsetek lub z 5% odsetek od pozostałego kapitału w jednostce bazowej. Waloryzujemy całą wymagalną kwotę, bez opłat. W pełnej próbie uwzględniamy po 615 okien na harmonogram w latach 1989–2024, o długości od 1 do 30 lat. Dane o cenach pochodzą z serii CPI OECD/FRED, a o wynagrodzeniach z GUS. Przejście przez 1999 r. korzysta z przybliżonego łącznika płac. <a href="https://github.com/kurek0010/talent/blob/main/materialy/walidacja_talent_pl.md">Metoda, źródła i pierwotna walidacja</a></p>
+<p>W drugiej próbie budżet dłużnika podąża za <strong>przeciętnym dochodem rozporządzalnym na osobę według GUS</strong>. Liczymy 51 identycznych okien raz z budżetem opartym na płacach, raz z budżetem opartym na dochodzie. Omijamy przejście 2020–2021, ponieważ GUS zmienił podstawę uogólniania wyników. Okna mieszczą się w blokach 2011–2020 i 2021–2024. Każda metoda waloryzacji nadal używa tych samych danych cen i płac co poprzednio. <a href="https://stat.gov.pl/files/gfx/portalinformacyjny/pl/defaultaktualnosci/5486/9/23/1/budzety_gospodarstw_domowych_2024.pdf">GUS, <em>Budżety gospodarstw domowych w 2024 r.</em>, wykres 1 i przypis, s. 26</a></p>
+<p>Mierzymy najwyższą płatność w relacji do budżetu lub dochodu, wartość realną wpływów i największą lukę gotówkową po wykorzystaniu rezerwy oraz nadwyżek z wcześniejszych rat. Na pożyczkę dostępne jest 25% modelowego dochodu, a na fakturę cały odłożony budżet. Bazowy koszt lub planowany wypływ wierzyciela wynosi 90% płatności bazowej w realnych złotych. Sprawdzamy osobno dochód o 25% niższy, koszty o 20% wyższe oraz oba szoki z rezerwą 5% lub 15% kapitału. Dane GUS opisują przeciętne gospodarstwo, a rezerwy, wydatki stron i terminy są założeniami symulacji. W fakturze ścieżka dochodu GUS sprawdza wrażliwość budżetu kupującego. Ocena przedsiębiorstwa wymagałaby jego rzeczywistych wpływów i kosztów.</p>
+<h2>Wyniki</h2>
+<p><strong>Talent daje najmniejsze maksymalne odchylenie według miary z whitepaperu.</strong> W pełnej próbie największy „żal” wyniósł 17,43% dla Talenta, 18,95% dla średniej arytmetycznej i 27,26% dla każdej z nierównych wag. Te wartości są takie same dla faktury i rat, ponieważ w każdym harmonogramie występuje okres z największą rozbieżnością cen i płac. Do oceny płynności używamy osobnej miary. <a href="whitepaper.html">Definicja żalu w whitepaperze</a></p>
+<p><strong>W oknach z danymi o dochodzie GUS obie średnie 50/50 były do siebie zbliżone.</strong> Przykładowo przy ratach 5% mediana najwyższego obciążenia w umowie wyniosła 37,84% dochodu dla Talenta i 37,85% dla średniej arytmetycznej. Mediana realnych wpływów wierzyciela to odpowiednio 103,82% i 103,91% wartości harmonogramu bazowego. Przy przeciętnym dochodzie GUS faktura 2021–2022 oparta na Talencie pochłania 101,13% modelowego budżetu kupującego, wobec 101,05% przy budżecie zmieniającym się tak jak płace. Realna wartość wpływu sprzedawcy w obu przypadkach to 98,96% kwoty bazowej.</p>
+<p><strong>Najmniejsza skrajna luka zależy od umowy, zakresu próby i założeń o dochodzie.</strong> Poniżej największa luka którejkolwiek ze stron w badanych oknach przy obu szokach i rezerwie 5%. Kwoty podano w złotych o sile nabywczej z początku umowy, zaokrąglone do pełnego złotego. Maksima dla różnych metod mogą przypadać w innych oknach.</p>
+<table>
+<thead>
+<tr>
+<th>Reguła</th>
+<th style="text-align: right;">Faktura, pełna próba</th>
+<th style="text-align: right;">Raty 5%, pełna próba</th>
+<th style="text-align: right;">Faktura, dochód GUS</th>
+<th style="text-align: right;">Raty 5%, dochód GUS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nominał</td>
+<td style="text-align: right;">102 084</td>
+<td style="text-align: right;">181 897</td>
+<td style="text-align: right;">27 501</td>
+<td style="text-align: right;"><strong>81 361</strong></td>
+</tr>
+<tr>
+<td>CPI</td>
+<td style="text-align: right;">40 614</td>
+<td style="text-align: right;">86 019</td>
+<td style="text-align: right;">21 604</td>
+<td style="text-align: right;">81 651</td>
+</tr>
+<tr>
+<td>Płace</td>
+<td style="text-align: right;">59 283</td>
+<td style="text-align: right;">92 892</td>
+<td style="text-align: right;">26 341</td>
+<td style="text-align: right;">89 316</td>
+</tr>
+<tr>
+<td>Talent 50/50</td>
+<td style="text-align: right;">25 770</td>
+<td style="text-align: right;">85 581</td>
+<td style="text-align: right;"><strong>20 895</strong></td>
+<td style="text-align: right;">83 846</td>
+</tr>
+<tr>
+<td>Arytmetyczna 50/50</td>
+<td style="text-align: right;">26 871</td>
+<td style="text-align: right;">85 806</td>
+<td style="text-align: right;">20 904</td>
+<td style="text-align: right;">83 975</td>
+</tr>
+<tr>
+<td>Geometryczna 25/75</td>
+<td style="text-align: right;"><strong>24 419</strong></td>
+<td style="text-align: right;">89 179</td>
+<td style="text-align: right;">21 964</td>
+<td style="text-align: right;">86 548</td>
+</tr>
+<tr>
+<td>Geometryczna 75/25</td>
+<td style="text-align: right;">32 894</td>
+<td style="text-align: right;"><strong>82 096</strong></td>
+<td style="text-align: right;">21 085</td>
+<td style="text-align: right;">81 886</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Częstość i wielkość luki mogą prowadzić do różnych wyborów.</strong> W pełnej próbie rat 5% waga 75/25 obniża największą lukę którejkolwiek ze stron z 85 581 do 82 096 zł względem Talenta. Jednocześnie luka wierzyciela pojawia się w 57,72% okien wobec 24,88% dla Talenta. W próbie 51 okien z dochodem GUS nominał ma najniższą skrajną lukę przy ratach 5%, lecz luka wierzyciela występuje w 100% okien wobec 49,02% dla Talenta. To odsetki symulowanych okien, często nakładających się na siebie.</li>
+<li><strong>Krótkie umowy mogą przesądzać o maksimum.</strong> Gdy w pełnej próbie ograniczymy początki umów do lat od 1999 r. i horyzonty do 5–30 lat, w tym samym scenariuszu najniższą skrajną lukę daje CPI dla obu harmonogramów. Dla faktury jest to 14 890 zł wobec 18 241 zł w Talencie, a dla rat 5% odpowiednio 12 617 i 14 763 zł. W tej próbie jest po 231 okien na harmonogram.</li>
+<li><strong>Sposób liczenia średniej ma znaczenie przy dzieleniu okresu.</strong> Jeśli ceny najpierw się podwoją, a potem spadną o połowę przy stałych płacach, średnia arytmetyczna mnożników dla dwóch osobnych okresów daje po przemnożeniu 1,125. Obliczona wprost od początku do końca daje 1. Średnia geometryczna daje 1 w obu przypadkach. To własność wzoru niezależna od symulacji płynności.</li>
+</ul>
+<h2>Odtwórz obliczenie z komunikatów GUS</h2>
+<p>Załóżmy jedną płatność bazową <strong>10 000 zł</strong> i roczną regułę przykładową v1. Porównujemy średnie za lata 2021 i 2022 według komunikatów dostępnych na <strong>1 marca 2023 r.</strong> Do tego rachunku bierzemy roczny CPI ogłoszony bezpośrednio przez GUS. Symulacja historyczna korzysta z poziomów CPI z szeregu OECD/FRED, a miesięczny prototyp ma własny kalendarz i szeregi wejściowe.</p>
+<table>
+<thead>
+<tr>
+<th>Wejście</th>
+<th style="text-align: right;">Odczyt</th>
+<th>Data komunikatu</th>
+<th>Źródło</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Średnioroczny CPI w 2022 r. (2021 = 100)</td>
+<td style="text-align: right;">114,4</td>
+<td>13.01.2023</td>
+<td><a href="https://eli.gov.pl/eli/MP/2023/68/ogl">M.P. 2023 poz. 68</a></td>
+</tr>
+<tr>
+<td>Przeciętne wynagrodzenie w gospodarce narodowej w 2021 r.</td>
+<td style="text-align: right;">5 662,53 zł</td>
+<td>09.02.2022</td>
+<td><a href="https://eli.gov.pl/eli/MP/2022/175/ogl">M.P. 2022 poz. 175</a></td>
+</tr>
+<tr>
+<td>Przeciętne wynagrodzenie w gospodarce narodowej w 2022 r.</td>
+<td style="text-align: right;">6 346,15 zł</td>
+<td>09.02.2023</td>
+<td><a href="https://eli.gov.pl/eli/MP/2023/171/ogl">M.P. 2023 poz. 171</a></td>
+</tr>
+</tbody>
+</table>
+<p>Mnożnik cen to 114,4 ÷ 100 = 1,144. Mnożnik płac to 6 346,15 ÷ 5 662,53. Mnożymy 10 000 zł przez pierwiastek z iloczynu tych dwóch mnożników i zaokrąglamy dopiero końcową kwotę do grosza. Otrzymujemy <strong>11 323,04 zł</strong>. Wartości z komunikatów i wszystkie formuły są zapisane w <a href="materialy/odtworzenie-talenta-2021-2022.xlsx">arkuszu kontrolnym</a>.</p>
+<h2>Odtwórz badanie</h2>
+<p>W katalogu repozytorium uruchom Python 3.10 lub nowszy. Skrypt wypisuje tabele i opcjonalnie zapisuje 75 285 wierszy CSV z wynikami wszystkich harmonogramów, scenariuszy i reguł. Ścieżka wyjściowa musi wskazywać nowy plik. Dane potrzebne do obliczeń są w repozytorium.</p>
+<pre><code class="language-bash">python3 prototyp/src/walidacja_wag.py --csv wyniki-wag.csv
+</code></pre>
+<p><a href="https://github.com/kurek0010/talent/blob/main/prototyp/src/walidacja_wag.py">Kod porównania</a> · <a href="https://github.com/kurek0010/talent/blob/main/prototyp/src/walidacja_pl.py">Model przepływów</a></p>
+<p class="gen">Strona wygenerowana automatycznie z pliku <code>materialy/walidacja_wag_talenta.md</code> w
+<a href="https://github.com/kurek0010/talent">repozytorium</a> —
+wersja markdown jest kanoniczna.</p>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.47/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.47/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '\\(', right: '\\)', display: false}], throwOnError: false});"></script>
+<script>function setTheme(t){
+ document.documentElement.setAttribute('data-theme',t);
+ try{localStorage.setItem('tln-theme',t);}catch(e){}
+ document.querySelectorAll('.theme-btn').forEach(b=>b.classList.toggle('active',b.dataset.themeBtn===t));
+}
+document.querySelectorAll('.theme-btn').forEach(b=>{
+ b.addEventListener('click',()=>setTheme(b.dataset.themeBtn));
+});
+setTheme(document.documentElement.getAttribute('data-theme')||'dark');</script>
+</body>
+</html>

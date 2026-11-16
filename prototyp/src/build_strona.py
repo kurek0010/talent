@@ -99,6 +99,7 @@ DOCS = {  # plik md zrodlowy -> strona html (nazwa md == nazwa html)
     "materialy/wyniki_test_stulecia_usa.md": "wyniki_test_stulecia_usa.html",
     "materialy/wyniki_kruche_gospodarki.md": "wyniki_kruche_gospodarki.html",
     "materialy/wyniki_talent_dwustronny.md": "wyniki_talent_dwustronny.html",
+    "materialy/walidacja_wag_talenta.md": "walidacja_wag_talenta.html",
     # TIP: katalog procesu (README linkuje do TIP-0001/0002)
     "TIP/README.md": "tip.html",
 }
@@ -108,6 +109,12 @@ DOCS = {  # plik md zrodlowy -> strona html (nazwa md == nazwa html)
 # tym samym katalogu, ktory nie ma wlasnej strony HTML).
 GITHUB_BLOB = "https://github.com/kurek0010/talent/blob/main"
 LINK_REWRITES = {
+    "materialy/walidacja_wag_talenta.md": [
+        ("(walidacja_talent_pl.md)", f"({GITHUB_BLOB}/materialy/walidacja_talent_pl.md)"),
+        ("(../prototyp/src/walidacja_wag.py)", f"({GITHUB_BLOB}/prototyp/src/walidacja_wag.py)"),
+        ("(../prototyp/src/walidacja_pl.py)", f"({GITHUB_BLOB}/prototyp/src/walidacja_pl.py)"),
+        ("(odtworzenie-talenta-2021-2022.xlsx)", "(materialy/odtworzenie-talenta-2021-2022.xlsx)"),
+    ],
     "TIP/README.md": [
         ("(TIP-0001-noga-placowa-v02.md)", f"({GITHUB_BLOB}/TIP/TIP-0001-noga-placowa-v02.md)"),
         ("(TIP-0002-mediana-wynagrodzen.md)", f"({GITHUB_BLOB}/TIP/TIP-0002-mediana-wynagrodzen.md)"),
